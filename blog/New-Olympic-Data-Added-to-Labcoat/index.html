@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>New Olympic Data Added to Labcoat - Precog
+    </title>
+    <link rel="stylesheet" href="../../css/default.css">
+    <link rel="stylesheet" href="../../css/unique.css">
+    <link rel="stylesheet" href="../../css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CAbel%7CMontserrat:400,700%7CCinzel:400,700,900" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="../../images/favicon.png">
+    <link rel="alternate" href="../../feed.xml.rss" type="application/rss+xml" title="Precog Big Data Analytics">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../js/default.js"></script>
+    <script type="text/javascript" src="../../js/unique.js"></script>
+    <script type="text/javascript" src="../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../index.html"><img src="../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul class="menu">
+            <li><a id="login-link" href="../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../index.html">Blog</a></li>
+            <li><a href="mailto:support@precog.com">Support</a></li>
+            <li><a href="../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="section-body">
+      <div class="holder">
+        <div class="two-columns">
+          <h1 class="page-title">New Olympic Data Added to Labcoat</h1>
+          <page class="post"></page>
+          <section class="content"><p>The Summer Games in London have wrapped up and we&apos;ve updated our data analysis tool, <a href="https://www.precog.com/blog/New-Olympic-Data-Added-to-Labcoat/Labcoat">Labcoat</a>, with some additional data. This new data is a list of all the medal winners with some additional information such as height, weight and age: perfect for a few more example queries!</p>
+<p>Let&apos;s start to explore this new data by checking out the new preloaded queries from the query manager (lower left-hand-side of Labcoat). There are four new sample queries in the summer games medals folder to take a look at: Attributes by Sport, Correlation of Letters In Name and Medals, Medals by Country and Percentage of Female Athletes by Country.</p>
+<p>A lot of interesting analysis could be conducted on this data; I&apos;d like to share just a few tidbits in this blog post. With the additional information about height, weight and age, it might be interesting to see how these vary across sports:</p>
+<pre style="font-size: 11px;">data := //summer<em>games/londonMedals
+bySport := forall &apos;Sport
+  {sport: &apos;Sport,
+aveAge:mean(data.Age where data.Sport =&apos;Sport),
+aveWeight: mean(data.Weight where data.Sport = &apos;Sport),
+aveHeight:mean(data.HeightIncm where data.Sport =&apos;Sport)}
+bySport</pre>
+<p>One way to easily analyze data in Labcoat is to click on a column label in the table format of results. This allows you to sort in ascending and descending order without having to rewrite the query. Click once to sort in ascending order and click a second time to sort in descending order. A brief investigation reveals that not only are medalists in Diving the youngest on average, but also the lightest and shortest.</p>
+<p>In contrast, Equestrian medal winners are by far the oldest, being 6 years older on average than the second oldest group. The second contenders for oldest average age was beach volleyball (surprising to me). However, when considering the &lt;a href=&quot;<a href="http://espn.go.com/olympics/summer/2012/volleyball/story/">http://espn.go.com/olympics/summer/2012/volleyball/story/</a></em>/id/8248574/2012-summer-olympics-misty-treanor-kerri-walsh-jennings-win-beach-volleyball-gold&quot;&gt;unprecedented 3rd consecutive gold</a> medal by <a href="http://en.wikipedia.org/wiki/Kerri_Walsh_Jennings">Kerri Walsh Jennings </a>and <a href="http://en.wikipedia.org/wiki/Misty_May-Treanor">Misty May-Treanor</a>, who are 34 and 35 respectively, this should have been less surprising.</p>
+<p>In the next example, we can dig a bit deeper by using the built-in correlation function. Let&apos;s look at the relationship between the average letters in an athlete&apos;s name by country and the total number of medals won by that country.</p>
+<p>Clearly the letters in someone&apos;s name will not cause them to be better or worse at an Olympic event, but cultural naming conventions may vary in such a way that letters in a name are associated with being from particular regions. And being from certain regions may have a causal impact on an athlete&apos;s ability to win a medal.</p>
+<pre style="font-size: 11px;">data := //summer_games/londonMedals
+byCountry := forall &apos;Country
+ {country: &apos;Country,
+gold: sum(data.G where data.Country = &apos;Country),
+silver: sum(data.S where data.Country = &apos;Country), 
+bronze: sum(data.B where data.Country = &apos;Country),
+total: sum(data.Total where data.Country = &apos;Country),
+aveLettersInName: mean(std::string::length(
+data.Name where data.Country = &apos;Country))}
+ std::stats::corr(byCountry.aveLettersInName, byCountry.total)</pre>
+<p>Interestingly, the correlation of ~ -.23 means that there is an inverse correlation between letters in a name and medals won. Gold, silver and bronze medals were included in the above query for easy modification. Changing byCountry.total to byCountry.gold reveals that this inverse correlation is even stronger when considering just gold medals.</p>
+<p>The final query we&apos;ll review is one that returns the top ten countries by percentage of female medal winners. The results are filtered by countries that won five or more medals to prevent a small handful of outliers from dominating the results (although this setting is easily changed for the curious).</p>
+<pre style="font-size: 11px;">data := //summer_games/londonMedals
+byCountry := forall &apos;Country
+  {country: &apos;Country,
+percentWomen: sum(data.Total where data.Sex = &quot;F&quot; &amp;
+data.Country =&apos;Country)/sum(data.Total where data.Country=&apos;Country),
+total: sum(data.Total where data.Country = &apos;Country)}
+filtered := byCountry where byCountry.total &lt;=5
+filtered where std::stats::rank(neg filtered.percentWomen) &lt;= 10</pre>
+<p>An interesting modification to this query is to replace the final line with a dynamic filter. Instead of examining the top ten results, we can return all the countries where the percent of female medal winners is higher than the average.</p>
+<pre style="font-size: 11px;">filtered where filtered.percentWomen &gt; mean(filtered.percentWomen)</pre>
+<p>Even though the United States did not make the top ten in this category, it is still an impressive showing for the US women &#8212; taking home nearly 57% of the medals the US won this year.</p>
+<p>If you&apos;d like to share any interesting insights you found or have a freely available data set you&apos;d like to see us feature, please add a comment to blog post. We&apos;d love to hear from you!</p>
+<p>(This data from the Summer Games in London was provided by <a href="http://www.google.com/url?q=http://www.guardian.co.uk/sport/datablog/2012/jul/30/olympics-2012-alternative-medal-table&sa=D&sntz=1&usg=AFQjCNFz84wafYyLwsH_9xPT99RiR12r6Q">The Guardian DataBlog</a>)</p></section>
+        </div>
+        <div class="two-columns-end">
+          <div id="disqus_thread">
+            <script type="text/javascript">
+              /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+              var disqus_shortname = 'precog'; // required: replace example with your forum shortname
+              /* * * DON'T EDIT BELOW THIS LINE * * */
+              (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+              })();
+            </script>
+            <noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript><a href="http://disqus.com" class="dsq-brlink">comments powered by<span class="logo-disqus">Disqus</span></a>
+          </div>
+        </div>
+        <div class="clear-left"></div>
+      </div>
+    </div>
+    <footer>
+      <div class="holder">
+        <div id="footer-menu">
+          <ul class="menu">
+            <li><a href="../../about/contact-us/index.html">About</a>
+              <ul>
+                <li><a href="../../about/contact-us/index.html">Overview</a></li>
+                <li><a href="../../about/contact-us/index.html">Contact</a></li>
+                <li><a href="../index.html">Blog</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="menu">
+            <li><a href="../../for-developers/index.html">For Developers</a>
+              <ul>
+                <li><a href="../../for-developers/index.html">Overview</a></li>
+                <li><a href="../../developers/getting-started/overview/index.html" target="_blank">Dev Center</a></li>
+                <li><a href="http://support.precog.com">Support</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="menu">
+            <li><a href="../../for-businesses/index.html">For Businesses</a>
+              <ul>
+                <li><a href="../../for-businesses/index.html">Overview</a></li>
+                <li><a href="../../solutions/white-label-reporting/index.html">White Label Reporting</a></li>
+                <li><a href="../../solutions/social-media-analytics/index.html">Social Media Analytics</a></li>
+                <li><a href="../../solutions/web-analytics/index.html">Web Analytics</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div id="footer-content">
+          <div id="copyrights"><a href="../../legal/index.html">privacy and terms of use</a>
+            <p>Copyright @ 2012-2013 ReportGrid, Inc. All Rights Reserved</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

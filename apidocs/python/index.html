@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to Precog’s documentation! &mdash; Precog 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Precog 0.2.0 documentation" href="index.html#" />
+    <link rel="next" title="Getting Started" href="getting_started.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="getting_started.html" title="Getting Started"
+             accesskey="N">next</a> |</li>
+        <li><a href="index.html#">Precog 0.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-precog-s-documentation">
+<h1>Welcome to Precog&#8217;s documentation!<a class="headerlink" href="index.html#welcome-to-precog-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#uploading-files">Uploading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#appending-data">Appending Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#running-queries">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#license">License</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<span class="target" id="module-precog"></span><dl class="class">
+<dt id="precog.Format">
+<em class="property">class </em><tt class="descclassname">precog.</tt><tt class="descname">Format</tt><a class="reference internal" href="_modules/precog.html#Format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format contains the data formats supported by the Precog client. Methods like
+<tt class="docutils literal"><span class="pre">Precog.append</span></tt> require a format in order to parse data from a string or file.</p>
+<blockquote>
+<div><ul class="simple">
+<li>json: Data is a single JSON value.</li>
+<li>jsonstream: Data is a stream of JSON values separated by optional whitespace.</li>
+<li>csv: Data is stored as comma-separated values.</li>
+<li>tsv: Data is stored as tab-separated values.</li>
+<li>ssv: Data is stored as semicolon-separated values.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="precog.Precog">
+<em class="property">class </em><tt class="descclassname">precog.</tt><tt class="descname">Precog</tt><big>(</big><em>apikey</em>, <em>accountid</em>, <em>basepath=None</em>, <em>host='beta.precog.com'</em>, <em>port=443</em>, <em>https=True</em><big>)</big><a class="reference internal" href="_modules/precog.html#Precog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Precog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client for the Precog API. This class contains all the functionality provided
+by this module.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>apikey (str): String containing the Precog API key
+(e.g. &#8220;6789ABCD-EF12-3456-68AC-123456789ABC&#8221;).</li>
+<li>accountid (str): String containing the Precog Account ID
+(e.g. &#8220;00000011345&#8221;).</li>
+</ul>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><ul class="first last simple">
+<li>basepath (str): Base path to use (defaults to accountid).</li>
+<li>host (str): Host name to connect to.</li>
+<li>port (int): Port to connect to.</li>
+<li>https (bool): Whether to connect to host using HTTPS.</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="precog.Precog.account_details">
+<tt class="descname">account_details</tt><big>(</big><em>email</em>, <em>password</em>, <em>accountId</em><big>)</big><a class="reference internal" href="_modules/precog.html#Precog.account_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Precog.account_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return details about an account.</p>
+<p>The resulting dictionary will contain information about the
+account, including the master API key.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>email (str): The email address for this account.</li>
+<li>password (str): The password for this account.</li>
+<li>accountid (str): The ID for this account.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="precog.Precog.append">
+<tt class="descname">append</tt><big>(</big><em>dest</em>, <em>obj</em><big>)</big><a class="reference internal" href="_modules/precog.html#Precog.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Precog.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a single JSON object to the destination path. The object must be a
+Python object representing a single JSON value: a dictionary, list, number,
+string, boolean, or None.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>dest (str): Precog path to append the object to.</li>
+<li>obj (json): The Python object to be appended.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="precog.Precog.append_all">
+<tt class="descname">append_all</tt><big>(</big><em>dest</em>, <em>objs</em><big>)</big><a class="reference internal" href="_modules/precog.html#Precog.append_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Precog.append_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends an list of JSON object to the destination path. Each object must be a
+Python object representing a single JSON value: a dictionary, list, number,
+string, boolean, or None. The objects should be provided in a list.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>dest (str): Precog path to append the object to.</li>
+<li>objs (list): The list of Python objects to be appended.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="precog.Precog.append_all_from_file">
+<tt class="descname">append_all_from_file</tt><big>(</big><em>dest</em>, <em>format</em>, <em>src</em><big>)</big><a class="reference internal" href="_modules/precog.html#Precog.append_all_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Precog.append_all_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a file and a format, append all the data from the file to the destination
+path. The <tt class="docutils literal"><span class="pre">format</span></tt> should be one of those provided by the <tt class="docutils literal"><span class="pre">precog.Format</span></tt>
+class (e.g. <tt class="docutils literal"><span class="pre">Format.json</span></tt>).</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>dest (str): Precog path to append the object to.</li>
+<li>format (dict): A dictionary defining the format to be used. See
+<tt class="docutils literal"><span class="pre">precog.Format</span></tt> for the supported formats.</li>
+<li>src (str or file): Either a path (as a string) or a file object read from.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="precog.Precog.append_all_from_string">
+<tt class="descname">append_all_from_string</tt><big>(</big><em>dest</em>, <em>format</em>, <em>src</em><big>)</big><a class="reference internal" href="_modules/precog.html#Precog.append_all_from_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Precog.append_all_from_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a string of data and a format, append all the data to the destination
+path. The <tt class="docutils literal"><span class="pre">format</span></tt> should be one of those provided by the <tt class="docutils literal"><span class="pre">precog.Format</span></tt>
+class (e.g. <tt class="docutils literal"><span class="pre">Format.json</span></tt>).</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>dest (str): Precog path to append the object to.</li>
+<li>format (dict): A dictionary defining the format to be used. See
+<tt class="docutils literal"><span class="pre">precog.Format</span></tt> for the supported formats.</li>
+<li>src (str): The data to be read.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="precog.Precog.create_account">
+<tt class="descname">create_account</tt><big>(</big><em>email</em>, <em>password</em><big>)</big><a class="reference internal" href="_modules/precog.html#Precog.create_account"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Precog.create_account" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new account.</p>
+<p>Given an email address and password, this method will create a
+new account, and return the account ID.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>email (str): The email address for the new account.</li>
+<li>password (str): The password for the new account.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="precog.Precog.query">
+<tt class="descname">query</tt><big>(</big><em>query</em>, <em>path=''</em>, <em>detailed=False</em><big>)</big><a class="reference internal" href="_modules/precog.html#Precog.query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Precog.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate a query.</p>
+<p>Run a Quirrel query against specified base path, and return the resulting set.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>query (str): The Quirrel query to perform.</li>
+</ul>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><ul class="first last simple">
+<li>path (str): Optional base path to add for this query.</li>
+<li>detailed (bool): If true, result will be a dictionary containing more
+information about how the query was performed.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="precog.Precog.search_account">
+<tt class="descname">search_account</tt><big>(</big><em>email</em><big>)</big><a class="reference internal" href="_modules/precog.html#Precog.search_account"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Precog.search_account" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for an existing account.</p>
+<p>Given an email address and password, this method will search
+for an existing account, and return the account ID if found, or
+None if the account is not found.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>email (str): The email address for this account.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="precog.Precog.upload_file">
+<tt class="descname">upload_file</tt><big>(</big><em>dest</em>, <em>format</em>, <em>src</em><big>)</big><a class="reference internal" href="_modules/precog.html#Precog.upload_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Precog.upload_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a file and a format, append all the data from the file to the destination
+path. This will replace any data that previously existed.The <tt class="docutils literal"><span class="pre">format</span></tt> should
+be one of those provided by the <tt class="docutils literal"><span class="pre">precog.Format</span></tt> class (e.g. <tt class="docutils literal"><span class="pre">Format.json</span></tt>).</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>dest (str): Precog path to append the object to.</li>
+<li>format (dict): A dictionary defining the format to be used. See
+<tt class="docutils literal"><span class="pre">precog.Format</span></tt> for the supported formats.</li>
+<li>src (str or file): Either a path (as a string) or a file object read from.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="precog.Precog.upload_string">
+<tt class="descname">upload_string</tt><big>(</big><em>dest</em>, <em>format</em>, <em>src</em><big>)</big><a class="reference internal" href="_modules/precog.html#Precog.upload_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.Precog.upload_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a string of data and a format, append all the data to the destination
+path. This will replace any data that previously existed.The <tt class="docutils literal"><span class="pre">format</span></tt> should
+be one of those provided by the <tt class="docutils literal"><span class="pre">precog.Format</span></tt> class (e.g. <tt class="docutils literal"><span class="pre">Format.json</span></tt>).</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><ul class="first last simple">
+<li>dest (str): Precog path to append the object to.</li>
+<li>format (dict): A dictionary defining the format to be used. See
+<tt class="docutils literal"><span class="pre">precog.Format</span></tt> for the supported formats.</li>
+<li>src (str): The data to be read.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="precog.PrecogClientError">
+<em class="property">exception </em><tt class="descclassname">precog.</tt><tt class="descname">PrecogClientError</tt><a class="reference internal" href="_modules/precog.html#PrecogClientError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.PrecogClientError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised on all errors detected or reported by the Precog platform.</p>
+<p>This error usually suggests an error in the user&#8217;s code.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="precog.PrecogServiceError">
+<em class="property">exception </em><tt class="descclassname">precog.</tt><tt class="descname">PrecogServiceError</tt><a class="reference internal" href="_modules/precog.html#PrecogServiceError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="index.html#precog.PrecogServiceError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised on HTTP response errors.</p>
+<p>This error may suggest a bug in the client or platform.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="index.html#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="index.html#">Welcome to Precog&#8217;s documentation!</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="getting_started.html"
+                        title="next chapter">Getting Started</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="getting_started.html" title="Getting Started"
+             >next</a> |</li>
+        <li><a href="index.html#">Precog 0.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Erik Osheim.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

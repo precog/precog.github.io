@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/devcntr.css">
+    <link rel="icon" type="image/png" href="../../../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CLato:300,400,700,900,300italic,400italic%7CMontserrat:400,700" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/devcntr.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../../for-developers/index.html"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul>
+            <li><a id="login-link" href="../../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../../../blog/index.html">Blog</a></li>
+            <li><a href="http://support.precog.com">Support</a></li>
+            <li><a href="../../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="body">
+      <div id="body-menu">
+        <ul id="fixed-menu">
+          <h1 id="page-title">Dev Center</h1>
+          <li><a href="../../getting-started/overview/index.html">Getting Started</a>
+            <ul class="getting-started">
+              <li><a href="../../getting-started/overview/index.html">Overview</a></li>
+              <li><a href="../../getting-started/faq/index.html">FAQ</a></li>
+              <li><a href="../../getting-started/analytics/index.html">Analytics</a></li>
+            </ul>
+          </li>
+          <li><a href="../index.html">How To Guides</a>
+            <ul class="how-tos">
+              <li><a href="../common-analytics/index.html">Common Analytics</a></li>
+              <li><a href="../embed-reporting/index.html">Embedded Reporting</a></li>
+              <li><a href="../machine-learning/index.html">Machine Learning</a></li>
+              <li><a href="index.html">Optimizing Performance</a></li>
+            </ul>
+          </li>
+          <li><a href="../../rest-apis/accounts/index.html">Rest API</a>
+            <ul class="rest-apis">
+              <li><a href="../../rest-apis/accounts/index.html">Accounts</a></li>
+              <li><a href="../../rest-apis/ingest/index.html">Ingest</a></li>
+              <li><a href="../../rest-apis/metadata/index.html">MetaData</a></li>
+              <li><a href="../../rest-apis/analytics/index.html">Analytics</a></li>
+              <li><a href="../../rest-apis/security/index.html">Security</a></li>
+            </ul>
+          </li>
+          <li><a href="../../client-libraries/index.html">Client Libraries</a></li>
+          <li><a href="../../viz-api/index.html">Visualization API</a>
+            <ul class="viz-api">
+              <li><a href="../../viz-api/charts-api/index.html">Charts API</a></li>
+              <li><a href="../../viz-api/transform-api/index.html">Data Transform API</a></li>
+            </ul>
+          </li>
+          <li><a href="../../quirrel/introduction/index.html">Quirrel</a></li>
+        </ul>
+      </div>
+      <div id="body-content">
+        <h1 class="page-title">Optimize Performance</h1>
+        <div id="dynamic-body-links">
+          <ul id="section-index"></ul>
+        </div>
+        <div id="page-content"><h2>How to Optimize Query Performance on Precog</h2>
+<p>If you are deploying a production application that uses Precog, you may be
+interested in ways to optimize the runtime query performance.
+
+</p>
+<p>In this document, you can find our recommended tips to maximizing runtime
+performance on Precog.
+
+</p>
+<h3>1. Partition data by path</h3>
+<p>Precog partitions all data by its location in the file system. Data stored in
+one path does not degrade the performance of queries on other paths.
+
+</p>
+<p>Precog makes it easy to analyze data even when the data is stored across
+different paths. So you should freely partition your data into different
+paths. The less data is located in any one path, the faster it will be to run
+queries across that path.
+
+</p>
+<h3>2. Specify columns</h3>
+<p>Precog is a columnar database, which means that all data from the same column
+is stored together. For typical analytical queries that only involve one or a
+few columns, this results in a dramatic reduction in IO, which improves
+performance.
+
+</p>
+<p>To maximize performance, when you perform a query across a data set, you
+should always specify the columns you are interested in.
+
+</p>
+<p>For example, you might be interested in counting all the data from a set foo.
+
+</p>
+<p>If you write <em>count(foo)</em>, Precog will have to load all the columns that make up
+the values of foo. However, if you write, count(foo.bar), then Precog only has
+to load the bar column of the data, which will be tremendously faster.
+
+</p>
+<p>Compare the following two queries:
+
+</p>
+<p>[clicks := //clicks count(clicks.product.price)](<a href="https://labcoat.precog.com/?q">https://labcoat.precog.com/?q</a>
+=clicks+%3A%3D+%2F%2Fclicks%0Acount(clicks.product.price))
+
+</p>
+<p>[clicks := //clicks count(clicks)](<a href="https://labcoat.precog.com/?q=clicks+:=">https://labcoat.precog.com/?q=clicks+%3A%3D</a>
++%2F%2Fclicks%0Acount(clicks))
+
+</p>
+<p>The first query completes 10 times faster than the second query, because it
+only has to load a fraction of the data that the second query has to load.
+
+</p>
+<h3>3. Pull up filters</h3>
+<p>If you are going to filter data at some point, it makes sense to filter it
+before performing any computationally expensive operations on it. For example,
+queries will generally complete faster if filtering is done before a solve
+statement rather than after.
+
+</p>
+<h3>4. Push down relates</h3>
+<p>The relate operator results in Cartesian cross product on the sets being
+related. Therefore, moving the relate operator as far down into a query as
+possible will increase performance.
+
+</p>
+<p>Ideally, sets being related are always small, such that the results can be
+computed rapidly.
+
+</p>
+<h3>5. When all else fails</h3>
+<p>If you encounter a slow running query that you cannot optimize, <a href="../../../about/contact-us/index.html">please let us
+know</a> and we&apos;ll look into it.
+
+</p>
+
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="developer-center-tooltips">
+        <div id="path-tt" class="tool-tip">
+          <h4>Path</h4>
+          <p>This is the path to your data. Replace 'path or [path], tic or brackets included with the correct directory location.</p>
+        </div>
+        <div id="root-path-tt" class="tool-tip">
+          <h4>Root Path</h4>
+          <p>This your root path. Replace [root path], brackets included with your root path. Your root path can be found on<a href="../../../account/index.html">your account page</a>.</p>
+        </div>
+        <div id="account-id-tt" class="tool-tip">
+          <h4>Account ID</h4>
+          <p>This is your accountId. Replace 'accountId, tic included with your accountId. Your accountId is the same as your root path and can be found on<a href="../../../account/index.html">your account page</a></p>
+        </div>
+        <div id="grant-id-tt" class="tool-tip">
+          <h4>Grant ID</h4>
+          <p>This is a grantId. Repalce 'grantId, tic included with the appropriate grantId. GrantId's can be generated and accessed using various Security API calls.</p>
+        </div>
+        <div id="api-key-tt" class="tool-tip">
+          <h4>API Key</h4>
+          <p>This is an API Key. Replace 'apiKey or [auth API key], tic or brackets included with the appropriate API Key. You are assigned an initial API Key upon creating your account that is accessible on<a href="../../../account/index.html">your account page</a>. API Keys can also be created using the Security API.</p>
+        </div>
+        <div id="auth-api-key-tt" class="tool-tip">
+          <h4>Auth API Key</h4>
+          <p>This is the authorizing API Key. Most likely it is your initital master Precog API Key. It can be found on<a href="../../../account/index.html">your account page</a>. Replace [auth API Key], brackets included with your Precog API key.</p>
+        </div>
+        <div id="query-tt" class="tool-tip">
+          <h4>Query</h4>
+          <p>This is your custom Quirrel query. See documentation on the quirrel language<a href="http://quirrel-lang.org/">here</a>. Replace [...], brackets included, with a query that has proper syntax.</p>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
+  </body>
+</html>

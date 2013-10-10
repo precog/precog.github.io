@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/devcntr.css">
+    <link rel="icon" type="image/png" href="../../../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CLato:300,400,700,900,300italic,400italic%7CMontserrat:400,700" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/devcntr.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../../for-developers/index.html"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul>
+            <li><a id="login-link" href="../../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../../../blog/index.html">Blog</a></li>
+            <li><a href="http://support.precog.com">Support</a></li>
+            <li><a href="../../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="body">
+      <div id="body-menu">
+        <ul id="fixed-menu">
+          <h1 id="page-title">Dev Center</h1>
+          <li><a href="index.html">Getting Started</a>
+            <ul class="getting-started">
+              <li><a href="index.html">Overview</a></li>
+              <li><a href="../faq/index.html">FAQ</a></li>
+              <li><a href="../analytics/index.html">Analytics</a></li>
+            </ul>
+          </li>
+          <li><a href="../../how-tos/index.html">How To Guides</a>
+            <ul class="how-tos">
+              <li><a href="../../how-tos/common-analytics/index.html">Common Analytics</a></li>
+              <li><a href="../../how-tos/embed-reporting/index.html">Embedded Reporting</a></li>
+              <li><a href="../../how-tos/machine-learning/index.html">Machine Learning</a></li>
+              <li><a href="../../how-tos/optimize-performance/index.html">Optimizing Performance</a></li>
+            </ul>
+          </li>
+          <li><a href="../../rest-apis/accounts/index.html">Rest API</a>
+            <ul class="rest-apis">
+              <li><a href="../../rest-apis/accounts/index.html">Accounts</a></li>
+              <li><a href="../../rest-apis/ingest/index.html">Ingest</a></li>
+              <li><a href="../../rest-apis/metadata/index.html">MetaData</a></li>
+              <li><a href="../../rest-apis/analytics/index.html">Analytics</a></li>
+              <li><a href="../../rest-apis/security/index.html">Security</a></li>
+            </ul>
+          </li>
+          <li><a href="../../client-libraries/index.html">Client Libraries</a></li>
+          <li><a href="../../viz-api/index.html">Visualization API</a>
+            <ul class="viz-api">
+              <li><a href="../../viz-api/charts-api/index.html">Charts API</a></li>
+              <li><a href="../../viz-api/transform-api/index.html">Data Transform API</a></li>
+            </ul>
+          </li>
+          <li><a href="../../quirrel/introduction/index.html">Quirrel</a></li>
+        </ul>
+      </div>
+      <div id="body-content">
+        <h1 class="page-title">Getting Started</h1>
+        <div id="dynamic-body-links">
+          <ul id="section-index"></ul>
+        </div>
+        <div id="page-content"><h2>Signup</h2>
+<p>Please visit the <a href="../../../about/contact-us/index.html">Signup Page</a> to sign
+up for a cloud-hosted account. When you signup, you&apos;ll be given an <em>account ID</em>, 
+an <em>API key</em>, and a <em>root path</em>. 
+
+</p>
+<ul>
+<li><strong>Account ID</strong> - Your account ID is globally unique and identifies your Precog account in a way that is stable, even if you decide to change your email address or API keys later.</li>
+<li><strong>API Key</strong> - Your API key allows you to interact with the Precog API. The API key can be thought of as a combination of a username and a password.</li>
+<li><strong>Root Path</strong> - Your root path is where all of your data lives inside the Precog file system. Your root path is just equal to <em>/&apos;accountId</em>, where <em>&apos;accountID</em> is your account ID.</li>
+</ul>
+<p>You can always find this information on your <a href="../../../account/index.html">account page</a> after logging in.
+
+</p>
+<h2>Precog File System</h2>
+<p>Precog uses the metaphor of a file system to help you organize and share data.
+When you store data in Precog, you must choose a directory to store the
+data in.
+
+</p>
+<p>You don&apos;t have to create directories manually. Directories are
+created on-demand whenever you try to put data in a directory that doesn&apos;t
+exist yet.
+
+</p>
+<p>Precog doesn&apos;t support the notion of &quot;databases&quot; or &quot;tables&quot; or &quot;collections&quot;.
+Instead, you can use the file system to create however many levels of
+organization make sense to you.
+
+</p>
+<p>The Precog file system forms the basis of the security model, because all
+grants are tied to a specific path. So the decision of how to organize your 
+data is not completely arbitrary (unless you have no intention of sharing 
+access to your data).
+
+</p>
+<p>The file system and associated security model make Precog multi-tenant out of the box.
+
+</p>
+<p>Technically, Precog supports hierarchical multi-tenancy, which is the most
+sophisticated kind of multi-tenancy available. Your customers can have
+customers, who in turn can have customers, for any number of levels deep, each
+with rigorously defined and enforced permissions.
+
+</p>
+<p>Some common use cases may help illustrate. An advertising company might
+structure its data like this:
+
+</p>
+<pre><code>/companyname/customerID/campaignID/web/cpm
+/companyname/customerID/campaignID/mobile/impressions
+/companyname/customerID/campaignID/mobile/clicks    
+etc.</code></pre>
+<p>An e-commerce platform might structure its data like this:
+
+</p>
+<pre><code>/platformname/clientcompany/transactions
+/platformname/clientcompany/checkouts
+/platformname/clientcompany/products
+etc.</code></pre>
+<h3>Root Path</h3>
+<p>When you create an account, you are assigned a unique root path. This root
+path is the same as your account ID.
+
+</p>
+<p>You will need to use your root path whenever you try to read or write data
+in Precog, because initially, you will only have permissions for data in 
+that directory.
+
+</p>
+<h2>Precog Data Model</h2>
+<p>Precog natively stores and analyzes <a href="http://www.json.org/">JSON</a> data (actually, a superset of JSON data, but that&apos;s a detail you can ignore when getting started).
+
+</p>
+<p>You can store any JSON value inside the Precog file system, as well as append JSON values to existing resources.
+
+</p>
+<p>A JSON object is an unordered set of name/value pairs. For example:
+
+</p>
+<pre><code>{ "age:" 36,"customerID": "0019327","status": "active" }    </code></pre>
+<p>Note that it is important that numeric values not be surrounded by quotes or
+they will be interpreted as strings and not as numeric values.
+
+</p>
+<p>When possible, you should try to store your data as JSON objects, so that all data is labeled. 
+
+</p>
+<p>For example:
+
+</p>
+<pre><code>{"age": 19}        </code></pre>
+<p>is better style than:
+
+</p>
+<pre><code>19</code></pre>
+<p>Similarly, storing an array in a JSON object with a field name like below:
+
+</p>
+<pre><code>{"states": ["colorado","idaho","california"] }    </code></pre>
+<p>is better than storing just the raw array:
+
+</p>
+<pre><code>["colorado","idaho","california"]</code></pre>
+<p>However, Precog imposes no restrictions on the type of data you can store, and different values may have completely different schemas.
+
+</p>
+<h2>Data Ownership</h2>
+<p>Your API key is tied to your Precog account. Any data you write to your root
+path is automatically <em>owned</em> by your Precog account. This means no one can
+see it unless you give them permission to see it.
+
+</p>
+<p>Precog is secure by default.
+
+</p>
+<p>Data ownership is tracked exhaustively in Precog so that no one can see
+data unless the owner of the data has given them permission to see it.
+
+</p>
+<h2>Grants</h2>
+<p>Precog manages permissions with the concept of <em>grants</em>. Grants confer some specific capability to the holder. Grants may be added to existing API keys.
+
+</p>
+<p>Precog currently supports the following kinds of grants:
+
+</p>
+<ul>
+<li><strong>Read</strong> - This grant lets you read any data in a path that is owned by a set of accounts.</li>
+<li><strong>Write</strong> - This grant lets you insert new data in a path that will be owned by one of a set of accounts.</li>
+<li><strong>Delete</strong> - This grant lets you delete any data in a path that is owned by a set of accounts.</li>
+</ul>
+<p>When you signup for a Precog account, you are given the ability to read any data that you own
+(across the entire Precog file system, not just your root directory);
+the ability to write data owned by anyone (but only inside your root directory), and the 
+ability to delete data owned by anyone (only inside your root directory).
+
+</p>
+<p>If you have a grant, you can use that grant to create another grant which is
+either less powerful than the original grant, or just as powerful as the
+original grant.
+
+</p>
+<p>For example, if you have a read grant to a path called <em>/foo/</em>, then you can use
+that read grant to create another read grant for <em>/foo/bar/</em> (which is strictly
+less powerful than the original grant). Or if you have a write grant for <em>/foo/</em>
+that does not expire, you could use that write grant to create another write
+grant for <em>/foo/</em> that expires in two days.
+
+</p>
+<p>If you use a first grant to create a second grant, then you can revoke the second 
+grant at any time. Additionally, if your grant is revoked, then all derived grants 
+are revoked automatically.</p>
+
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="developer-center-tooltips">
+        <div id="path-tt" class="tool-tip">
+          <h4>Path</h4>
+          <p>This is the path to your data. Replace 'path or [path], tic or brackets included with the correct directory location.</p>
+        </div>
+        <div id="root-path-tt" class="tool-tip">
+          <h4>Root Path</h4>
+          <p>This your root path. Replace [root path], brackets included with your root path. Your root path can be found on<a href="../../../account/index.html">your account page</a>.</p>
+        </div>
+        <div id="account-id-tt" class="tool-tip">
+          <h4>Account ID</h4>
+          <p>This is your accountId. Replace 'accountId, tic included with your accountId. Your accountId is the same as your root path and can be found on<a href="../../../account/index.html">your account page</a></p>
+        </div>
+        <div id="grant-id-tt" class="tool-tip">
+          <h4>Grant ID</h4>
+          <p>This is a grantId. Repalce 'grantId, tic included with the appropriate grantId. GrantId's can be generated and accessed using various Security API calls.</p>
+        </div>
+        <div id="api-key-tt" class="tool-tip">
+          <h4>API Key</h4>
+          <p>This is an API Key. Replace 'apiKey or [auth API key], tic or brackets included with the appropriate API Key. You are assigned an initial API Key upon creating your account that is accessible on<a href="../../../account/index.html">your account page</a>. API Keys can also be created using the Security API.</p>
+        </div>
+        <div id="auth-api-key-tt" class="tool-tip">
+          <h4>Auth API Key</h4>
+          <p>This is the authorizing API Key. Most likely it is your initital master Precog API Key. It can be found on<a href="../../../account/index.html">your account page</a>. Replace [auth API Key], brackets included with your Precog API key.</p>
+        </div>
+        <div id="query-tt" class="tool-tip">
+          <h4>Query</h4>
+          <p>This is your custom Quirrel query. See documentation on the quirrel language<a href="http://quirrel-lang.org/">here</a>. Replace [...], brackets included, with a query that has proper syntax.</p>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
+  </body>
+</html>

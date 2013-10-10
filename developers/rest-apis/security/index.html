@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/devcntr.css">
+    <link rel="icon" type="image/png" href="../../../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CLato:300,400,700,900,300italic,400italic%7CMontserrat:400,700" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/devcntr.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../../for-developers/index.html"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul>
+            <li><a id="login-link" href="../../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../../../blog/index.html">Blog</a></li>
+            <li><a href="http://support.precog.com">Support</a></li>
+            <li><a href="../../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="body">
+      <div id="body-menu">
+        <ul id="fixed-menu">
+          <h1 id="page-title">Dev Center</h1>
+          <li><a href="../../getting-started/overview/index.html">Getting Started</a>
+            <ul class="getting-started">
+              <li><a href="../../getting-started/overview/index.html">Overview</a></li>
+              <li><a href="../../getting-started/faq/index.html">FAQ</a></li>
+              <li><a href="../../getting-started/analytics/index.html">Analytics</a></li>
+            </ul>
+          </li>
+          <li><a href="../../how-tos/index.html">How To Guides</a>
+            <ul class="how-tos">
+              <li><a href="../../how-tos/common-analytics/index.html">Common Analytics</a></li>
+              <li><a href="../../how-tos/embed-reporting/index.html">Embedded Reporting</a></li>
+              <li><a href="../../how-tos/machine-learning/index.html">Machine Learning</a></li>
+              <li><a href="../../how-tos/optimize-performance/index.html">Optimizing Performance</a></li>
+            </ul>
+          </li>
+          <li><a href="../accounts/index.html">Rest API</a>
+            <ul class="rest-apis">
+              <li><a href="../accounts/index.html">Accounts</a></li>
+              <li><a href="../ingest/index.html">Ingest</a></li>
+              <li><a href="../metadata/index.html">MetaData</a></li>
+              <li><a href="../analytics/index.html">Analytics</a></li>
+              <li><a href="index.html">Security</a></li>
+            </ul>
+          </li>
+          <li><a href="../../client-libraries/index.html">Client Libraries</a></li>
+          <li><a href="../../viz-api/index.html">Visualization API</a>
+            <ul class="viz-api">
+              <li><a href="../../viz-api/charts-api/index.html">Charts API</a></li>
+              <li><a href="../../viz-api/transform-api/index.html">Data Transform API</a></li>
+            </ul>
+          </li>
+          <li><a href="../../quirrel/introduction/index.html">Quirrel</a></li>
+        </ul>
+      </div>
+      <div id="body-content">
+        <h1 class="page-title">Security</h1>
+        <div id="dynamic-body-links">
+          <ul id="section-index"></ul>
+        </div>
+        <div id="page-content"><h2>security api</h2>
+<p>The security API is responsible for managing permissions for all data stored in Precog. The API can be used to manage API keys and grants.
+
+</p>
+<p>An API key is required for interacting with all Precog data APIs. An API key may be associated with many different grants, each of which confers specific permissions with respect to some directory and data owner.
+
+</p>
+<p>The fields &quot;name&quot; and &quot;description&quot; are optional fields taking arbitrary strings that increase the human read-ability of the output. &quot;parentIds&quot; is an optional field that can take the Grant ID of the parent grant. If no expiration date is set, the grant will not expire. To set an expiration date, provide an ISO8601 formatted string.
+
+</p>
+<p>For more information on API keys and grants, see the Precog Security Model.
+
+</p>
+<h3>List API Keys</h3>
+<ul>
+<li>JSON</li>
+<li>GET</li>
+<li>GET /security/v1/apikeys/?apiKey=<span class="tool-tip-apikey">[auth API key]</span></li>
+<li>description</li>
+<li>Retrieves all API keys created by the authorization API key.</li>
+<li>response body</li>
+<li><pre>[{&quot;apiKey&quot;: &quot;[API Key]&quot;}, {&quot;apiKey&quot;: &quot;[API Key]&quot;}, ...]</pre>
+
+</li>
+</ul>
+<h3>Create an API Key</h3>
+<ul>
+<li>JSON</li>
+<li>POST</li>
+<li>POST /security/v1/apikeys/?apiKey=<span class="tool-tip-apikey">[auth API key]</span></li>
+<li>description</li>
+<li>Creates a new API key that has the grants specified in the body of the request. The grants of the authorization API key will be used to issue the grants for the new API key. If multiple grants can be used to satisfy the requirements, then all of them will be used to issue the grants for the new API key.</li>
+<li>request body</li>
+<li><pre>{
+&quot;name&quot;: ...
+&quot;description&quot;: ...
+&quot;grants&quot;: [{
+&quot;name&quot;: ...
+&quot;description&quot;: ...
+&quot;parentIds&quot;: ...
+&quot;expirationDate&quot;: ...
+&quot;permissions&quot; : [{
+&quot;accessType&quot;: &quot;read&quot;,
+&quot;path&quot;: &quot;/foo/&quot;,
+&quot;ownerAccountIds&quot;: &quot;[Owner Account Id]&quot;
+}, ...
+]
+}, ...
+]
+}</pre></li>
+<li>response body</li>
+<li><pre>{&quot;apiKey&quot;: &quot;[API Key]&quot;}</pre>
+
+</li>
+</ul>
+<h3>Describe an API Key</h3>
+<ul>
+<li>JSON</li>
+<li>GET</li>
+<li>GET /security/v1/apikeys/<span class="tool-tip-apikey tool-tip-apikey">&apos;apiKey</span></li>
+<li>description</li>
+<li>Retrieves the details of a particular API key. The API key must have been created by the authorization API key. If a given grant cannot be shared, it will not return information on the grant id (because this could be used to issue additional grants from the given grant).</li>
+<li>response body</li>
+<li><pre>{
+&quot;apiKey&quot;: &quot;[API key]&quot;,
+&quot;name&quot;: ...,
+&quot;description&quot;: ...,
+&quot;grants&quot;: [{
+&quot;grantId&quot;: &quot;[Grant ID]&quot;,
+&quot;name&quot;: ...,
+&quot;description&quot;: ...,
+&quot;expirationDate&quot;: ...,
+&quot;permissions&quot;: [{
+&quot;accessType&quot;: &quot;read&quot;,
+&quot;path&quot;: &quot;/foo/&quot;,
+&quot;ownerAccountIds&quot;: &quot;[Owner Account Id]&quot;
+}, ...
+]
+}, ...
+]
+}</pre>
+
+</li>
+</ul>
+<h3>Delete an API Key</h3>
+<ul>
+<li>JSON</li>
+<li>DELETE</li>
+<li>DELETE /security/v1/apikeys/<span class="tool-tip-apikey tool-tip-apikey">&apos;apiKey</span></li>
+<li>description</li>
+<li>Deletes a particular API key.</li>
+</ul>
+<h3>Retrieve the Grants of an API Key</h3>
+<ul>
+<li>JSON</li>
+<li>GET</li>
+<li>GET /security/v1/apikeys/<span class="tool-tip-apikey tool-tip-apikey">&apos;apiKey</span>/grants/</li>
+<li>description</li>
+<li>Retrieves all the grants of a particular API key. If a grant cannot be shared, then its grant id will not be exposed, although its type and other settings will be visible.</li>
+<li>Request Body</li>
+<li><pre>[{
+&quot;grantId&quot;: &quot;[Grant ID]&quot;,
+&quot;name&quot;: ...,
+&quot;description&quot;: ...,
+&quot;expirationDate&quot;: ...,
+&quot;permissions&quot;: [{
+&quot;accessType&quot;: &quot;read&quot;,
+&quot;path&quot;: &quot;/foo/&quot;,
+&quot;ownerAccountIds&quot;: &quot;[Owner Account Id]&quot;
+}, ...
+]
+}, ...
+]</pre>
+
+</li>
+</ul>
+<h3>Add a Grant to an API Key</h3>
+<ul>
+<li>JSON</li>
+<li>GET</li>
+<li>GET /security/v1/apikeys/<span class="tool-tip-apikey tool-tip-apikey">&apos;apiKey</span>/grants/</li>
+<li>description</li>
+<li>Adds the specified grant to the specified API key. The authorization API key must possess (possibly indirectly) the grant being added.</li>
+<li>request body</li>
+<li><pre>{&quot;grantId&quot;: &quot;[Grant Id]&quot;}</pre>
+
+</li>
+</ul>
+<h3>Remove a Grant from an API Key</h3>
+<ul>
+<li>JSON</li>
+<li>DELETE</li>
+<li>DELETE /security/v1/apikeys/<span class="tool-tip-apikey tool-tip-apikey">&apos;apiKey</span>/grants/<span class="tool-tip-grant-id">&apos;grantId</span></li>
+<li>description</li>
+<li>Deletes a particular grant from an API key. The API key must have been created by the authorization API key, and the grant must have been added by the API key.</li>
+</ul>
+<h3>Create a New Grant</h3>
+<ul>
+<li>JSON</li>
+<li>POST</li>
+<li>POST /security/v1/grants/?apiKey=<span class="tool-tip-apikey">[auth API key]</span></li>
+<li>description</li>
+<li>Creates a new grant, derived from grants of the authorization API key. If the authorization key has multiple grants which can be used to satisfy the requirements of the new grant, then the least powerful such grant will be used to derive the new grant. If the authorization key does not have any grants which can be used to satisfy the requirements of the new grant, then the method will not succeed.</li>
+<li>Request Body</li>
+<li><pre>{
+&quot;name&quot;: ...
+&quot;description&quot;: ...
+&quot;parentIds&quot;: ...
+&quot;expirationDate&quot;: ...
+&quot;permissions&quot; : [{
+&quot;accessType&quot;: &quot;read&quot;,
+&quot;path&quot;: &quot;/foo/&quot;,
+&quot;ownerAccountIds&quot;: &quot;[Owner Account Id]&quot;
+}, ...
+]
+}</pre>
+</li>
+<li><p>response body</p>
+</li>
+<li><pre>{&quot;grantId&quot;: &quot;[Grant Id]&quot;}</pre>
+
+</li>
+</ul>
+<h3>Describe a Grant</h3>
+<ul>
+<li>JSON</li>
+<li>GET</li>
+<li>GET /security/v1/grants/<span class="tool-tip-grant-id">&apos;grantId</span>?apiKey=<span class="tool-tip-apikey">[auth API key]</span></li>
+<li>description</li>
+<li>Describes the details of a particular grant. Anyone who has access to the grant id can list the full details of the grant.</li>
+<li>response body</li>
+<li><pre>{
+&quot;grantId&quot;: &quot;[Grant ID]&quot;,
+&quot;name&quot;: ...,
+&quot;description&quot;: ...,
+&quot;expirationDate&quot;: ...,
+&quot;permissions&quot;: [{
+&quot;accessType&quot;: &quot;read&quot;,
+&quot;path&quot;: &quot;/foo/&quot;,
+&quot;ownerAccountIds&quot;: &quot;[Owner Account Id]&quot;
+}, ...
+]
+}</pre>
+
+</li>
+</ul>
+<h3>Delete a Grant</h3>
+<ul>
+<li>JSON</li>
+<li>DELETE</li>
+<li>DELETE /security/v1/grants/<span class="tool-tip-grant-id">&apos;grantId</span>?apiKey=<span class="tool-tip-apikey">[auth API key]</span></li>
+<li>description</li>
+<li>Deletes a particular grant specified by id. Only the creator of a grant can delete it.</li>
+</ul>
+<h3>List Children of a Grant</h3>
+<ul>
+<li>JSON</li>
+<li>GET</li>
+<li>GET /security/v1/grants/<span class="tool-tip-grant-id">&apos;grantId</span>/children/?apiKey=<span class="tool-tip-apikey">[auth API key]</span></li>
+<li>description</li>
+<li>Lists all immediate children of the specified grant. Only the creator of a grant can list the children of the grant.</li>
+<li>response body</li>
+<li><pre>[{
+&quot;grantId&quot;: &quot;[Grant ID]&quot;,
+&quot;name&quot;: ...,
+&quot;description&quot;: ...,
+&quot;expirationDate&quot;: ...,
+&quot;permissions&quot;: [{
+&quot;accessType&quot;: &quot;read&quot;,
+&quot;path&quot;: &quot;/foo/&quot;,
+&quot;ownerAccountIds&quot;: &quot;[Owner Account Id]&quot;
+}, ...
+]
+}, ...
+]</pre>
+
+</li>
+</ul>
+<h3>Create a Child Grant</h3>
+<ul>
+<li>JSON</li>
+<li>POST</li>
+<li>POST /security/v1/grants/<span class="tool-tip-grant-id">&apos;grantId</span>/children/?apiKey=<span class="tool-tip-apikey">[auth API key]</span></li>
+<li>description</li>
+<li>Creates a new grant that is derived from the specified grant. The child grant may be less powerful than the specified grant. When this grant is created, the shared property can indicate whether or not the new child grant can be shared. If the grant cannot be shared, then although it will appear on any API keys to which it is added, the id of the grant will not be exposed.</li>
+<li>request body</li>
+<li><pre>{
+&quot;name&quot;: ...
+&quot;description&quot;: ...
+&quot;parentIds&quot;: ...
+&quot;expirationDate&quot;: ...
+&quot;permissions&quot; : [{
+&quot;accessType&quot;: &quot;read&quot;,
+&quot;path&quot;: &quot;/foo/&quot;,
+&quot;ownerAccountIds&quot;: &quot;[Owner Account Id]&quot;
+}, ...
+]
+}</pre>
+</li>
+<li><p>response body</p>
+</li>
+<li><pre>{&quot;grantId&quot;: &quot;[Grant Id]&quot;}</pre></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="developer-center-tooltips">
+        <div id="path-tt" class="tool-tip">
+          <h4>Path</h4>
+          <p>This is the path to your data. Replace 'path or [path], tic or brackets included with the correct directory location.</p>
+        </div>
+        <div id="root-path-tt" class="tool-tip">
+          <h4>Root Path</h4>
+          <p>This your root path. Replace [root path], brackets included with your root path. Your root path can be found on<a href="../../../account/index.html">your account page</a>.</p>
+        </div>
+        <div id="account-id-tt" class="tool-tip">
+          <h4>Account ID</h4>
+          <p>This is your accountId. Replace 'accountId, tic included with your accountId. Your accountId is the same as your root path and can be found on<a href="../../../account/index.html">your account page</a></p>
+        </div>
+        <div id="grant-id-tt" class="tool-tip">
+          <h4>Grant ID</h4>
+          <p>This is a grantId. Repalce 'grantId, tic included with the appropriate grantId. GrantId's can be generated and accessed using various Security API calls.</p>
+        </div>
+        <div id="api-key-tt" class="tool-tip">
+          <h4>API Key</h4>
+          <p>This is an API Key. Replace 'apiKey or [auth API key], tic or brackets included with the appropriate API Key. You are assigned an initial API Key upon creating your account that is accessible on<a href="../../../account/index.html">your account page</a>. API Keys can also be created using the Security API.</p>
+        </div>
+        <div id="auth-api-key-tt" class="tool-tip">
+          <h4>Auth API Key</h4>
+          <p>This is the authorizing API Key. Most likely it is your initital master Precog API Key. It can be found on<a href="../../../account/index.html">your account page</a>. Replace [auth API Key], brackets included with your Precog API key.</p>
+        </div>
+        <div id="query-tt" class="tool-tip">
+          <h4>Query</h4>
+          <p>This is your custom Quirrel query. See documentation on the quirrel language<a href="http://quirrel-lang.org/">here</a>. Replace [...], brackets included, with a query that has proper syntax.</p>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
+  </body>
+</html>

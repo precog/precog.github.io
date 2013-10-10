@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Precog Copointed: Predictive Analytics and Machine Learning in Quirrel - Precog
+    </title>
+    <link rel="stylesheet" href="../../css/default.css">
+    <link rel="stylesheet" href="../../css/unique.css">
+    <link rel="stylesheet" href="../../css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CAbel%7CMontserrat:400,700%7CCinzel:400,700,900" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="../../images/favicon.png">
+    <link rel="alternate" href="../../feed.xml.rss" type="application/rss+xml" title="Precog Big Data Analytics">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../js/default.js"></script>
+    <script type="text/javascript" src="../../js/unique.js"></script>
+    <script type="text/javascript" src="../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../index.html"><img src="../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul class="menu">
+            <li><a id="login-link" href="../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../index.html">Blog</a></li>
+            <li><a href="mailto:support@precog.com">Support</a></li>
+            <li><a href="../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="section-body">
+      <div class="holder">
+        <div class="two-columns">
+          <h1 class="page-title">Precog Copointed: Predictive Analytics and Machine Learning in Quirrel</h1>
+          <page class="post"></page>
+          <section class="content"><p>One feature that sets Precog apart from many embedded reporting solutions is the possibility to perform advanced analytics.  This includes the ability to perform predictive analytics.  Among other things, predictions can be used to create personalizations, recommendations or other sales optimizations.
+
+</p>
+<p>In this blog post, we will cover simple introductory examples of clustering, linear regression, logistic regression and applying evaluation metrics.  The code snippets included will use data included in the demo version of <a href="http://labcoat.precog.com/">Labcoat</a> so that you can run the queries and modify if desired.
+
+</p>
+<h2>Clustering</h2>
+<p><a href="http://en.wikipedia.org/wiki/Cluster_analysis">Cluster analysis</a> is the process of finding groups in a set of data that are similar to each other.  The notion of similarity can vary depending on the specific clustering algorithm used, but the general idea is to find points in the data that minimize the distance between those points and the rest of the points in the data.  For more details, see an overview or the details on the <a href="http://valis.cs.uiuc.edu/~sariel/papers/03/kcoreset/kcoreset.pdf">specific algorithm we use</a>.
+
+</p>
+<p>Suppose we had some demographic data and wanted to do customer segmentation.  A query like the this would automatically find natural segments in the data and allow us to examine if there is any meaningful difference in customer behavior.
+
+</p>
+<pre><code>import std::stats::*
+conversions := <span class="comment">//conversions</span>
+
+input := { age : conversions.customer.age }
+model := kMedians( input, <span class="number">7</span> )
+
+conversions<span class="string">' := conversions with {cluster : assignClusters(input, model) }
+
+solve '</span>cluster
+  {
+  cluster: <span class="string">'cluster,
+  mean : mean(conversions'</span>.product.price where 
+           conversions<span class="string">'.cluster.model1.clusterId = '</span>cluster)
+  }  </code></pre>
+<p><a href="https://labcoat.precog.com/?q=import+std::stats::*%0Aconversions+:=+//conversions%0A%0Ainput+:=+%7B+age+:+conversions.customer.age+%7D%0Amodel+:=+kMedians(+input,+7+)%0A%0Aconversions'+:=+conversions+with+%7Bcluster+:+assignClusters(input,+model)+%7D%0A%0Asolve+'cluster%0A++%7B%0A++cluster:+'cluster,%0A++mean+:+mean(conversions'.product.price+where+conversions'.cluster.model1.clusterId+=+'cluster)%0A++%7D&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/">Check out this query in Labcoat.</a>
+
+</p>
+<p>Creating clusters is as easy as passing data to cluster on to the kMedians function and deciding how many clusters to create.  The resulting model will contain centroids that minimize the distance between each datapoint and its closest centroid. This model can then be used to assign existing data to a particular cluster for historical analysis or assign incoming data to a cluster for near real-time usage.
+
+</p>
+<p>While many of the clusters have similar mean sales in this example there is still a significant discrepancy between the cluster with the highest mean sales being over 22% higher than the cluster with the lowest mean sales. Depending upon the demographics and cost of acquiring customers in the various clusters, this could be a meaningful insight that boosts average sales and revenue.
+
+</p>
+<h2>Linear Regression</h2>
+<p><a href="http://en.wikipedia.org/wiki/Linear_regression">Linear regression</a> is a statistical technique for modeling the best fit line through a set of data points.  Given its name of linear, it should be clear that linear regression can have difficulty predicting relationships that are non-linear, but linear regression is the best linear unbiased estimator of non-linear relationships.
+
+</p>
+<p>A regression equation is of the form:
+
+</p>
+<p>y = x0 + ẞ<sub>1</sub>x1 + ẞ<sub>2</sub>x<sub>2</sub> + ... 
+
+</p>
+<p>where y is the dependent variable being predicted, x<sub>0</sub> is a constant y-intercept, x<sub>1</sub> through x<sub>n</sub> are dependent variables and ẞ<sub>1</sub> through ẞ<sub>n</sub> are the coefficients.  The interpretation of a regression is that for each 1 unit increase in x<sub>1</sub> there will on average be associated a ẞ<sub>1</sub> change in y.  
+
+</p>
+<p>A common example from economics is to look at the relationship between years of education and annual income.  In this example, years of education will be an independent variable and we are attempting to determine its relationship to annual income which will be the dependent variable :
+
+</p>
+<p>annual income in dollars = some constant + ẞ<sub>1</sub> * years of education + .... 
+
+</p>
+<p>The ... is important here.  These represent control variables that attempt to narrow the comparison as much as possible.  In this example, they might be things like race, gender, region and industry.  This helps isolate specifically the relationship that years of education has with annual income. Suppose that ẞ<sub>1</sub> is 3,000.  Then, on average, a 1 year increase in years of education is associated with a $3,000 increase in annual earnings.
+
+</p>
+<p>Part of what is so nice about linear regression is that it has such a clean and useful explanatory capability.  For raw predictive power, random forest will typically outperform linear regression, but linear regression still has a place in understanding specific relationships and their magnitude.  
+
+</p>
+<p>In this example, we examine the relationship between an athlete’s weight and their height, age and medals won at the summer games in london.
+
+</p>
+<pre><code>medals := <span class="comment">//summer_games/london_medals</span>
+
+indVars :=
+{
+HeightIncm : medals.HeightIncm,
+Age : medals.Age,
+Total : medals.Total
+}
+
+std::stats::linearRegression(medals.Weight, indVars)</code></pre>
+<p><a href"https://labcoat.precog.com/?q=medals+%3A%3D+%2F%2Fsummer_games%2Flondon_medals%0A%0AindVars+%3A%3D%0A{%0AHeightIncm+%3A+medals.HeightIncm%2C%0AAge+%3A+medals.Age%2C%0ATotal+%3A+medals.Total%0A}%0A%0Astd%3A%3Astats%3A%3AlinearRegression%28medals.Weight%2C+indVars%29&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https%3A%2F%2Flabcoat.precog.com%2F">Run this query in Labcoat.</a>
+
+</p>
+<p>And a look at a subset of the output:
+
+</p>
+<pre><code>"model2": {
+     "coefficients": [
+       {
+         "HeightIncm": {
+           "estimate": 1.0997392523919332,
+           "standardError": 0.031407749767906355
+         },
+         "Total": {
+           "standardError": 0.7136294756726215,
+           "estimate": 1.5812939398407877
+         },
+         "Age": {
+           "estimate": 0.11920578883597059,
+           "standardError": 0.06478117116040236
+         }
+       },
+       {
+         "estimate": -125.49027015629706,
+         "standardError": 5.802076482230592
+       }
+     ],
+     "residualStandardError": {
+       "estimate": 10.505454174431426,
+       "degreesOfFreedom": 905
+     },
+     "RSquared": 0.5814684929851268
+   }</code></pre>
+<p>Some things to notice above, starting from the bottom.  The RSquared value is a measure of percentage of variance explained by the regression.  Evaluating a RSquared value is typically quite domain dependent but gives some initial indication as to the explanatory power of the model.  Next, looking at the dependent variables of height, age and medals we notice the estimate which is the coefficient and a standard error.  The ratio of the estimate to the standard error helps indicate what is statistically significant (a ratio of 2 or higher is generally meaningful). Both age and total are borderline, while height (unsurprisingly) is quite significant.  Each additional centimeter of height is on average associated with an additional kilogram of weight.  Notice also the high negative value of the y-intercept that this has to overcome.
+
+</p>
+<h2>Logistic Regression</h2>
+<p>Logistic regression is regression designed for classification as opposed to predicting a continuous value.  It is appropriate when the dependent variable is categorical. An example of a  categorical variable would be a set of colors.  If &quot;green&quot; is coded as 4 in our data and &quot;blue&quot; is coded as &quot;2&quot; it does not mean that we would expect to see twice the effect from a &quot;green&quot; than from a &quot;blue&quot;.  Our current implementation of logistic regression is limited to the binary case of predicting 1s and 0s.  To classify a multinomial categorical variable, you can use random forest.
+
+</p>
+<p>We might also be interested in attempting to predict demographic data from other data we have access to.  These predictions might be fuzzy in their accuracy, but imputed values may still provide additional opportunities to make custom recommendations or sales optimizations.  For example, there may be recommendations that can be made based on gender.  So we can create a model that will predict gender based on the price of the product purchased and the age of the customer.
+
+</p>
+<pre><code>import std::stats::*
+
+conversions := <span class="comment">//conversions</span>
+conversions<span class="string">' := conversions with {female : 
+                if conversions.customer.gender = "female" then 1 else 0 }
+
+indVars :=
+ {
+ price : conversions'</span>.product.price,
+ age : conversions<span class="string">'.customer.age
+ }
+
+logisticRegression( conversions'</span>.female, indVars)</code></pre>
+<p><a href="https://labcoat.precog.com/?q=import+std::stats::*%0Aconversions+:=+//conversions%0Aconversions'+:=+conversions+with+%7Bfemale+:+if+conversions.customer.gender+=+%22female%22+then+1+else+0+%7D%0A%0AindVars+:=%0A+%7B%0A+price+:+conversions'.product.price,%0A+age+:+conversions'.customer.age%0A+%7D%0A%0AlogisticRegression(+conversions'.female,+indVars)&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/">View in Labcoat.</a>
+
+</p>
+<p>The resulting model will give us a probability  estimate based on the price of the product being considered and the age of the customer that the customer is female. This can then be used to impute missing values in historical data or as a real-time prediction to generate dynamic content in an application.  
+
+</p>
+<h2>Evaluation Metrics</h2>
+<p>It is often helpful to have some means of evaluating the quality of a prediction.  There are a multitude of such evaluation metrics and deciding on the correct one is an important part of the process (which is beyond the scope of this post).  For a list of a number of metrics and their implementations in number of languages, see <a href="https://github.com/benhamner/Metrics">Ben Hamner’s repository</a> of metrics used in <a href="http://www.kaggle.com/">Kaggle competitions</a>.
+
+</p>
+<p>Let’s focus on creating and deploying a single evaluation metric in Quirrel.  We’ll use root mean squared error (RMSE) because its relatively common.
+
+</p>
+<p>RMSE = sqrt(mean(observed - predicted)^2)
+
+</p>
+<p>In Quirrel, we can create a user-defined function that will calcluate the RMSE:
+
+</p>
+<pre><code>rmse(observed, predicted) :=
+
+ diff := observed - predicted
+
+ std::math::sqrt((mean(diff^2)))</code></pre>
+<p>Now we just need some observed and predicted values to feed into our function. Let’s return the olympics data, split it into a training and test set and use our model to predict the weight of athletes in the test set.
+
+</p>
+<pre><code>medals := <span class="comment">//summer_games/london_medals</span>
+
+filter := observe(medals, std::random::uniform(<span class="number">38</span>))
+train := medals where filter &lt;= <span class="number">0.8</span>
+test := medals where filter > <span class="number">0.8</span>
+
+indVars :=
+{
+HeightIncm : train.HeightIncm,
+Age : train.Age,
+Total : train.Total
+}
+
+model := std::stats::linearRegression(train.Weight, indVars)
+prediction := std::stats::predictLinear(test, model)
+
+results := test with {prediction : prediction}
+
+rmse(predicted, observed) :=
+ diff := observed - predicted
+ std::math::sqrt((mean(diff^<span class="number">2</span>)))
+
+{
+model1rmse : rmse(results.prediction.model1.fit, results.Weight),
+model2rmse : rmse(results.prediction.model2.fit, results.Weight)
+}</code></pre>
+<p><a href="https://labcoat.precog.com/?q=medals+:=+//summer_games/london_medals%0A%0Afilter+:=+observe(medals,+std::random::uniform(38))%0Atrain+:=+medals+where+filter+%3C=+0.8%0Atest+:=+medals+where+filter+%3E+0.8%0A%0AindVars+:=%0A%7B%0AHeightIncm+:+train.HeightIncm,%0AAge+:+train.Age,%0ATotal+:+train.Total%0A%7D%0A%0Amodel+:=+std::stats::linearRegression(train.Weight,+indVars)%0Aprediction+:=+std::stats::predictLinear(test,+model)%0Aresults+:=+test+with+%7Bprediction+:+prediction%7D%0A%0Armse(predicted,+observed)+:=%0A+diff+:=+observed+-+predicted%0A+std::math::sqrt((mean(diff%5E2)))%0A%0A%7B%0Amodel1rmse+:+rmse(results.prediction.model1.fit,+results.Weight),%0Amodel2rmse+:+rmse(results.prediction.model2.fit,+results.Weight)%0A%7D&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/">See the results in Labcoat</a>.
+
+</p>
+<p>Note that the results include rmse for two different models.  This is because Precog supports heterogeneous data.  So linear regression will create a model for each schema in the data.  Some observations are missing data for height, which dramatically reduces the quality of the prediction.  Notice that the RMSE for the model with height is almost twice as good as the model without.  This can help you understand your data better and the value that each component provides.
+
+</p>
+<p>These examples just scratch the surface of the ability to use Precog to leverage your data to create meaningful, revenue enhancing predictions in your application.  But they show how Precog is different from many traditional BI platforms and is focused on data science for deep, useful analysis.  </p>
+</section>
+        </div>
+        <div class="two-columns-end">
+          <div id="disqus_thread">
+            <script type="text/javascript">
+              /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+              var disqus_shortname = 'precog'; // required: replace example with your forum shortname
+              /* * * DON'T EDIT BELOW THIS LINE * * */
+              (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+              })();
+            </script>
+            <noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript><a href="http://disqus.com" class="dsq-brlink">comments powered by<span class="logo-disqus">Disqus</span></a>
+          </div>
+        </div>
+        <div class="clear-left"></div>
+      </div>
+    </div>
+    <footer>
+      <div class="holder">
+        <div id="footer-menu">
+          <ul class="menu">
+            <li><a href="../../about/contact-us/index.html">About</a>
+              <ul>
+                <li><a href="../../about/contact-us/index.html">Overview</a></li>
+                <li><a href="../../about/contact-us/index.html">Contact</a></li>
+                <li><a href="../index.html">Blog</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="menu">
+            <li><a href="../../for-developers/index.html">For Developers</a>
+              <ul>
+                <li><a href="../../for-developers/index.html">Overview</a></li>
+                <li><a href="../../developers/getting-started/overview/index.html" target="_blank">Dev Center</a></li>
+                <li><a href="http://support.precog.com">Support</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="menu">
+            <li><a href="../../for-businesses/index.html">For Businesses</a>
+              <ul>
+                <li><a href="../../for-businesses/index.html">Overview</a></li>
+                <li><a href="../../solutions/white-label-reporting/index.html">White Label Reporting</a></li>
+                <li><a href="../../solutions/social-media-analytics/index.html">Social Media Analytics</a></li>
+                <li><a href="../../solutions/web-analytics/index.html">Web Analytics</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div id="footer-content">
+          <div id="copyrights"><a href="../../legal/index.html">privacy and terms of use</a>
+            <p>Copyright @ 2012-2013 ReportGrid, Inc. All Rights Reserved</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

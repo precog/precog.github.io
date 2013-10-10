@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../css/devcntr.css">
+    <link rel="icon" type="image/png" href="../../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CLato:300,400,700,900,300italic,400italic%7CMontserrat:400,700" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/devcntr.js"></script>
+    <script type="text/javascript" src="../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../for-developers/index.html"><img src="../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul>
+            <li><a id="login-link" href="../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../../blog/index.html">Blog</a></li>
+            <li><a href="http://support.precog.com">Support</a></li>
+            <li><a href="../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="body">
+      <div id="body-menu">
+        <ul id="fixed-menu">
+          <h1 id="page-title">Dev Center</h1>
+          <li><a href="../getting-started/overview/index.html">Getting Started</a>
+            <ul class="getting-started">
+              <li><a href="../getting-started/overview/index.html">Overview</a></li>
+              <li><a href="../getting-started/faq/index.html">FAQ</a></li>
+              <li><a href="../getting-started/analytics/index.html">Analytics</a></li>
+            </ul>
+          </li>
+          <li><a href="../how-tos/index.html">How To Guides</a>
+            <ul class="how-tos">
+              <li><a href="../how-tos/common-analytics/index.html">Common Analytics</a></li>
+              <li><a href="../how-tos/embed-reporting/index.html">Embedded Reporting</a></li>
+              <li><a href="../how-tos/machine-learning/index.html">Machine Learning</a></li>
+              <li><a href="../how-tos/optimize-performance/index.html">Optimizing Performance</a></li>
+            </ul>
+          </li>
+          <li><a href="../rest-apis/accounts/index.html">Rest API</a>
+            <ul class="rest-apis">
+              <li><a href="../rest-apis/accounts/index.html">Accounts</a></li>
+              <li><a href="../rest-apis/ingest/index.html">Ingest</a></li>
+              <li><a href="../rest-apis/metadata/index.html">MetaData</a></li>
+              <li><a href="../rest-apis/analytics/index.html">Analytics</a></li>
+              <li><a href="../rest-apis/security/index.html">Security</a></li>
+            </ul>
+          </li>
+          <li><a href="../client-libraries/index.html">Client Libraries</a></li>
+          <li><a href="index.html">Visualization API</a>
+            <ul class="viz-api">
+              <li><a href="charts-api/index.html">Charts API</a></li>
+              <li><a href="transform-api/index.html">Data Transform API</a></li>
+            </ul>
+          </li>
+          <li><a href="../quirrel/introduction/index.html">Quirrel</a></li>
+        </ul>
+      </div>
+      <div id="body-content">
+        <h1 class="page-title">Visualization API</h1>
+        <div id="dynamic-body-links">
+          <ul id="section-index"></ul>
+        </div>
+        <div id="page-content"><h2>Introduction</h2>
+<p>Precog&apos;s Visualization API is a JavaScript API that can help you quickly build charts and interactive reporting dashboards.
+
+</p>
+<p>You can embed these charts and reporting dashboards into web apps, mobile apps, and web pages.
+
+</p>
+<p>There are two different components to the Visualization API: <a href="charts-api/index.html">Charts API</a>, and <a href="transform-api/index.html">Data Transform API</a>.
+
+</p>
+<h2>Charts API</h2>
+<p>The <a href="charts-api/index.html">Charts API</a> lets you easily create interactive charts, including pie charts, bar charts, funnel charts, stream graphs, geo charts, heat maps, and much more.
+
+</p>
+<p>The Charts API relies on HTML5 technology, but has fallbacks for older browsers.
+
+</p>
+<h2>Data Transform API</h2>
+<p>The <a href="transform-api/index.html">Data Transform API</a>, which is bundled into the Charts API, helps you massage data immediately prior to visualizing the data.
+
+</p>
+<p>Many times, data needs to be grouped, filtered, sorted, or otherwise transformed before it can be displayed by the Charts API. The Data Transform API lets you do all of these things in a very clean, composable way.</p>
+
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="developer-center-tooltips">
+        <div id="path-tt" class="tool-tip">
+          <h4>Path</h4>
+          <p>This is the path to your data. Replace 'path or [path], tic or brackets included with the correct directory location.</p>
+        </div>
+        <div id="root-path-tt" class="tool-tip">
+          <h4>Root Path</h4>
+          <p>This your root path. Replace [root path], brackets included with your root path. Your root path can be found on<a href="../../account/index.html">your account page</a>.</p>
+        </div>
+        <div id="account-id-tt" class="tool-tip">
+          <h4>Account ID</h4>
+          <p>This is your accountId. Replace 'accountId, tic included with your accountId. Your accountId is the same as your root path and can be found on<a href="../../account/index.html">your account page</a></p>
+        </div>
+        <div id="grant-id-tt" class="tool-tip">
+          <h4>Grant ID</h4>
+          <p>This is a grantId. Repalce 'grantId, tic included with the appropriate grantId. GrantId's can be generated and accessed using various Security API calls.</p>
+        </div>
+        <div id="api-key-tt" class="tool-tip">
+          <h4>API Key</h4>
+          <p>This is an API Key. Replace 'apiKey or [auth API key], tic or brackets included with the appropriate API Key. You are assigned an initial API Key upon creating your account that is accessible on<a href="../../account/index.html">your account page</a>. API Keys can also be created using the Security API.</p>
+        </div>
+        <div id="auth-api-key-tt" class="tool-tip">
+          <h4>Auth API Key</h4>
+          <p>This is the authorizing API Key. Most likely it is your initital master Precog API Key. It can be found on<a href="../../account/index.html">your account page</a>. Replace [auth API Key], brackets included with your Precog API key.</p>
+        </div>
+        <div id="query-tt" class="tool-tip">
+          <h4>Query</h4>
+          <p>This is your custom Quirrel query. See documentation on the quirrel language<a href="http://quirrel-lang.org/">here</a>. Replace [...], brackets included, with a query that has proper syntax.</p>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
+  </body>
+</html>

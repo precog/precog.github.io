@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Teaming up with 10gen to Bring Precog to MongoDB - Precog
+    </title>
+    <link rel="stylesheet" href="../../css/default.css">
+    <link rel="stylesheet" href="../../css/unique.css">
+    <link rel="stylesheet" href="../../css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CAbel%7CMontserrat:400,700%7CCinzel:400,700,900" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="../../images/favicon.png">
+    <link rel="alternate" href="../../feed.xml.rss" type="application/rss+xml" title="Precog Big Data Analytics">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../js/default.js"></script>
+    <script type="text/javascript" src="../../js/unique.js"></script>
+    <script type="text/javascript" src="../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../index.html"><img src="../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul class="menu">
+            <li><a id="login-link" href="../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../index.html">Blog</a></li>
+            <li><a href="mailto:support@precog.com">Support</a></li>
+            <li><a href="../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="section-body">
+      <div class="holder">
+        <div class="two-columns">
+          <h1 class="page-title">Teaming up with 10gen to Bring Precog to MongoDB</h1>
+          <page class="post"></page>
+          <section class="content"><p>Today, we&apos;re excited to announce the launch of <a href="https://www.precog.com/blog/Teaming-up-with-10gen-to-Bring-Precog-to-MongoDB/mongodb">Precog for MongoDB</a>, a release that bundles all of the really cool Precog technology into a free package that anyone can download and deploy on their existing MongoDB database.</p>
+<p>We&apos;ve known for a long time that we were going to bring a standalone version of our data science platform to some NoSQL database. Here are the reasons why we chose MongoDB:</p>
+<ul>
+<li>MongoDB developers share our passion for creating software that developers love to use.</li>
+<li>Quirrel is designed to analyze JSON, which is natively supported by MongoDB.</li>
+<li>MongoDB has a basic query and aggregation framework, but to do more advanced analytics, you have to write lots of custom code or export the data into a RDBMS, both of which are very painful.</li>
+<li>We&apos;re great friends of some of the 10gen developers and have released <a href="https://github.com/jdegoes/blueeyes/tree/master/mongo">open source software for MongoDB</a>.</li>
+</ul>
+<p><a href="https://www.precog.com/blog/Teaming-up-with-10gen-to-Bring-Precog-to-MongoDB/mongodb">Precog for MongoDB</a> gives you the ability to analyze all the data in your MongoDB database, without forcing you to export data into another tool or write any custom code.</p>
+<p>We&apos;re really excited about the release and encourage you to <a href="https://www.precog.com/blog/Teaming-up-with-10gen-to-Bring-Precog-to-MongoDB/mongodb">download the release</a> (zipped file) and start using it today. You can start to analyze your data in a matter of minutes! Simply <a href="https://www.precog.com/blog/Teaming-up-with-10gen-to-Bring-Precog-to-MongoDB/mongodb">visit our page</a>, complete the brief form, and confirm your email address to then download the file. We want to help you get started, so here are the steps for installation and configuration:</p>
+<p><strong>Step 1: Unpack the Download </strong></p>
+<p>The download is a ZIP file that contains the following files: </p>
+<pre>precog.jar
+config.cfg
+precog.sh
+precog.bat</pre>
+<p>The file <strong>precog.jar</strong> is the Java JAR that bundles all of the Precog dependencies into a single (really big!) file. The files <strong>precog.sh</strong> and <strong>precog.bat</strong> are scripts that launch <strong>precog.jar</strong>.</p>
+<p>The file <strong>config.cfg</strong> contains configuration information.</p>
+<p><strong>Step 2: Configure Precog </strong></p>
+<p>All the configuration settings for Precog are stored in the file <strong>config.cfg</strong>, with reasonable defaults.</p>
+<p>There are two things you need to do at a minimum before you can launch Precog:</p>
+<ul>
+<li>Tell Precog where to find the MongoDB server.</li>
+<li>Tell Precog what the master account is.</li>
+</ul>
+<p>To tell Precog where to find the MongoDB server, simply edit the mongo server key in the settings:</p>
+<pre>
+queryExecutor {
+ mongo {
+   server = &quot;<a href="mongodb://localhost:27017">mongodb://localhost:27017</a>&quot;
+ }
+}
+</pre>
+<p>Change the &quot;localhost:27017&quot; portion to the host and port of your mongo server. For optimal performance, you should launch Precog on the same machine that is running the MongoDB server.</p>
+<p>Precog will map the MongoDB databases and collections into the file system by placing the databases at the top level of the file system, and will nest the database collections under the databases (e.g. <em>/mydb/mycollection/</em>).</p>
+<p>To tell Precog what the master account is, edit <strong>config.cfg</strong> and edit the following settings under the masterAccount section:</p>
+<pre>
+security {
+ masterAccount {
+   apiKey = &quot;12345678-1234-1234-1234-123456789abc&quot;
+ }
+}
+</pre>
+<p>The API key for the master account can be anything you like, but you should treat it securely because whoever has it has full access to all of your MongoDB data.</p>
+<p>You may also want to tweak the ports that Precog uses for the web server that exposes the Precog REST API and to serve labcoat:</p>
+<pre>
+    server {
+ port = 8888
+   }
+   �
+   labcoat {
+     port = 8000
+   }
+</pre>
+<p><strong>Step 3: Launch Precog </strong></p>
+<p>To run <strong>precog.jar</strong>, you will need to install JRE 6 or later (many systems already have Java installed). If you&apos;re on an OS X or Linux machine, just run the <strong>precog.sh</strong> script, which automatically launches Java:</p>
+<p><strong>precog.sh</span></strong></p>
+<p>If you&apos;re on a Windows machine, you can launch Precog with the <strong>precog.bat</strong> script.</p>
+<p>Once Precog has been launched, it will start a web server that exposes the REST API as well as labcoat.</p>
+<p><strong>Step 4: Try the API </strong></p>
+<p>Once Precog is running, you have full access to the <a href="https://www.precog.com/blog/Teaming-up-with-10gen-to-Bring-Precog-to-MongoDB/developers">Precog REST API</a>. You can find a large number of open source client libraries <a href="https://github.com/reportgrid/client-libraries">available on Github</a>, and the Precog developers site contains a bunch of <a href="https://www.precog.com/blog/Teaming-up-with-10gen-to-Bring-Precog-to-MongoDB/developers">documentation and tutorials</a> for interacting with the API.</p>
+<p><strong>Step 5: Try Labcoat </strong></p>
+<p>Labcoat is an HTML5 application that comes bundled in the download. You don&apos;t have to use Labcoat, of course, since Precog has a REST API, but Labcoat is the best way to interactively explore your data and develop Quirrel queries.</p>
+<p>The precog.jar comes with a bundled web server for labcoat, so once it&apos;s running just point your browser at <a href="http://localhost:8000/"><a href="http://localhost:8000/%3C/a%3E">http://localhost:8000/&lt;/a&gt;</a> (or whatever port you&apos;ve configured it for) and you&apos;ll have a new labcoat IDE pointing at your local Precog REST API.</p>
+<p><strong>Step 6: Analyze Data! </strong></p>
+<p>Once you&apos;ve got Labcoat running, you&apos;re all set! You should see your MongoDB collections in the file system explorer, and you can query data from the collections, develop queries to analyze the data, and export queries as code that run against your Precog server. Precog is a beta product, and <em>Precog for MongoDB</em> is hot off the press. You may encounter a few rough corners, and if so, we&apos;d love to hear about them (just send an email to <a href="mailto:support@precog.com">support@precog.com</a>). Have fun analyzing!</p></section>
+        </div>
+        <div class="two-columns-end">
+          <div id="disqus_thread">
+            <script type="text/javascript">
+              /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+              var disqus_shortname = 'precog'; // required: replace example with your forum shortname
+              /* * * DON'T EDIT BELOW THIS LINE * * */
+              (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+              })();
+            </script>
+            <noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript><a href="http://disqus.com" class="dsq-brlink">comments powered by<span class="logo-disqus">Disqus</span></a>
+          </div>
+        </div>
+        <div class="clear-left"></div>
+      </div>
+    </div>
+    <footer>
+      <div class="holder">
+        <div id="footer-menu">
+          <ul class="menu">
+            <li><a href="../../about/contact-us/index.html">About</a>
+              <ul>
+                <li><a href="../../about/contact-us/index.html">Overview</a></li>
+                <li><a href="../../about/contact-us/index.html">Contact</a></li>
+                <li><a href="../index.html">Blog</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="menu">
+            <li><a href="../../for-developers/index.html">For Developers</a>
+              <ul>
+                <li><a href="../../for-developers/index.html">Overview</a></li>
+                <li><a href="../../developers/getting-started/overview/index.html" target="_blank">Dev Center</a></li>
+                <li><a href="http://support.precog.com">Support</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="menu">
+            <li><a href="../../for-businesses/index.html">For Businesses</a>
+              <ul>
+                <li><a href="../../for-businesses/index.html">Overview</a></li>
+                <li><a href="../../solutions/white-label-reporting/index.html">White Label Reporting</a></li>
+                <li><a href="../../solutions/social-media-analytics/index.html">Social Media Analytics</a></li>
+                <li><a href="../../solutions/web-analytics/index.html">Web Analytics</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div id="footer-content">
+          <div id="copyrights"><a href="../../legal/index.html">privacy and terms of use</a>
+            <p>Copyright @ 2012-2013 ReportGrid, Inc. All Rights Reserved</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

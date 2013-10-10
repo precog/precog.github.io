@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting Started &mdash; Precog 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Precog 0.2.0 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to Precog’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Precog’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Precog 0.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="getting_started.html#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>If you already have a Precog account, the first thing you&#8217;ll want to do is to
+create a client object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">precog</span> <span class="kn">import</span> <span class="n">Precog</span>
+
+<span class="n">apikey</span> <span class="o">=</span> <span class="s">&#39;01231234-2345-3579-468A-456789ABCDEF&#39;</span> <span class="c">#apikey</span>
+<span class="n">accountid</span> <span class="o">=</span> <span class="s">&#39;0000000123&#39;</span> <span class="c">#accountid</span>
+<span class="n">basepath</span> <span class="o">=</span> <span class="n">accountid</span> <span class="c"># this is a good default</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s">&#39;devapi.precog.com&#39;</span> <span class="c">#host</span>
+<span class="n">port</span> <span class="o">=</span> <span class="s">&#39;443&#39;</span> <span class="c">#port</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Precog</span><span class="p">(</span><span class="n">apikey</span><span class="p">,</span> <span class="n">accountid</span><span class="p">,</span> <span class="n">accountid</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Next we&#8217;ll want to load some data into Precog. Here are four different methods
+for adding equivalent data.</p>
+<div class="section" id="uploading-files">
+<h2>Uploading Files<a class="headerlink" href="getting_started.html#uploading-files" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="comma-separated-values">
+<h3>Comma Separated Values<a class="headerlink" href="getting_started.html#comma-separated-values" title="Permalink to this headline">¶</a></h3>
+<p>Imagine that we have the following data in a file called <cite>songs.csv</cite>:</p>
+<div class="highlight-python"><pre>song,artist,album,tracknum,duration
+Peaches En Regalia,Frank Zappa,Hot Rats,1,218
+The Advent of Panurge,Gentle Giant,Octopus,1,281
+One More Red Nightmare,King Crimson,Red,3,427
+Jack The Ripper,Univers Zero,Heresie,2,809
+Vuh,Popol Vuh,In den Gärten Pharaos,2,1191</pre>
+</div>
+<p>Using the previous snippet, the following code would load that into
+the path <cite>mysongs</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s">&#39;mysongs&#39;</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">csv</span><span class="p">,</span> <span class="s">&#39;songs.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We could also do the same work using a file object instead of a path:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;songs.csv&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s">&#39;mysongs&#39;</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">csv</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default CSV files are delimited by commas (<cite>,</cite>), use double-quotes
+(<cite>&#8220;</cite>) to surround data that may contain commas, and escape
+double-quotes using an extra double quote (<cite>&#8220;&#8221;</cite>). It&#8217;s possible to
+read other formats. For instance, to read tab-separated values use
+<tt class="xref py py-const docutils literal"><span class="pre">precog.Format.tsv</span></tt> and to read semi-colon-separeated values use
+<tt class="xref py py-const docutils literal"><span class="pre">precog.Format.ssv</span></tt>.</p>
+<p>You can also choose a custom delimiter, or custom-escaping, via the
+<tt class="xref py py-func docutils literal"><span class="pre">makecsv()</span></tt> function of the <a class="reference internal" href="index.html#precog.Format" title="precog.Format"><tt class="xref py py-class docutils literal"><span class="pre">Format</span></tt></a> class. Given a pipe-separeted
+file called <cite>foo.csv</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">name</span><span class="o">|</span><span class="n">age</span>
+<span class="n">anne</span><span class="o">|</span><span class="mi">36</span>
+<span class="n">bob</span><span class="o">|</span><span class="mi">34</span>
+<span class="n">cathy</span><span class="o">|</span><span class="mi">29</span>
+</pre></div>
+</div>
+<p>The data could be ingested using:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">makecsv</span><span class="p">(</span><span class="n">delim</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">),</span> <span class="s">&quot;pipe-separated.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="javascript-object-notation">
+<h3>Javascript Object Notation<a class="headerlink" href="getting_started.html#javascript-object-notation" title="Permalink to this headline">¶</a></h3>
+<p>Any data stored in CSV can be converted to JSON instead. While the CSV
+reprsentation is often more compact, it can only represent flat
+objects. So if you have nested data (objects within objects), you&#8217;ll
+want to use JSON.</p>
+<p>Here&#8217;s a JSON representation of the previous data for the file
+<cite>songs.json</cite>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">[{</span><span class="s2">&quot;song&quot;</span><span class="o">:</span> <span class="s2">&quot;Peaches En Regalia&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;artist&quot;</span><span class="o">:</span> <span class="s2">&quot;Frank Zappa&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;album&quot;</span><span class="o">:</span> <span class="s2">&quot;Hot Rats&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;tracknum&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">&quot;duration&quot;</span><span class="o">:</span> <span class="mi">218</span><span class="p">},</span>
+ <span class="p">{</span><span class="s2">&quot;song&quot;</span><span class="o">:</span> <span class="s2">&quot;The Advent of Panurge&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;artist&quot;</span><span class="o">:</span> <span class="s2">&quot;Gentle Giant&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;album&quot;</span><span class="o">:</span> <span class="s2">&quot;Octopus&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;tracknum&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">&quot;duration&quot;</span><span class="o">:</span> <span class="mi">281</span><span class="p">},</span>
+ <span class="p">{</span><span class="s2">&quot;song&quot;</span><span class="o">:</span> <span class="s2">&quot;One More Red Nightmare&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;artist&quot;</span><span class="o">:</span> <span class="s2">&quot;King Crimson&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;album&quot;</span><span class="o">:</span> <span class="s2">&quot;Red&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;tracknum&quot;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="s2">&quot;duration&quot;</span><span class="o">:</span> <span class="mi">427</span><span class="p">},</span>
+ <span class="p">{</span><span class="s2">&quot;song&quot;</span><span class="o">:</span> <span class="s2">&quot;Jack The Ripper&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;artist&quot;</span><span class="o">:</span> <span class="s2">&quot;Univers Zero&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;album&quot;</span><span class="o">:</span> <span class="s2">&quot;Heresie&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;tracknum&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">&quot;duration&quot;</span><span class="o">:</span> <span class="mi">809</span><span class="p">},</span>
+ <span class="p">{</span><span class="s2">&quot;song&quot;</span><span class="o">:</span> <span class="s2">&quot;Vuh&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;artist&quot;</span><span class="o">:</span> <span class="s2">&quot;Popol Vuh&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;album&quot;</span><span class="o">:</span> <span class="s2">&quot;In den Gärten Pharaos&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;tracknum&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">&quot;duration&quot;</span><span class="o">:</span> <span class="mi">1191</span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Using the previous snippet, the following code would load that into
+the path <cite>mysongs</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s">&#39;mysongs&#39;</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">json</span><span class="p">,</span> <span class="s">&#39;songs.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="appending-data">
+<h2>Appending Data<a class="headerlink" href="getting_started.html#appending-data" title="Permalink to this headline">¶</a></h2>
+<p>The previous commands will upload an entire file to a path, replacing
+whatever is already there. But in many cases you might want to append
+extra data without removing what was already there. In these cases
+you&#8217;ll want the family of append functions: <a class="reference internal" href="index.html#precog.Precog.append" title="precog.Precog.append"><tt class="xref py py-func docutils literal"><span class="pre">append()</span></tt></a>, <a class="reference internal" href="index.html#precog.Precog.append_all" title="precog.Precog.append_all"><tt class="xref py py-func docutils literal"><span class="pre">append_all()</span></tt></a>,
+<a class="reference internal" href="index.html#precog.Precog.append_all_from_file" title="precog.Precog.append_all_from_file"><tt class="xref py py-func docutils literal"><span class="pre">append_all_from_file()</span></tt></a>, and <a class="reference internal" href="index.html#precog.Precog.append_all_from_string" title="precog.Precog.append_all_from_string"><tt class="xref py py-func docutils literal"><span class="pre">append_all_from_string()</span></tt></a>.</p>
+<p>You can add events one at a time as Python objects using <a class="reference internal" href="index.html#precog.Precog.append" title="precog.Precog.append"><tt class="xref py py-func docutils literal"><span class="pre">append()</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">song</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;song&quot;</span><span class="p">:</span> <span class="s">&quot;Meeting of the Spirits&quot;</span><span class="p">,</span>
+        <span class="s">&quot;artist&quot;</span><span class="p">:</span> <span class="s">&quot;Mahavishnu Orchestra&quot;</span><span class="p">,</span>
+        <span class="s">&quot;album&quot;</span><span class="p">:</span> <span class="s">&quot;The Inner Mounting Flame&quot;</span><span class="p">,</span>
+        <span class="s">&quot;tracknum&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">412</span><span class="p">}</span>
+<span class="n">client</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;mysongs&#39;</span><span class="p">,</span> <span class="n">song</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This can also be done in bulk using <a class="reference internal" href="index.html#precog.Precog.append_all" title="precog.Precog.append_all"><tt class="xref py py-func docutils literal"><span class="pre">append_all()</span></tt></a> and an array:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">songs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s">&quot;song&quot;</span><span class="p">:</span> <span class="s">&quot;Moonshake&quot;</span><span class="p">,</span>
+     <span class="s">&quot;artist&quot;</span><span class="p">:</span> <span class="s">&quot;Can&quot;</span><span class="p">,</span>
+     <span class="s">&quot;album&quot;</span><span class="p">:</span> <span class="s">&quot;Future Days&quot;</span><span class="p">,</span>
+     <span class="s">&quot;tracknum&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+     <span class="s">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">184</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;song&quot;</span><span class="p">:</span> <span class="s">&quot;Untitled&quot;</span><span class="p">,</span>
+     <span class="s">&quot;artist&quot;</span><span class="p">:</span> <span class="s">&quot;Faust&quot;</span><span class="p">,</span>
+     <span class="s">&quot;album&quot;</span><span class="p">:</span> <span class="s">&quot;The Faust Tapes&quot;</span><span class="p">,</span>
+     <span class="s">&quot;tracknum&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s">&quot;duration&quot;</span><span class="p">:</span> <span class="mi">1357</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+<span class="n">client</span><span class="o">.</span><span class="n">append_all</span><span class="p">(</span><span class="s">&#39;mysongs&#39;</span><span class="p">,</span> <span class="n">songs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Be careful! If you were to call <a class="reference internal" href="index.html#precog.Precog.append" title="precog.Precog.append"><tt class="xref py py-func docutils literal"><span class="pre">append()</span></tt></a> instead of <a class="reference internal" href="index.html#precog.Precog.append_all" title="precog.Precog.append_all"><tt class="xref py py-func docutils literal"><span class="pre">append_all()</span></tt></a> with
+an array, the method would succeed but you would have imported the
+array a single event containing multiple objects, instead of multiple
+events.</p>
+<p>If your data is stored in a string or file you can call
+<a class="reference internal" href="index.html#precog.Precog.append_all_from_string" title="precog.Precog.append_all_from_string"><tt class="xref py py-func docutils literal"><span class="pre">append_all_from_string()</span></tt></a> or <a class="reference internal" href="index.html#precog.Precog.append_all_from_file" title="precog.Precog.append_all_from_file"><tt class="xref py py-func docutils literal"><span class="pre">append_all_from_file()</span></tt></a> which are somewhat
+similar to <a class="reference internal" href="index.html#precog.Precog.upload_file" title="precog.Precog.upload_file"><tt class="xref py py-func docutils literal"><span class="pre">upload_file()</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># this adds the data from extrasongs.json</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;extra.json&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">append_all_from_file</span><span class="p">(</span><span class="s">&#39;mysongs&#39;</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">json</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="c"># ...so does this</span>
+<span class="n">client</span><span class="o">.</span><span class="n">append_all_from_file</span><span class="p">(</span><span class="s">&#39;mysongs&#39;</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">json</span><span class="p">,</span> <span class="s">&#39;extra.json&#39;</span><span class="p">)</span>
+
+<span class="c"># ...and this does too!</span>
+<span class="n">s</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;extra.json&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">client</span><span class="o">.</span><span class="n">append_all_from_string</span><span class="p">(</span><span class="s">&#39;mysongs&#39;</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">json</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-queries">
+<h2>Running Queries<a class="headerlink" href="getting_started.html#running-queries" title="Permalink to this headline">¶</a></h2>
+<p>Now that we&#8217;ve loaded all our songs in <cite>mysongs</cite>, we can learn things
+about our music collection. The following Python snippet runs a
+Quirrel query to find the total duration of all our songs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">quirrel</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">  songs := //mysongs</span>
+<span class="s">  sum(songs.duration)</span>
+<span class="s">&quot;&quot;&quot;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">quirrel</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&quot;we have </span><span class="si">%s</span><span class="s"> seconds of music!&quot;</span> <span class="o">%</span> <span class="n">n</span>
+</pre></div>
+</div>
+<p>Queries always result in a set of results. So even when running a <cite>count</cite>,
+<cite>sum</cite>, or other reduction, it&#8217;s important to remember that you will get back
+an array containing a number, not just a number.</p>
+<p>Quirrel results will be translated into standard Python objects,
+strings, numbers, and so on. If there is an error with the query we&#8217;ll
+get a <a class="reference internal" href="index.html#precog.PrecogClientError" title="precog.PrecogClientError"><tt class="xref py py-exc docutils literal"><span class="pre">PrecogClientError</span></tt></a> exception. There may be additional output if there
+were (non-fatal) warnings sent back.</p>
+<p>In some cases we don&#8217;t want exception, but want more details about the
+query execution. In these instances we can use the <cite>detailed</cite> keyword
+parameter to get more information:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">quirrel</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">  songs := //mysongs</span>
+<span class="s">  sum(songs.duration)</span>
+<span class="s">&quot;&quot;&quot;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">quirrel</span><span class="p">,</span> <span class="n">detailed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;our result was </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>The result will look something like the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;serverErrors&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;errors&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s">&#39;data&#39;</span><span class="p">:</span> <span class="mi">235235</span><span class="p">,</span> <span class="s">&#39;warnings&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+</pre></div>
+</div>
+<p>Obviously if there were errors or warnings we&#8217;d get a list of
+those. In this case the query executed successfully and the <cite>data</cite>
+parameter contains our result (the number of seconds in our music
+library).</p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="getting_started.html#license" title="Permalink to this headline">¶</a></h2>
+<p>The client code is available to you under the MIT license.</p>
+<p>See the <cite>LICENSE</cite> file for more details.</p>
+<p>Copyright 2011-2013 (c) ReportGrid, Inc.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="getting_started.html#">Getting Started</a><ul>
+<li><a class="reference internal" href="getting_started.html#uploading-files">Uploading Files</a><ul>
+<li><a class="reference internal" href="getting_started.html#comma-separated-values">Comma Separated Values</a></li>
+<li><a class="reference internal" href="getting_started.html#javascript-object-notation">Javascript Object Notation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="getting_started.html#appending-data">Appending Data</a></li>
+<li><a class="reference internal" href="getting_started.html#running-queries">Running Queries</a></li>
+<li><a class="reference internal" href="getting_started.html#license">License</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Precog&#8217;s documentation!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/getting_started.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Precog’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">Precog 0.2.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Erik Osheim.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

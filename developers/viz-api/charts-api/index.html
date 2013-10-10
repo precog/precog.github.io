@@ -1,0 +1,2824 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/devcntr.css">
+    <link rel="icon" type="image/png" href="../../../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CLato:300,400,700,900,300italic,400italic%7CMontserrat:400,700" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/devcntr.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../../for-developers/index.html"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul>
+            <li><a id="login-link" href="../../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../../../blog/index.html">Blog</a></li>
+            <li><a href="http://support.precog.com">Support</a></li>
+            <li><a href="../../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="body">
+      <div id="body-menu">
+        <ul id="fixed-menu">
+          <h1 id="page-title">Dev Center</h1>
+          <li><a href="../../getting-started/overview/index.html">Getting Started</a>
+            <ul class="getting-started">
+              <li><a href="../../getting-started/overview/index.html">Overview</a></li>
+              <li><a href="../../getting-started/faq/index.html">FAQ</a></li>
+              <li><a href="../../getting-started/analytics/index.html">Analytics</a></li>
+            </ul>
+          </li>
+          <li><a href="../../how-tos/index.html">How To Guides</a>
+            <ul class="how-tos">
+              <li><a href="../../how-tos/common-analytics/index.html">Common Analytics</a></li>
+              <li><a href="../../how-tos/embed-reporting/index.html">Embedded Reporting</a></li>
+              <li><a href="../../how-tos/machine-learning/index.html">Machine Learning</a></li>
+              <li><a href="../../how-tos/optimize-performance/index.html">Optimizing Performance</a></li>
+            </ul>
+          </li>
+          <li><a href="../../rest-apis/accounts/index.html">Rest API</a>
+            <ul class="rest-apis">
+              <li><a href="../../rest-apis/accounts/index.html">Accounts</a></li>
+              <li><a href="../../rest-apis/ingest/index.html">Ingest</a></li>
+              <li><a href="../../rest-apis/metadata/index.html">MetaData</a></li>
+              <li><a href="../../rest-apis/analytics/index.html">Analytics</a></li>
+              <li><a href="../../rest-apis/security/index.html">Security</a></li>
+            </ul>
+          </li>
+          <li><a href="../../client-libraries/index.html">Client Libraries</a></li>
+          <li><a href="../index.html">Visualization API</a>
+            <ul class="viz-api">
+              <li><a href="index.html">Charts API</a></li>
+              <li><a href="../transform-api/index.html">Data Transform API</a></li>
+            </ul>
+          </li>
+          <li><a href="../../quirrel/introduction/index.html">Quirrel</a></li>
+        </ul>
+      </div>
+      <div id="body-content">
+        <h1 class="page-title">Charts API</h1>
+        <div id="dynamic-body-links">
+          <ul id="section-index"></ul>
+        </div>
+        <div id="page-content"><h1>Visualization API</h1>
+<h2>Charts API</h2>
+<p>ReportGrid JavaScript charts are HTML5 widgets that you can embed in
+your web pages. First of all you have to be sure to include the required
+javascript files.
+
+</p>
+<p>The minimal setup requires the inclusion of the <code>reportgrid-charts.js</code>
+file. This file has no dependencies and is used to generates all of the
+charts in the ReportGrid library.
+
+</p>
+<pre><code>&lt;!DOCTYPE html>
+&lt;html>
+  &lt;head>
+    &lt;title>MySite.com&lt;/title>
+    &lt;link rel=<span class="string">"stylesheet"</span> type=<span class="string">"text/css"</span> href=<span class="string">"http://api.reportgrid.com/css/rg-charts.css"</span>/>
+    &lt;script type=<span class="string">"text/javascript"</span>
+     src=<span class="string">"http://api.reportgrid.com/js/reportgrid-charts.js"</span>>&lt;/script>
+    &lt;script type=<span class="string">"text/javascript"</span>>
+document.addEventListener(<span class="string">"DOMContentLoaded"</span>, <span class="keyword">function</span>(){
+  ReportGrid.barChart(<span class="string">"#chart"</span>, {
+    axes : [<span class="string">'gender'</span>, <span class="string">'population'</span>],
+    data : [{ gender : <span class="string">'male'</span>, population: <span class="number">137</span> }, { gender : <span class="string">'female'</span>, population: <span class="number">143</span> }]
+  });
+}, <span class="keyword">false</span>);
+    &lt;/script>
+  &lt;/head>
+  &lt;body>
+  &lt;div id=<span class="string">"chart"</span>>&lt;/div>
+  &lt;/body>
+&lt;/html></code></pre>
+<p>The charts are styled with a default theme using the <code>rg-charts.css</code>
+stylesheet. If you prefer you can customize the visualizations providing
+an alternative stylesheet or refining the existing one with an
+additional CSS. CSS styles applies to SVG (used to render the
+visualizations) as much as they are used to style normal HTML elements.
+
+</p>
+<p>You can change the color schemes of the visualization loading one of our
+optional <a href="http://api.reportgrid.com/css/colors/">css palettes</a>. The
+palettes CSS files are located at
+</p>
+<p><a href="http://api.reportgrid.com/css/colors/">http://api.reportgrid.com/css/colors/</a>
+
+</p>
+<p>Every visualization is a method of the object <code>ReportGrid</code> and every
+visualization takes an element placeholder as the first argument. That
+argument can be a DOM element or a CSS selector (string); usually you
+will want to use the ID selector of an existing DIV in your page. In the
+example above the &quot;#chart&quot; selector refers to the \<div
+id="chart"\>\</div\> node in the DOM.
+
+</p>
+<p>The second argument is a parameter object that must provide at least two
+fields: <code>axes</code> and <code>data</code> (or <code>load</code>).
+
+</p>
+<p>The second argument is always an object that contains all the info
+required to make the visualization render.
+
+</p>
+<p>Note that in this document whenever you encounter a string enclosed in
+curly brackets <code>{value}</code> it means that the entire string must be
+replaced with a custom value (e.g. for <code>gradient:{value}</code> you can use
+either <code>gradient:0.75</code>, <code>gradient:1.25</code> or any valid value for
+gradient).
+
+</p>
+<h2>Data Loading</h2>
+<p>Loading data is the first step to generate meaningful visualizations.
+The data can be provided by any accessible source and format provided
+that it is passed as an array of data points to the visualization
+engine. In this document we will refer to a data point as to a
+JavaScript object containing key/value pairs and to a dataset as an
+array of data points.
+
+</p>
+<p>To build a pie chart that depicts male population VS female population
+you will probably need a dataset in the following format:
+
+</p>
+<pre><code><span class="keyword">var</span> data = [{ gender : <span class="string">"male"</span>, population: <span class="number">137</span> }, { gender : <span class="string">"female"</span>, population: <span class="number">143</span> }];</code></pre>
+<p>In the parameters object (the second argument of every visualization
+method) you always have to set a data source this can be done by setting
+either <code>data</code> or <code>load</code> (see below). The other mandatory parameter for
+the parameters object is <code>axes</code>. So the complete pie chart example for
+population by gender is:
+
+</p>
+<pre><code>ReportGrid.pieChart("#chart", {
+  axes : ['gender', 'population'],
+  data : [{ gender : 'male', population: 137 }, { gender : 'female', population: 143 }]
+});</code></pre>
+<h3>Data</h3>
+<p>When you have your data points already available in your script you can
+pass them directly to the visualization using the <code>data</code> parameter as in
+the example above.
+
+</p>
+<h3>Load</h3>
+<p>Sometimes the data needs to be loaded from a service and is not
+immediately available. In that case you can wrap your data loading
+operation in a function passed to the <code>load</code> parameter. The signature
+for that function is
+<code>function(callback : Array&lt;DataPoint&gt; -&gt; Void) -&gt; Void</code>, which means a
+function that takes a function as an argument. That argument function
+should be called by your code once the data is available. Supposing that
+you are using jQuery to load some JSON objects from a service, that
+could be coded this way:
+
+</p>
+<pre><code>ReportGrid.pieChart(<span class="string">"#chart"</span>, {
+  axes : [<span class="string">'gender'</span>, <span class="string">'population'</span>],
+  load : <span class="keyword">function</span>(callback) {
+    $.get(serviceurl, callback, <span class="string">'json'</span>);
+  }
+});</code></pre>
+<p>Sometimes you want to be able to transform your data set before serving
+the data to the visualization, to do that the Charts API provides a very
+interesting Query API.
+
+</p>
+<h3>Axes</h3>
+<p>Axes describe the dimensions present in the datapoints that the user
+wants to display in the visualizations. The number of axes depends on
+the type of the visualization and for that reason they are always passed
+as an array. The array can be as simple as an array of strings (only
+stating the type name of each axis) or a complete JavaScript object that
+can bring more options than just the type name itself.
+
+</p>
+<p>If you decide for the object definition the only mandatory parameter is
+<code>type</code>. <code>type</code>must match one of the property names present in the data
+points you want to render. If your axis represents a time series you
+might want to follow the special notation: <code>time:periodicity</code> (where
+<code>periodicity</code> can be: <code>minute</code>, <code>hour</code>, <code>day</code>, <code>week</code>, <code>month</code> or
+<code>year</code>) that will build a correct time scale
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>type</code> (mandatory) : string
+:   The axis type name, must match a property in you data point objects.
+
+</p>
+<p><code>scalemode</code> : string (<code>fit</code>, <code>fill</code>, <code>before</code> or <code>after</code>)
+:   States how the scale should &apos;fill&apos; the available space. Every visualization has its default scalemode automatically set and this option is there if you want to override the default behavior.
+    :   -   <code>&quot;fit&quot;</code> :
+            :   The first and last tickmarks in the scale are set to
+                leave a space before and after. This is particularly
+                useful for bar charts that need some margin before and
+                after the centers of the bars.
+
+</p>
+<pre><code>    -   `<span class="string">"fill"</span>` :
+        :   The fill mode puts the first value at the very beginning
+            of the available space <span class="keyword">and</span> the last one at the other
+            edge. It is handy <span class="keyword">for</span> line charts <span class="keyword">and</span> other
+            visualization that need to fill the available space from
+            side to side.
+
+    -   `<span class="string">"before"</span>` :
+        :   The available space is divided equally into `n` segments
+            where `n` is equal to the number of values in the scale
+            <span class="keyword">and</span> starting at the beginning of the available space.
+
+    -   `<span class="string">"after"</span>` :
+        :   Same <span class="keyword">as</span> <span class="keyword">for</span> before but the scale values are stacked on
+            the opposite side.</code></pre>
+<p><code>values</code> : array mixed
+:   Specifies exactly which values should be displayed for this axis. It
+    is also useful to precisely order the values along the axis.
+
+</p>
+<p><code>variable</code> : string (<code>&quot;dependent&quot;</code> or <code>&quot;independent&quot;</code>)
+:   It is not usually needed to specify this property unless you want for
+    example to reverse the axis in a cartesian chart.
+
+</p>
+<p><code>view</code> : array mixed
+:   The array must contain the lowest and highest value to display in
+    the chart. If <code>view</code> is omitted it will be generated automatically
+    from all the values in the data set.
+
+</p>
+<h2>Visualization Methods</h2>
+<h3>ReportGrid.barChart</h3>
+<p><code>ReportGrid.barChart(selector el, parameters object) void</code>
+
+</p>
+<p>Based on the values in the data set, for each tick in the X axis might
+exist one or more bar. The bars can belong to the same Y axis or to
+different ones (in that case more than 2 <code>axes</code> must be specified). If
+they belong to the same Y axis the data can be segmented to produce
+several bars. The bars segmented on the same Y axis can be stacked or
+not.
+
+</p>
+<p>Bar charts can also be rendered horizontally.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>barpadding</code> : float (default is 12 pixels)
+:   Padding distance in pixel between groups of bars for the same X
+    tick.
+
+</p>
+<p><code>barpaddingaxis</code> : float (default is 4 pixels)
+:   Padding distance in pixel between bars when grouped on different Y
+    axis.
+
+</p>
+<p><code>barpaddingdatapoint</code> : float (default is 2 pixels)
+:   Padding distance in pixel between bars when lined horizontally.
+
+</p>
+<p><code>effect</code> : string (&quot;noeffect&quot;, &quot;gradient&quot;, &quot;gradient:{value}&quot;, default is &quot;gradient:1.25&quot;)
+:   The effect to apply to the bars.
+    :   -   <code>noeffect</code> :
+            :   simply uses a solid fill color
+
+</p>
+<pre><code>    -   `gradient` :
+        :   applies a gradient
+
+    -   `gradient:{value}` :
+        :   applies a gradient from the color in the stylesheet
+            darkened <span class="keyword">or</span> lightned by the value. <span class="keyword">If</span> the value is <span class="number">1.0</span>
+            there will be no gradient at all, <span class="keyword">use</span> bigger <span class="keyword">or</span> lower
+            values to make the gradient lighter <span class="keyword">or</span> darker.</code></pre>
+<p><code>horizontal</code> : bool (default is false)
+:   Renders the bar chart with horizontal bars.
+
+</p>
+<p><code>stacked</code> : bool (default is true)
+:   Determines if the bars are stacked on top of each other or lined
+    horizontally.
+
+</p>
+<p><code>click</code> : function(object datapoint, object stats) void
+:   A handler function that is executed when the user clicks or touches
+    a datapoint.
+
+</p>
+<p><code>displayanchorlinerule</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function states
+    if a border should be rendered for the axis inside the chart area.
+
+</p>
+<p><code>displayanchorlinetick</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function states
+    if a border should be rendered for the axis inside the axis area.
+
+</p>
+<p><code>displayrules</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the rules for the axis will be rendered below the chart or
+    not. This option controls both the <em>minor</em> and the <em>major</em> rules.
+
+</p>
+<p><code>displayruleminor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the minor rules for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displayrulemajor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the major rules for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displayticklabel</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the tickmark labels for the axis will be rendered below the
+    chart or not. Note that only major tickmarks can have labels.
+
+</p>
+<p><code>displaytickmajor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the major tickmarks for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displaytickmarks</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the tickmarks for the axis will be rendered below the chart
+    or not. This option controls both the <em>minor</em> and the <em>major</em>
+    tickmarks.
+
+</p>
+<p><code>displaytickminor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the minor tickmarks for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>label</code> : object label
+:   Configuration object for text labels.
+
+</p>
+<p><code>labelanchor</code> : string OR function(string type) string
+:   The passed value or the return value of the passed function controls
+    the position of the label in regards of the tickmark origin point.
+    Valid values for this property are: <code>topleft</code>, <code>top</code>, <code>topright</code>,
+    <code>left</code>, <code>center</code>, <code>right</code>, <code>bottomleft</code>, <code>bottom</code>, <code>bottomright</code>,
+    <code>center</code>. By default the anchor will depend on the position of the
+    axis.
+
+</p>
+<p><code>labelangle</code> : float OR function(string type) float
+:   The passed value or the return value of the passed function controls
+    the inclination (angle in degrees) of the labels.
+
+</p>
+<p><code>labelorientation</code> : string OR function(string type) string
+:   The passed value or the return value of the passed function controls
+    the way the label is oriented in relation with its tickmark. The
+    valid values for this option are: <code>orthogonal</code> or <code>aligned</code>.
+
+</p>
+<p><code>lengthtick</code> : float
+:   Length in pixel of the tickmark. Controls both the minor and major
+    tickmarks.
+
+</p>
+<p><code>lengthtickmajor</code> : float
+:   Sets the length in pixel of the major tickmarks.
+
+</p>
+<p><code>lengthtickminor</code> : float
+:   Sets the length in pixel of the minor tickmarks.
+
+</p>
+<p><code>paddingtick</code> : float
+:   Padding distance between the area occupied by the chart and the
+    tickmarks. Controls both the major and minor tickmarks.
+
+</p>
+<p><code>paddingticklabel</code> : float
+:   Padding distance between the area occupied by the chart and the
+    tickmark labels.
+
+</p>
+<p><code>paddingtickmajor</code> : float
+:   Padding distance between the area occupied by the chart and the
+    major tickmarks.
+
+</p>
+<p><code>paddingtickminor</code> : float
+:   Padding distance between the area occupied by the chart and the
+    minor tickmarks.
+
+</p>
+<p><code>height</code> : float
+:   Height of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<p><code>layout</code> : string
+:   This option is automatically set to the most convenient value based
+    on the selected visualization. This field should be set only to
+    assemble unusual and complex visualizations. The accepted values so
+    far are <code>&quot;simple&quot;</code>, <code>&quot;Cartesian&quot;</code> and <code>&quot;x&quot;</code>
+
+</p>
+<p><code>main</code> : string
+:   (experimental) The <code>main</code> field is used to identify in which panel
+    of the selected layout the visualization should be rendered.
+
+</p>
+<p><code>padding</code> : object padding options
+:   The padding object controls how the chart is spaced from its
+    margins.
+
+</p>
+<p><code>titleontop</code> : bool
+:   Set if the title (assuming that one exists) is set on top of the
+    visualization.
+
+</p>
+<p><code>width</code> : float
+:   Width of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<h4>Padding Options</h4>
+<p>If not configured, the values below are automatically set to convey the
+best possible visual without cutting off parts of the axis labels or
+titles. All of these options are measures in pixels (integer values).
+
+</p>
+<p>The available options are: <code>bottom</code>, <code>left</code>, <code>right</code> and <code>top</code>.
+
+</p>
+<h4>Label Options</h4>
+<p>The label options object provides a way to customize the labels and
+texts that appear on your visualizations. They usually take a function
+so that your labels can be customized with their related datapoints.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>title</code> : string OR function(array variables, array datapoint) string
+:   Controls the text to display in the title. The <code>variables</code> array
+    contains objects with a <code>type</code> field that can be used to know the
+    axis that are involved in the visualization. The datapoint array is
+    a collection of data that is the response to a query. Each datapoint
+    has one or more fields describing it. If the parameter is <code>null</code> or
+    returns <code>null</code> the title will not be rendered at all.
+
+</p>
+<p><code>datapoint</code> : function(object datapoint, object stats) string
+:   The label to display on top of each datapoint of the chart. The
+    datapoint is associated to a shape in the visualization and that
+    shape depends on the kind of visualization. For a piechart the
+    datapoint is associated to a slice of the pie, while for a line
+    chart the data point is one point on the line. If the parameter is
+    <code>null</code> or returns <code>null</code> the label will not be rendered at all.
+
+</p>
+<p><code>datapointover</code> : function(object datapoint, object stats) string
+:   The label to display when the user passes his mouse over a datapoint
+    shape (see above) or touches a shape in a touch environment. If the
+    parameter is <code>null</code> or returns <code>null</code> the label will not be rendered
+    at all.
+
+</p>
+<p><code>axis</code> : function(string type) string
+:   The label to apply as a legend for the axis.
+
+</p>
+<p><code>tickmark</code> : function(any value, string type) string
+:   The label to apply to the individual tick-marks of the scales. The
+    <code>value</code> argument is the scaled value for that tick-mark and <code>type</code>
+    is the name of the axis.
+
+</p>
+<p><code>yscaleposition</code> : string
+:   (&quot;alternating&quot;, &quot;left&quot;, &quot;right&quot;)
+
+</p>
+<h3>ReportGrid.funnelChart</h3>
+<p><code>ReportGrid.funnelChart(selector el, parameters object) void</code>
+
+</p>
+<p>The funnel chart is an extremely insightful visualization to quickly
+grasp ROI-like information. The funnel starts big for a certain variable
+and &apos;funnel&apos; into subordinate values.
+
+</p>
+<p>Note that the subordinate values do not necessarily need to be smaller
+and you can achieve that way a reversed funnel effect. The funnel chart
+requires two axes, one to segment the funnel and one to size the
+segments.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>arrowsize</code> : float
+:   The size of the funnel arrow side in pixels.
+
+</p>
+<p><code>click</code> : function(object datapoint, object stats) void
+:   A handler function that is executed when the user click or touches a
+    datapoint.
+
+</p>
+<p><code>effect</code> : string (&quot;noeffect&quot;, &quot;gradient&quot;, &quot;gradient:{value}&quot;)
+:   The effect to apply to the funnel sections. * <code>noeffect</code> simply
+    uses a solid fill color * <code>gradient</code> applies a gradient *
+    <code>gradient:{value}</code> : applies a gradient from the color in the
+    stylesheet darkened or lightened by the value. If the value is 1.0
+    there will be no gradient at all, use bigger or lower values to make
+    the gradient lighter or darker (default is 1.25).
+
+</p>
+<p><code>flatness</code> : float
+:   A value to accentuate or reduce the 3D effect of the chart. The
+    default value is 1. A value near to 0.0 will make the funnel appear
+    almost completely flat.
+
+</p>
+<p><code>label</code> : object labeloptions
+:   Conveys information over labeling the funnel sections_.
+
+</p>
+<p><code>segmentpadding</code> : float
+:   Distance in pixel (white space) between the sections of the funnel
+    chart.
+
+</p>
+<p><code>sort</code> : function(object a, object b) int
+:   A custom function to order the datapoints before rendering them.
+
+</p>
+<p><code>height</code> : float
+:   Height of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<p><code>layout</code> : string
+:   This option is automatically set to the most convenient value based
+    on the selected visualization. This field should be set only to
+    assemble unusual and complex visualizations. The accepted values so
+    far are <code>&quot;simple&quot;</code>, <code>&quot;Cartesian&quot;</code> and <code>&quot;x&quot;</code>
+
+</p>
+<p><code>main</code> : string
+:   (experimental) The <code>main</code> field is used to identify in which panel
+    of the selected layout the visualization should be rendered.
+
+</p>
+<p><code>padding</code> : object padding options
+:   The padding object controls how the chart is spaced from its
+    margins.
+
+</p>
+<p><code>titleontop</code> : bool
+:   Set if the title (assuming that one exists) is set on top of the
+    visualization.
+
+</p>
+<p><code>width</code> : float
+:   Width of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<h4>Padding Options</h4>
+<p>If not configured, the values below are automatically set to convey the
+best possible visual without cutting off parts of the axis labels or
+titles. All of these options are measures in pixels (integer values).
+
+</p>
+<p>The available options are: <code>bottom</code>, <code>left</code>, <code>right</code> and <code>top</code>.
+
+</p>
+<h4>Label Options</h4>
+<p>The label options object provides a way to customize the labels and
+texts that appear on your visualizations. They usually take a function
+so that your labels can be customized with their related datapoints.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>title</code> : string OR function(array variables, array datapoint) string
+:   Controls the text to display in the title. The <code>variables</code> array
+    contains objects with a <code>type</code> field that can be used to know the
+    axis that are involved in the visualization. The datapoint array is
+    a collection of data that is the response to a query. Each datapoint
+    has one or more fields describing it. If the parameter is <code>null</code> or
+    returns <code>null</code> the title will not be rendered at all.
+
+</p>
+<p><code>datapoint</code> : function(object datapoint, object stats) string
+:   The label to display on top of each datapoint of the chart. The
+    datapoint is associated to a shape in the visualization and that
+    shape depends on the kind of visualization. For a piechart the
+    datapoint is associated to a slice of the pie, while for a line
+    chart the data point is one point on the line. If the parameter is
+    <code>null</code> or returns <code>null</code> the label will not be rendered at all.
+
+</p>
+<p><code>datapointover</code> : function(object datapoint, object stats) string
+:   The label to display when the user passes his mouse over a datapoint
+    shape (see above) or touches a shape in a touch environment. If the
+    parameter is <code>null</code> or returns <code>null</code> the label will not be rendered
+    at all.
+
+</p>
+<p><code>arrow</code> : function(object datapoint, object stats) string
+:   A function to generate a custom label to put over the section
+    arrows. If the returned value is <code>null</code> the arrow will not be
+    displayed.
+
+</p>
+<h3>ReportGrid.geo</h3>
+<p><code>ReportGrid.geo(selector el, parameters object) void</code>
+
+</p>
+<p>The geo visualization can be used to produce choropleth charts or
+point/area diagrams. Each geo visualization can overlay more than one
+geographic layer associated or not to the datapoints retrieved by the
+query. This gives you the option to load geographic features to convey
+data information and/or to decorate the visualization.
+
+</p>
+<p>Note that the data contained in the geographic features (if any) is
+merged in the datapoint when the visualization is rendered. That
+metadata will be contained in the <code>#data</code> field. In the same way also
+the centroids in pixel of the geometries is injected in the datapoint in
+the <code>#centroid</code> field.
+
+</p>
+<p>Geo charts require two axes, one to identify the geometry features and
+one to apply the coloring or scaling the overlapped symbol.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>label</code> : object label options
+:   Configuration object for text labels. The values passed to this
+    object are used as defaults for the map object(s).
+
+</p>
+<p><code>map</code> : object/array map options
+:   A single map definition or an array of Map Options_.
+
+</p>
+<h4>Map Options</h4>
+<p><strong>options:</strong>
+
+</p>
+<p><code>classname</code> : string
+:   An optional class name to associate with the geometries container.
+    The <code>classname</code> may be used for styling purposes.
+
+</p>
+<p><code>click</code> : function(object datapoint, object stats) void
+:   A handler function that is executed when the user click or touches a
+    datapoint.
+
+</p>
+<p><code>color</code> : string OR function(datapoint, stats) string
+:   This parameter determines how the geometries are colored. The default value is <code>css</code> but the field accept any of the following:
+    :   -   <code>&quot;css&quot;</code> or <code>&quot;css:{int}&quot;</code> :
+            :   It uses the colors in the stylesheet to color the
+                geometries. The colors in the css palette are
+                automatically detected and the color scale is divided
+                proportionally to associate the values in the axis with
+                each color in the palette. You can reduce the number of
+                values used by specifying an integer number after the
+                dash: <code>&quot;css-5&quot;</code> will only use the first 5 colors in the
+                associated CSS stylesheet.
+
+</p>
+<pre><code>    -   `<span class="keyword">function</span>()` :
+        :   a custom <span class="keyword">function</span> whose <span class="keyword">return</span> value must be a valid CSS
+            color string.
+
+    -   `<span class="string">"i:{color1},{color2},..."</span>` <span class="keyword">or</span> `<span class="string">"interpolated:{color1},{color2},..."</span>` :
+        :   You pass a <span class="keyword">list</span> of colors <span class="keyword">and</span> the color scale is built
+            on the interpolation between those colors.
+
+    -   `<span class="string">"s:{color1},{color2},..."</span>` <span class="keyword">or</span> `<span class="string">"sequence:{color1},{color2},..."</span>` <span class="keyword">or</span> `<span class="string">"{color1},{color2},..."</span>` :
+        :   You pass a <span class="keyword">list</span> of colors <span class="keyword">and</span> the color scale is built
+            to match exactly the colors in the <span class="keyword">list</span>.
+
+    -   `<span class="string">"f:{color}"</span>` <span class="keyword">or</span> `<span class="string">"fixed:{color}"</span>` <span class="keyword">or</span> `<span class="string">"{color}"</span>` :
+        :   <span class="keyword">Use</span> <span class="keyword">this</span> option to colour all the geometries with the
+            same color.</code></pre>
+<p><code>label</code> : object label options
+:   Configuration object for text labels.
+
+</p>
+<p><code>mapping</code> : mixed (a URL or a json object)
+:   The mapping properties is used to map the geometries identifiers to
+    something different. The mapping can be done using a JavaScript
+    object that has as keys the values matching the id field of the data
+    point and the values match the id in the geometry file.
+
+</p>
+<p><code>mode</code> : string
+:   The projection mode for the <code>azimuthal</code> projection. The value can be
+    either <code>orthographic</code> or <code>stereographic</code>.
+
+</p>
+<p><code>origin</code> : array of float
+:   Moves the origin of the projection (available for the <code>albers</code> and
+    <code>azimuthal</code> projections).
+
+</p>
+<p><code>parallels</code> : array of float
+:   Redefines the parallels in the <code>albers</code> projection.
+
+</p>
+<p><code>projection</code> : string
+:   The kind of projection to use to render the geographic features. The
+    available values are: <code>mercator</code>, <code>albers</code>, <code>albersusa</code> and
+    <code>azimuthal</code>
+
+</p>
+<p><code>property</code> : null OR string
+:   The property field in the datapoint associated to the feature ID in
+    the geometric layer. The default value is <code>#location</code>. If the
+    property is set to <code>null</code> the geographic layer will be rendered but
+    not associated to the data.
+
+</p>
+<p><code>radius</code> : float OR function(datapoint, stats) float
+:   If the geometry contains Point geometries they are rendered as
+    <code>svg:circle</code> elements whose radius can be a fixed value or
+    calculated using a custom function.
+
+</p>
+<p><code>scale</code> : float
+:   A scale factor to reduce or enlarge the geographic visualization.
+
+</p>
+<p><code>template</code> : string
+:   To simplify geo consumption some premade templates and geographic
+    files are made available by the ReportGrid API.
+
+</p>
+<pre><code>The available templates are: \* `"world"` : \* `"usa-states"` : \*
+`"usa-state-centroids"` : \* `"usa-counties"` :</code></pre>
+<p><code>translate</code> : array of float
+:   Array of 2 values in pixel to pan the visualization from its center.
+
+</p>
+<p><code>type</code> : string
+:   The format of the geographic file addressed in <code>url</code>. So far the
+    only supported format is the default one <code>geojson</code>.
+
+</p>
+<p><code>url</code> : string
+:   The url of the file containing the geometries to display.
+
+</p>
+<p><code>height</code> : float
+:   Height of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<p><code>layout</code> : string
+:   This option is automatically set to the most convenient value based
+    on the selected visualization. This field should be set only to
+    assemble unusual and complex visualizations. The accepted values so
+    far are <code>&quot;simple&quot;</code>, <code>&quot;Cartesian&quot;</code> and <code>&quot;x&quot;</code>
+
+</p>
+<p><code>main</code> : string
+:   (experimental) The <code>main</code> field is used to identify in which panel
+    of the selected layout the visualization should be rendered.
+
+</p>
+<p><code>padding</code> : object padding options
+:   The padding object controls how the chart is spaced from its
+    margins.
+
+</p>
+<p><code>titleontop</code> : bool
+:   Set if the title (assuming that one exists) is set on top of the
+    visualization.
+
+</p>
+<p><code>width</code> : float
+:   Width of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<h4>Padding Options</h4>
+<p>If not configured, the values below are automatically set to convey the
+best possible visual without cutting off parts of the axis labels or
+titles. All of these options are measures in pixels (integer values).
+
+</p>
+<p>The available options are: <code>bottom</code>, <code>left</code>, <code>right</code> and <code>top</code>.
+
+</p>
+<h4>Label Options</h4>
+<p>The label options object provides a way to customize the labels and
+texts that appear on your visualizations. They usually take a function
+so that your labels can be customized with their related datapoints.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>title</code> : string OR function(array variables, array datapoint) string
+:   Controls the text to display in the title. The <code>variables</code> array
+    contains objects with a <code>type</code> field that can be used to know the
+    axis that are involved in the visualization. The datapoint array is
+    a collection of data that is the response to a query. Each datapoint
+    has one or more fields describing it. If the parameter is <code>null</code> or
+    returns <code>null</code> the title will not be rendered at all.
+
+</p>
+<p><code>datapoint</code> : function(object datapoint, object stats) string
+:   The label to display on top of each datapoint of the chart. The
+    datapoint is associated to a shape in the visualization and that
+    shape depends on the kind of visualization. For a piechart the
+    datapoint is associated to a slice of the pie, while for a line
+    chart the data point is one point on the line. If the parameter is
+    <code>null</code> or returns <code>null</code> the label will not be rendered at all.
+
+</p>
+<p><code>datapointover</code> : function(object datapoint, object stats) string
+:   The label to display when the user passes his mouse over a datapoint
+    shape (see above) or touches a shape in a touch environment. If the
+    parameter is <code>null</code> or returns <code>null</code> the label will not be rendered
+    at all.
+
+</p>
+<h3>ReportGrid.heatGrid</h3>
+<p><code>ReportGrid.heatGrid(selector el, parameters object) void</code>
+
+</p>
+<p>The heatgrid visualization divides a two dimensional space into a grid
+whose columns and rows are associated to the first two axis in your
+query. Each cell of the grid is colored according to the third axis.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>color</code> : string OR function(datapoint, stats) string
+:   This parameter determines how the geometries are colored. The default value is <code>css</code> but the field accept any of the following:
+    :   -   <code>&quot;css&quot;</code> or <code>&quot;css:{int}&quot;</code> :
+            :   It uses the colors in the stylesheet to color the
+                geometries. The colors in the css palette are
+                automatically detected and the color scale is divided
+                proportionally to associate the values in the axis with
+                each color in the palette. You can reduce the number of
+                values used by specifying an integer number after the
+                dash: <code>&quot;css-5&quot;</code> will only use the first 5 colors in the
+                associated CSS stylesheet.
+
+</p>
+<pre><code>    -   `<span class="keyword">function</span>()` :
+        :   a custom <span class="keyword">function</span> whose <span class="keyword">return</span> value must be a valid CSS
+            color string.
+
+    -   `<span class="string">"i:{color1},{color2},..."</span>` <span class="keyword">or</span> `<span class="string">"interpolated:{color1},{color2},..."</span>` :
+        :   You pass a <span class="keyword">list</span> of colors <span class="keyword">and</span> the color scale is built
+            on the interpolation between those colors.
+
+    -   `<span class="string">"s:{color1},{color2},..."</span>` <span class="keyword">or</span> `<span class="string">"sequence:{color1},{color2},..."</span>` <span class="keyword">or</span> `<span class="string">"{color1},{color2},..."</span>` :
+        :   You pass a <span class="keyword">list</span> of colors <span class="keyword">and</span> the color scale is built
+            to match exactly the colors in the <span class="keyword">list</span>.
+
+    -   `<span class="string">"f:{color}"</span>` <span class="keyword">or</span> `<span class="string">"fixed:{color}"</span>` <span class="keyword">or</span> `<span class="string">"{color}"</span>` :
+        :   <span class="keyword">Use</span> <span class="keyword">this</span> option to colour all the geometries with the
+            same color.</code></pre>
+<p><code>click</code> : function(object datapoint, object stats) void
+:   A handler function that is executed when the user clicks or touches
+    a datapoint.
+
+</p>
+<p><code>displayanchorlinerule</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function states
+    if a border should be rendered for the axis inside the chart area.
+
+</p>
+<p><code>displayanchorlinetick</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function states
+    if a border should be rendered for the axis inside the axis area.
+
+</p>
+<p><code>displayrules</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the rules for the axis will be rendered below the chart or
+    not. This option controls both the <em>minor</em> and the <em>major</em> rules.
+
+</p>
+<p><code>displayruleminor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the minor rules for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displayrulemajor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the major rules for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displayticklabel</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the tickmark labels for the axis will be rendered below the
+    chart or not. Note that only major tickmarks can have labels.
+
+</p>
+<p><code>displaytickmajor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the major tickmarks for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displaytickmarks</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the tickmarks for the axis will be rendered below the chart
+    or not. This option controls both the <em>minor</em> and the <em>major</em>
+    tickmarks.
+
+</p>
+<p><code>displaytickminor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the minor tickmarks for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>label</code> : object label
+:   Configuration object for text labels.
+
+</p>
+<p><code>labelanchor</code> : string OR function(string type) string
+:   The passed value or the return value of the passed function controls
+    the position of the label in regards of the tickmark origin point.
+    Valid values for this property are: <code>topleft</code>, <code>top</code>, <code>topright</code>,
+    <code>left</code>, <code>center</code>, <code>right</code>, <code>bottomleft</code>, <code>bottom</code>, <code>bottomright</code>,
+    <code>center</code>. By default the anchor will depend on the position of the
+    axis.
+
+</p>
+<p><code>labelangle</code> : float OR function(string type) float
+:   The passed value or the return value of the passed function controls
+    the inclination (angle in degrees) of the labels.
+
+</p>
+<p><code>labelorientation</code> : string OR function(string type) string
+:   The passed value or the return value of the passed function controls
+    the way the label is oriented in relation with its tickmark. The
+    valid values for this option are: <code>orthogonal</code> or <code>aligned</code>.
+
+</p>
+<p><code>lengthtick</code> : float
+:   Length in pixel of the tickmark. Controls both the minor and major
+    tickmarks.
+
+</p>
+<p><code>lengthtickmajor</code> : float
+:   Sets the length in pixel of the major tickmarks.
+
+</p>
+<p><code>lengthtickminor</code> : float
+:   Sets the length in pixel of the minor tickmarks.
+
+</p>
+<p><code>paddingtick</code> : float
+:   Padding distance between the area occupied by the chart and the
+    tickmarks. Controls both the major and minor tickmarks.
+
+</p>
+<p><code>paddingticklabel</code> : float
+:   Padding distance between the area occupied by the chart and the
+    tickmark labels.
+
+</p>
+<p><code>paddingtickmajor</code> : float
+:   Padding distance between the area occupied by the chart and the
+    major tickmarks.
+
+</p>
+<p><code>paddingtickminor</code> : float
+:   Padding distance between the area occupied by the chart and the
+    minor tickmarks.
+
+</p>
+<p><code>height</code> : float
+:   Height of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<p><code>layout</code> : string
+:   This option is automatically set to the most convenient value based
+    on the selected visualization. This field should be set only to
+    assemble unusual and complex visualizations. The accepted values so
+    far are <code>&quot;simple&quot;</code>, <code>&quot;Cartesian&quot;</code> and <code>&quot;x&quot;</code>
+
+</p>
+<p><code>main</code> : string
+:   (experimental) The <code>main</code> field is used to identify in which panel
+    of the selected layout the visualization should be rendered.
+
+</p>
+<p><code>padding</code> : object padding options
+:   The padding object controls how the chart is spaced from its
+    margins.
+
+</p>
+<p><code>titleontop</code> : bool
+:   Set if the title (assuming that one exists) is set on top of the
+    visualization.
+
+</p>
+<p><code>width</code> : float
+:   Width of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<h4>Padding Options</h4>
+<p>If not configured, the values below are automatically set to convey the
+best possible visual without cutting off parts of the axis labels or
+titles. All of these options are measures in pixels (integer values).
+
+</p>
+<p>The available options are: <code>bottom</code>, <code>left</code>, <code>right</code> and <code>top</code>.
+
+</p>
+<h4>Label Options</h4>
+<p>The label options object provides a way to customize the labels and
+texts that appear on your visualizations. They usually take a function
+so that your labels can be customized with their related datapoints.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>title</code> : string OR function(array variables, array datapoint) string
+:   Controls the text to display in the title. The <code>variables</code> array
+    contains objects with a <code>type</code> field that can be used to know the
+    axis that are involved in the visualization. The datapoint array is
+    a collection of data that is the response to a query. Each datapoint
+    has one or more fields describing it. If the parameter is <code>null</code> or
+    returns <code>null</code> the title will not be rendered at all.
+
+</p>
+<p><code>datapoint</code> : function(object datapoint, object stats) string
+:   The label to display on top of each datapoint of the chart. The
+    datapoint is associated to a shape in the visualization and that
+    shape depends on the kind of visualization. For a piechart the
+    datapoint is associated to a slice of the pie, while for a line
+    chart the data point is one point on the line. If the parameter is
+    <code>null</code> or returns <code>null</code> the label will not be rendered at all.
+
+</p>
+<p><code>datapointover</code> : function(object datapoint, object stats) string
+:   The label to display when the user passes his mouse over a datapoint
+    shape (see above) or touches a shape in a touch environment. If the
+    parameter is <code>null</code> or returns <code>null</code> the label will not be rendered
+    at all.
+
+</p>
+<p><code>axis</code> : function(string type) string
+:   The label to apply as a legend for the axis.
+
+</p>
+<p><code>tickmark</code> : function(any value, string type) string
+:   The label to apply to the individual tick-marks of the scales. The
+    <code>value</code> argument is the scaled value for that tick-mark and <code>type</code>
+    is the name of the axis.
+
+</p>
+<p><code>yscaleposition</code> : string
+:   (&quot;alternating&quot;, &quot;left&quot;, &quot;right&quot;)
+
+</p>
+<h3>ReportGrid.leaderBoard</h3>
+<p><code>ReportGrid.leaderBoard(selector el, parameters object) void</code>
+
+</p>
+<p>This visualization renders a list of values associated to the datapoints
+produced by your query.
+
+</p>
+<p>The leaderboard requires two axes, one to generate the items in the list
+and the other to quantify each item.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>animation</code> : object animation options
+:   Defines the animation behavior_ of the visualization.
+
+</p>
+<p><code>colorscale</code> : bool
+:   Associates the background color of the rank numbers to the CSS
+    palette. Default is false.
+
+</p>
+<p><code>click</code> : function(object datapoint, object stats) void
+:   A handler function that is executed when the user click or touches a
+    datapoint.
+
+</p>
+<p><code>displaybar</code> : bool (default true)
+:   Makes the measurement bar visible or not.
+
+</p>
+<p><code>effect</code> : string
+:   States the effect to apply to the list items in the leaderboard.
+    :   -   <code>&quot;noeffect&quot;</code> :
+            :   No gradient is applied below the item.
+
+</p>
+<pre><code>    -   `<span class="string">"gradient"</span>` :
+        :   Applies a gradient below the item that is proportional
+            to the sum of the values in the datapoint set.
+
+    -   `<span class="string">"gradient-max"</span>` :
+        :   Same <span class="keyword">as</span> above but the gradient is proportional to the
+            biggest value in the datapoint set.</code></pre>
+<p><code>label</code> : object label options
+:   Configuration object for text labels.
+
+</p>
+<p><code>sort</code> : function(object datapoint, object datapoint) int
+:   Sort function to rearrange the orders of the items in the
+    leaderboard list. Configuration object for text labels.
+
+</p>
+<p><code>usemax</code> : bool (default false)
+:   By default percentage values and the length of the measurement bar
+    is the ratio between the current value and the total sum; activating
+    this flag the proportion will be done using the maximum value
+    instead.
+
+</p>
+<h4>Animation Options</h4>
+<p>The animation options object controls how the visualization is animated
+and it is animated in the first place.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>animated</code> : bool
+:   Set if the visualization should be animated or not. Usually the
+    animation consists in a fade-in effect and some kind of mouse
+    interaction. The default val`e for <code>animated</code> is false.
+
+</p>
+<p><code>duration</code> : int
+:   The duration in milliseconds of the animation.
+
+</p>
+<p><code>delay</code>: int
+    The delay before the animation is executed.
+ease` : function(float v) float
+:   The equation function that regulates the easing of the animation.
+    The default function provides an <em>elastic</em> effect to smooth the
+    animation.
+
+</p>
+<h3>ReportGrid.lineChart</h3>
+<p><code>ReportGrid.lineChart(selector el, parameters object) void</code>
+
+</p>
+<p>The <code>lineChart</code> can be used to build standard line charts, area charts
+stacked or not. It requires at least two axes but can support more.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>displayarea</code> : bool
+:   States if an area shape must be rendered below the line chart or
+    not.
+
+</p>
+<p><code>effect</code> : string
+:   States the effect to apply to the line(s) of the chart. The parameters in curly brackets are optional and refine the style.
+    :   -   &quot;noeffect&quot; :
+            :   The line is rendered with a solid color.
+
+</p>
+<pre><code>    -   <span class="string">"dropshadow"</span> :
+        :   The line is rendered with a background shadow.
+
+    -   <span class="string">"dropshadow:{offsetx}"</span> :
+    -   <span class="string">"dropshadow:{offsetx}:{offsety}"</span> :
+    -   <span class="string">"dropshadow:{offsetx}:{offsety}:{levels}"</span> :
+        :   The optional parameters are used to set the offset (x
+            <span class="keyword">and</span> y) of the shadow <span class="keyword">and</span> of how many degrees of gray the
+            shadow is composed.
+
+    -   <span class="string">"gradient"</span> :
+        :   The line is rendered with a gradient from the middle
+            outwards.
+
+    -   <span class="string">"gradient:{lightness}"</span> :
+    -   <span class="string">"gradient:{lightness}:{levels}"</span> :
+        :   The `lightness` parameter is used to state how brigther
+            (<span class="keyword">or</span> darker) the end of the gradient will be <span class="keyword">and</span> the
+            `levels` parameterd states the number of steps that form
+            the gradient.</code></pre>
+<p><code>symbol</code> : string OR function(object datapoint, object stats) string
+:   Each datapoint in the line charts can be associated to an optional symbol. The symbol can be described statically using a string or using a function. The symbol must be expressed in one of the 2 following formats:
+    :   -   SVG PATH format. There is a practical function
+            <code>ReportGrid.symbol.get()</code> to quickly build symbols.
+        -   &quot;image:urltoimage&quot;. This second format allows to embed
+            raster images instead of vectorial symbols. The URL part must
+            be an absolute path to an image. It is also possible to
+            specify the size of the image this way:
+            &quot;image,40x50:urltoimage&quot;. The images are by default aligned
+            so that their center will match the underlying datapoint.
+            Other alignments are possible using this syntax: &quot;image,left
+            top:imageurl&quot;. The horizontal position must be expressed
+            first (center, left, right), the vertical alignment must be
+            separated by a white space (center, top, bottom). Size and
+            alignment can be specified together by separating them with
+            a comma.
+
+</p>
+<p><code>symbolstyle</code> : function(object datapoint, object stats) string
+:   If symbols are added to the lines you can use <code>symbolstyle</code> to
+    render a custom style for each of them. The style produced by the
+    custom function must be a string in CSS format.
+
+</p>
+<p><code>y0property</code> : string
+:   This parameter is used to determine what value in the datapoint must
+    be used to stack values. Usually that value must be calculated
+    transforming the datapoints from your query.
+
+</p>
+<p><code>interpolation</code> : string
+:   Linecharts are not interpolated by default (equivalent to &quot;linear&quot;
+    interpolation) but can be smoothed or transformed using one of the
+    following values: <code>&quot;basis&quot;</code>, <code>&quot;basisopen&quot;</code>, <code>&quot;basisclosed&quot;</code>,
+    <code>&quot;cardinal&quot;</code>, <code>&quot;cardinal:{value}&quot;</code>, <code>&quot;cardinalopen&quot;</code>,
+    <code>&quot;cardinalopen:{value}&quot;</code>, <code>&quot;cardinalclosed&quot;</code>,
+    <code>&quot;cardinalclosed:{value}&quot;</code>, <code>&quot;monotone&quot;</code>, <code>&quot;stepafter&quot;</code>,
+    <code>&quot;stepbefore&quot;</code>, <code>&quot;linear&quot;</code> The <code>value</code> parameter is an optional
+    <code>float</code> value for <code>cardinal</code> interpolations.
+
+</p>
+<p><code>segment</code> : object segmentoptions
+:   An object that describes the options for segmenting the data (see
+    below).
+
+</p>
+<p><code>segmenton</code> : string
+:   A shortcut that is equivalent to :
+    <code>{ segment : { on : &quot;propertyname&quot; } }</code>
+
+</p>
+<p><code>sensibleradius</code> : int
+:   The distance from a datapoint within which the mouseover and click
+    events should be fired.
+
+</p>
+<p><code>click</code> : function(object datapoint, object stats) void
+:   A handler function that is executed when the user clicks or touches
+    a datapoint.
+
+</p>
+<p><code>displayanchorlinerule</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function states
+    if a border should be rendered for the axis inside the chart area.
+
+</p>
+<p><code>displayanchorlinetick</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function states
+    if a border should be rendered for the axis inside the axis area.
+
+</p>
+<p><code>displayrules</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the rules for the axis will be rendered below the chart or
+    not. This option controls both the <em>minor</em> and the <em>major</em> rules.
+
+</p>
+<p><code>displayruleminor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the minor rules for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displayrulemajor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the major rules for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displayticklabel</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the tickmark labels for the axis will be rendered below the
+    chart or not. Note that only major tickmarks can have labels.
+
+</p>
+<p><code>displaytickmajor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the major tickmarks for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displaytickmarks</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the tickmarks for the axis will be rendered below the chart
+    or not. This option controls both the <em>minor</em> and the <em>major</em>
+    tickmarks.
+
+</p>
+<p><code>displaytickminor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the minor tickmarks for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>label</code> : object label
+:   Configuration object for text labels.
+
+</p>
+<p><code>labelanchor</code> : string OR function(string type) string
+:   The passed value or the return value of the passed function controls
+    the position of the label in regards of the tickmark origin point.
+    Valid values for this property are: <code>topleft</code>, <code>top</code>, <code>topright</code>,
+    <code>left</code>, <code>center</code>, <code>right</code>, <code>bottomleft</code>, <code>bottom</code>, <code>bottomright</code>,
+    <code>center</code>. By default the anchor will depend on the position of the
+    axis.
+
+</p>
+<p><code>labelangle</code> : float OR function(string type) float
+:   The passed value or the return value of the passed function controls
+    the inclination (angle in degrees) of the labels.
+
+</p>
+<p><code>labelorientation</code> : string OR function(string type) string
+:   The passed value or the return value of the passed function controls
+    the way the label is oriented in relation with its tickmark. The
+    valid values for this option are: <code>orthogonal</code> or <code>aligned</code>.
+
+</p>
+<p><code>lengthtick</code> : float
+:   Length in pixel of the tickmark. Controls both the minor and major
+    tickmarks.
+
+</p>
+<p><code>lengthtickmajor</code> : float
+:   Sets the length in pixel of the major tickmarks.
+
+</p>
+<p><code>lengthtickminor</code> : float
+:   Sets the length in pixel of the minor tickmarks.
+
+</p>
+<p><code>paddingtick</code> : float
+:   Padding distance between the area occupied by the chart and the
+    tickmarks. Controls both the major and minor tickmarks.
+
+</p>
+<p><code>paddingticklabel</code> : float
+:   Padding distance between the area occupied by the chart and the
+    tickmark labels.
+
+</p>
+<p><code>paddingtickmajor</code> : float
+:   Padding distance between the area occupied by the chart and the
+    major tickmarks.
+
+</p>
+<p><code>paddingtickminor</code> : float
+:   Padding distance between the area occupied by the chart and the
+    minor tickmarks.
+
+</p>
+<p><code>height</code> : float
+:   Height of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<p><code>layout</code> : string
+:   This option is automatically set to the most convenient value based
+    on the selected visualization. This field should be set only to
+    assemble unusual and complex visualizations. The accepted values so
+    far are <code>&quot;simple&quot;</code>, <code>&quot;Cartesian&quot;</code> and <code>&quot;x&quot;</code>
+
+</p>
+<p><code>main</code> : string
+:   (experimental) The <code>main</code> field is used to identify in which panel
+    of the selected layout the visualization should be rendered.
+
+</p>
+<p><code>padding</code> : object padding options
+:   The padding object controls how the chart is spaced from its
+    margins.
+
+</p>
+<p><code>titleontop</code> : bool
+:   Set if the title (assuming that one exists) is set on top of the
+    visualization.
+
+</p>
+<p><code>width</code> : float
+:   Width of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<h4>Padding Options</h4>
+<p>If not configured, the values below are automatically set to convey the
+best possible visual without cutting off parts of the axis labels or
+titles. All of these options are measures in pixels (integer values).
+
+</p>
+<p>The available options are: <code>bottom</code>, <code>left</code>, <code>right</code> and <code>top</code>. Segment
+Options ---------------
+
+</p>
+<p>Segment options convey a way to separate several datapoints into
+separated set of values. This comes handy when you want to draw several
+lines from a uniquer data set of datapoints.
+
+</p>
+<p>Both the <code>scale</code> and <code>transform</code> parameters are optionals.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>on</code> : string
+:   Defines the property used to split the datapoints. A new set of
+    datapoints is created for each distinct value for the selected
+    property.
+
+</p>
+<p><code>scale</code> : function(array datapoint) array
+:   The scale function is used to transform each segmented data set of
+    datapoints in a new data set.
+
+</p>
+<p><code>transform</code> : function(array datapoint) array
+:   The transform function works on the data orthogonally.
+
+</p>
+<p><code>values</code>: string array (optional)
+:   Specifies the values for the segmentation. This parameter is
+    optional and if not set, the segment values are derived from the
+    loaded dataset.
+
+</p>
+<h4>Label Options</h4>
+<p>The label options object provides a way to customize the labels and
+texts that appear on your visualizations. They usually take a function
+so that your labels can be customized with their related datapoints.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>title</code> : string OR function(array variables, array datapoint) string
+:   Controls the text to display in the title. The <code>variables</code> array
+    contains objects with a <code>type</code> field that can be used to know the
+    axis that are involved in the visualization. The datapoint array is
+    a collection of data that is the response to a query. Each datapoint
+    has one or more fields describing it. If the parameter is <code>null</code> or
+    returns <code>null</code> the title will not be rendered at all.
+
+</p>
+<p><code>datapoint</code> : function(object datapoint, object stats) string
+:   The label to display on top of each datapoint of the chart. The
+    datapoint is associated to a shape in the visualization and that
+    shape depends on the kind of visualization. For a piechart the
+    datapoint is associated to a slice of the pie, while for a line
+    chart the data point is one point on the line. If the parameter is
+    <code>null</code> or returns <code>null</code> the label will not be rendered at all.
+
+</p>
+<p><code>datapointover</code> : function(object datapoint, object stats) string
+:   The label to display when the user passes his mouse over a datapoint
+    shape (see above) or touches a shape in a touch environment. If the
+    parameter is <code>null</code> or returns <code>null</code> the label will not be rendered
+    at all.
+
+</p>
+<p><code>axis</code> : function(string type) string
+:   The label to apply as a legend for the axis.
+
+</p>
+<p><code>tickmark</code> : function(any value, string type) string
+:   The label to apply to the individual tick-marks of the scales. The
+    <code>value</code> argument is the scaled value for that tick-mark and <code>type</code>
+    is the name of the axis.
+
+</p>
+<p><code>yscaleposition</code> : string
+:   (&quot;alternating&quot;, &quot;left&quot;, &quot;right&quot;)
+
+</p>
+<h3>ReportGrid.pieChart</h3>
+<p><code>ReportGrid.pieChart(selector el, parameters object) void</code>
+
+</p>
+<p>The <code>pieChart</code> is obviously used to render pie charts, but it can also
+be used to render donut charts.
+
+</p>
+<p>All of the <code>radius</code> parameters below should be expressed as a <code>float</code>
+value between 0 and 1 where 0 is at the center of the pie and 1 is at
+the edge of the available chart space.
+
+</p>
+<p>The pie chart requires two axes, one for the slicing and one to set the
+slice size.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>animation</code> : object animation options
+:   Defines the piechart animation behavior_ of the visualization.
+
+</p>
+<p><code>click</code> : function(object datapoint, object stats) void
+:   A handler function that is executed when the user click or touches a
+    datapoint.
+
+</p>
+<p><code>dontfliplabel</code> : bool
+:   Determines if the labels on the datapoints should always be set so
+    that even if they are inclined they never end flipped.
+
+</p>
+<p><code>effect</code> : string
+:   The effect to apply to each slice in a pie or donut chart.
+    :   -   <code>&quot;noeffect&quot;</code> :
+            :   The pie slices are filled with a solid color.
+
+</p>
+<pre><code>    -   `<span class="string">"gradient"</span>` :
+        :   Applies a radial gradient.
+
+    -   `<span class="string">"gradient:{lightness}"</span>` :
+        :   Same effect <span class="keyword">as</span> above but with the control over the
+            intensity of the color variation.</code></pre>
+<p><code>innerradius</code> : float
+:   Inner radius is zero by default but can be any value between 0 and 1
+    to build a donut chart.
+
+</p>
+<p><code>label</code> : object label options
+:   Configuration object for text labels.
+
+</p>
+<p><code>labelorientation</code> : string
+:   Label orientation is used to control the behavior of label rotation according to their position in the chart.
+    :   -   <code>&quot;fixed&quot;</code> or <code>&quot;horizontal&quot;</code>:
+            :   No rotation.
+
+</p>
+<pre><code>    -   `<span class="string">"fixed:{angle}"</span>` :
+        :   Rotation fixed at a certain angle.
+
+    -   `<span class="string">"ortho"</span>` <span class="keyword">or</span> `<span class="string">"orthogonal"</span>` :
+        :   Labels are aligned orthogonally to their radius.
+
+    -   `<span class="string">"align"</span>` <span class="keyword">or</span> `<span class="string">"aligned"</span>` :
+        :   Labels have the same angle <span class="keyword">as</span> their radius have.</code></pre>
+<p><code>labelradius</code> : float
+:   States where the datapoint labels are positioned.
+
+</p>
+<p><code>outerradius</code> : float
+:   The outer radius is useful when you want accentuated transitions
+    (animations) that can bleed the border of the charts. Another use in
+    combination with <code>innerradius</code> is to nest two or more donut charts
+    in the same visualization and avoid overlapping.
+
+</p>
+<p><code>overradius</code> : float
+:   The over radius is used to control the slice size when animation is
+    turned on.
+
+</p>
+<p><code>tooltipradius</code> : float
+:   Controls the position of the tooltip balloon when activated and the
+    mouse is positioned over a slice.
+
+</p>
+<p><code>sort</code> : function(object datapoint, object datapoint) int
+:   Sort function to rearrange the orders of the slices in the pie
+    chart.
+
+</p>
+<p><code>height</code> : float
+:   Height of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<p><code>layout</code> : string
+:   This option is automatically set to the most convenient value based
+    on the selected visualization. This field should be set only to
+    assemble unusual and complex visualizations. The accepted values so
+    far are <code>&quot;simple&quot;</code>, <code>&quot;Cartesian&quot;</code> and <code>&quot;x&quot;</code>
+
+</p>
+<p><code>main</code> : string
+:   (experimental) The <code>main</code> field is used to identify in which panel
+    of the selected layout the visualization should be rendered.
+
+</p>
+<p><code>padding</code> : object padding options
+:   The padding object controls how the chart is spaced from its
+    margins.
+
+</p>
+<p><code>titleontop</code> : bool
+:   Set if the title (assuming that one exists) is set on top of the
+    visualization.
+
+</p>
+<p><code>width</code> : float
+:   Width of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<h4>Padding Options</h4>
+<p>If not configured, the values below are automatically set to convey the
+best possible visual without cutting off parts of the axis labels or
+titles. All of these options are measures in pixels (integer values).
+
+</p>
+<p>The available options are: <code>bottom</code>, <code>left</code>, <code>right</code> and <code>top</code>.
+
+</p>
+<h4>Animation Options</h4>
+<p>The animation options object controls how the visualization is animated
+and it is animated in the first place.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>animated</code> : bool
+:   Set if the visualization should be animated or not. Usually the
+    animation consists in a fade-in effect and some kind of mouse
+    interaction. The default val`e for <code>animated</code> is false.
+
+</p>
+<p><code>duration</code> : int
+:   The duration in milliseconds of the animation.
+
+</p>
+<p><code>delay</code>: int
+    The delay before the animation is executed.
+ease` : function(float v) float
+:   The equation function that regulates the easing of the animation.
+    The default function provides an <em>elastic</em> effect to smooth the
+    animation.
+
+</p>
+<h3>ReportGrid.pivotTable</h3>
+<p><code>ReportGrid.pivotTable(selector el, parameters object) void</code>
+
+</p>
+<p>A pivot table is a data summarization table. It can be created on any
+number of dimensions (axis) where the dimensions are grouped on columns
+or rows.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>click</code> : function(object datapoint, object stats) void
+:   A handler function that is executed when the user click or touches a
+    datapoint.
+
+</p>
+<p><code>columnaxes</code> : int
+:   This parameter controls how many dimensions of the query are grouped
+    as columns. If you have three axis and you want to group just the
+    first on the columns and the remaining two on the rows, the
+    <code>columnaxes</code> value must set to <code>1</code> (default value). The same
+    visualization can have 2axes on the columns and 1 axis on the rows,
+    setting the value to 1.
+
+</p>
+<p><code>displaycolumntotal</code> : bool
+:   Whether or not to display the totals at the bottom of the columns.
+
+</p>
+<p><code>displayheatmap</code> : bool
+:   Whether or not to display a background color below each cell whose
+    intensity in the color scale is based on the value of the cell
+    itself.
+
+</p>
+<p><code>displayrowtotal</code> : bool
+:   Whether or not to display the totals at the right of the rows.
+
+</p>
+<p><code>endcolor</code> : string
+:   Color for the background cell of highest value in the table. This
+    option is used only if <code>displayheatmap</code> is set to true.
+
+</p>
+<p><code>label</code> : object pivottable label options
+:   Configuration object for text labels.
+
+</p>
+<p><code>startcolor</code> : string
+:   Color for the background cell with a value of zero. This option is
+    used only if <code>displayheatmap</code> is set to true.
+
+</p>
+<p><code>cellclass</code>: function(object datapoint, object stats) string
+:   A function to inject custom class(es) in the cell container. If the
+    function returns <code>null</code> nothing is injected.
+
+</p>
+<p><code>valueclass</code>: function(mixed value, string header) string
+:   A function to inject custom class(es) in the value container (it
+    refers to one of the possible values that a dimension/header can
+    have). If the function returns <code>null</code> nothing is injected.
+
+</p>
+<p><code>headerclass</code>: function(string header) string
+:   A function to inject custom class(es) in the header container. If
+    the function returns <code>null</code> nothing is injected.
+
+</p>
+<p><code>totalclass</code>: function(mixed value, array of string headers) string
+:   A function to inject custom class(es) in the total cell container.
+    If the function returns <code>null</code> nothing is injected.
+
+</p>
+<h4>Label Options</h4>
+<p>The label options object provides a way to customize the labels and
+texts that appear on your visualizations. They usually take a function
+so that your labels can be customized with their related datapoints.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>title</code> : string OR function(array variables, array datapoint) string
+:   Controls the text to display in the title. The <code>variables</code> array
+    contains objects with a <code>type</code> field that can be used to know the
+    axis that are involved in the visualization. The datapoint array is
+    a collection of data that is the response to a query. Each datapoint
+    has one or more fields describing it. If the parameter is <code>null</code> or
+    returns <code>null</code> the title will not be rendered at all.
+
+</p>
+<p><code>datapoint</code> : function(object datapoint, object stats) string
+:   The label to display on top of each datapoint of the chart. The
+    datapoint is associated to a shape in the visualization and that
+    shape depends on the kind of visualization. For a piechart the
+    datapoint is associated to a slice of the pie, while for a line
+    chart the data point is one point on the line. If the parameter is
+    <code>null</code> or returns <code>null</code> the label will not be rendered at all.
+
+</p>
+<p><code>datapointover</code> : function(object datapoint, object stats) string
+:   The label to display when the user passes his mouse over a datapoint
+    shape (see above) or touches a shape in a touch environment. If the
+    parameter is <code>null</code> or returns <code>null</code> the label will not be rendered
+    at all.
+
+</p>
+<p><code>axisvalue</code> : function(any value, string type) string
+:   The label to apply to the individual values of the grouped
+    dimensions..
+
+</p>
+<p><code>total</code> : function(float value, object stats) string
+:   Function to control the label in the total cell.
+
+</p>
+<p><code>totalover</code> : function(float value, object stats) string
+:   Function to control the label when the mouse goes over a total cell.
+
+</p>
+<p><code>axis</code> : function(string type) string
+:   The label to apply as a legend for the axis.
+
+</p>
+<p><code>tickmark</code> : function(any value, string type) string
+:   The label to apply to the individual tick-marks of the scales. The
+    <code>value</code> argument is the scaled value for that tick-mark and <code>type</code>
+    is the name of the axis.
+
+</p>
+<p><code>yscaleposition</code> : string
+:   (&quot;alternating&quot;, &quot;left&quot;, &quot;right&quot;)
+
+</p>
+<h3>ReportGrid.sankey</h3>
+<p><code>ReportGrid.sankey(selector el, parameters object) void</code>
+
+</p>
+<p>Sankey diagrams are a type of flow diagram in which nodes are connected
+by arrows whose width is proportional to the flow quantity. They are
+typically used to visualize transfer of quantities between processes.
+They can also be seen as bi-dimensional funnel charts.
+
+</p>
+<p>The visualization is composed of nodes rendered as rectangle whose
+height is proportional to their weight in the graph. The nodes are laid
+on a set of vertical lines (those lines can be styled using CSS rules
+and are hidden by default) called layers. The nodes are automatically
+associated to the layers unless you provide a <code>layoutmap</code> definition
+that exactly the location of the nodes. If the <code>layoutmap</code> is not
+defined, the visualization will use the algorithm specified in
+<code>layoutmethod</code>.
+
+</p>
+<p>Complex layouts may use dummy nodes to fill the graph in a way that
+edges are correctly positioned. The dummy node id is by convention
+prefixed with the pound &quot;#&quot; character. Dummy nodes do not render labels
+or mouse over.
+
+</p>
+<p>The sankey requires only one axis to quantify each edge node but it
+expects the data points to be formatted in a certain way. All the edge
+data points must contain a pair of <code>head</code>/<code>tail</code> fields that identify
+the nodes uniquely and a weight field that matches the mandatory axis
+type. Optionally, you can pass a set of node data points that are used
+to set the absolute weight of each node (that value can be greater than
+the sum of each edge flowing in or out). Those nodes must have the field
+ìd` and a weight field matching the mandatory axis type.
+
+</p>
+<p><code>backedgespacing</code> : number
+:   The vertical spacing between roll-back edges
+
+</p>
+<p><code>click</code> : function(datapoint, stats) void
+:   A function that is invoked when the user clicks on a node.
+
+</p>
+<p><code>clickedge</code> : function(object, stats) void
+:   A function that is invoked when the user clicks on an edge.
+
+</p>
+<p><code>displayentry</code> : bool or function(datapoint) bool
+:   If a function (or static value) is provided, the entry edge will be
+    displayed conditionally (if it exists).
+
+</p>
+<p><code>displayexit</code> : bool or function(datapoint) bool
+:   If a function (or static value) is provided, the exit edge will be
+    displayed conditionally (if it exists).
+
+</p>
+<p><code>dummyspacing</code> : number
+:   A vertical spacing reserved to dummy nodes.
+
+</p>
+<p><code>edgeclass</code> : string or function(datapoint, stats) void
+:   Additional class to append to the edges. It is used mainly for
+    styling.
+
+</p>
+<p><code>extraheight</code> : number
+:   The height in pixel for the entry/exit edges.
+
+</p>
+<p><code>extraradius</code> : : number
+:   The minimum radius in pixel for the entry/exit edges.
+
+</p>
+<p><code>extrawidth</code> : number
+:   The max width in pixel for the entry/exit edges.
+
+</p>
+<p><code>imageheight</code> : number
+:   The height of the images associated with the nodes.
+
+</p>
+<p><code>imagepath</code> : function(datapoint, stats) : string
+:   A function that given the datapoint data return an absolute URL to
+    an image file. The image can be in PNG or JPG format. The image will
+    be automatically resized to the ìmagewidth` and <code>imageheight</code>
+    values.
+
+</p>
+<p><code>imagespacing</code> : number
+:   The space in pixel between the image associated to a node and to the
+    node itself.
+
+</p>
+<p><code>imagewidth</code> : number
+:   The width of the images associated with the nodes.
+
+</p>
+<p><code>label</code> : object sankey label options
+:   Configuration object for text labels.
+
+</p>
+<p><code>labelnodespacing</code> : number
+:   Space between the label over the nodes and the node itself.
+
+</p>
+<p><code>layerwidth</code> : number
+:   The width of the node rectangles in pixels. The remaining space is
+    occupied by the edges.
+
+</p>
+<p><code>layoutmap</code> : object { layers : array of array of strings, dummies : array of array of strings }
+:   The layers property must contain an array of array of node
+    identifiers. The first array dimension matches the layers in the
+    sankey, the inner array represents the disposition of the nodes in
+    each layer from top to bottom. The second field contains a mapping
+    of how the dummy nodes connect the real nodes. Each array in the
+    array must contain a path from a concrete node to another that wrap
+    one or more dummy nodes.
+
+</p>
+<p><code>layoutmethod</code> : string (&quot;sugiyama&quot; - default - or &quot;weightbalance&quot;)
+:   When a <code>layoutmap</code> is not provided states the method for laying out
+    the nodes on the sankey. More methods will be added in the future.
+
+</p>
+<p><code>nodeclass</code> : string or function(datapoint, stats) void
+:   Additional class to append to the nodes. It is used mainly for
+    styling.
+
+</p>
+<p><code>nodespacing</code> : number
+:   Vertical spacing in pixels between two nodes. Note that if you use
+    images or labels on top of the nodes, the <code>nodespacing</code> value should
+    be greater than both or some overlapping might happen.
+
+</p>
+<h4>Label Options</h4>
+<p>The label options object provides a way to customize the labels and
+texts that appear on your visualizations. They usually take a function
+so that your labels can be customized with their related datapoints.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>title</code> : string OR function(array variables, array datapoint) string
+:   Controls the text to display in the title. The <code>variables</code> array
+    contains objects with a <code>type</code> field that can be used to know the
+    axis that are involved in the visualization. The datapoint array is
+    a collection of data that is the response to a query. Each datapoint
+    has one or more fields describing it. If the parameter is <code>null</code> or
+    returns <code>null</code> the title will not be rendered at all.
+
+</p>
+<p><code>datapoint</code> : function(object datapoint, object stats) string
+:   The label to display on top of each datapoint of the chart. The
+    datapoint is associated to a shape in the visualization and that
+    shape depends on the kind of visualization. For a piechart the
+    datapoint is associated to a slice of the pie, while for a line
+    chart the data point is one point on the line. If the parameter is
+    <code>null</code> or returns <code>null</code> the label will not be rendered at all.
+
+</p>
+<p><code>datapointover</code> : function(object datapoint, object stats) string
+:   The label to display when the user passes his mouse over a datapoint
+    shape (see above) or touches a shape in a touch environment. If the
+    parameter is <code>null</code> or returns <code>null</code> the label will not be rendered
+    at all.
+
+</p>
+<p><code>edge</code> : function(data point, stats) string
+:   The label to display inside the edges.
+
+</p>
+<p><code>edgeover</code> : function(data point, stats) string
+:   The label to display when the mouse is over an edge.
+
+</p>
+<p><code>node</code> : function(data point, stats) string
+:   The label to display inside the node rectangles. Note that multiline
+    messages (each line separated by n character) are accepted and the
+    first line will be rendered bigger than the rest.
+
+</p>
+<h3>ReportGrid.scatterGraph</h3>
+<p><code>ReportGrid.scatterGraph(selector el, parameters object) void</code>
+
+</p>
+<p>A scatter graph is a visualization to display data for two variables in
+a data set (more variables can be addressed using size and colors). The
+data is displayed is displayed as a collection of points or symbols.
+
+</p>
+<p>The scatter graph requires two axes, one for the X axis and one for the
+Y axis.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>symbol</code> : string OR function(object datapoint, object stats) string
+:   Each datapoint in the line charts can be associated to an optional symbol. The symbol can be described statically using a string or using a function. The symbol must be expressed in one of the 2 following formats:
+    :   -   SVG PATH format. There is a practical function
+            <code>ReportGrid.symbol.get()</code> to quickly build symbols.
+        -   &quot;image:urltoimage&quot;. This second format allows to embed
+            raster images instead of vectorial symbols. The URL part must
+            be an absolute path to an image. It is also possible to
+            specify the size of the image this way:
+            &quot;image,40x50:urltoimage&quot;. The images are by default aligned
+            so that their center will match the underlying datapoint.
+            Other alignments are possible using this syntax: &quot;image,left
+            top:imageurl&quot;. The horizontal position must be expressed
+            first (center, left, right), the vertical alignment must be
+            separated by a white space (center, top, bottom). Size and
+            alignment can be specified together by separating them with
+            a comma.
+
+</p>
+<p><code>symbolstyle</code> : string OR function(object datapoint, object stats) : string
+:   As much as you can control the sy,bol shape, you can control its
+    style returning a custom style string. The style must be expressed
+    in the CSS format.
+
+</p>
+<p><code>segment</code> : object segmentoptions
+:   An object that describes the options for segmenting the data (see
+    below).
+
+</p>
+<p><code>segmenton</code> : string
+:   A shortcut that is equivalent to :
+    <code>{ segment : { on : &quot;propertyname&quot; } }</code>
+
+</p>
+<p><code>click</code> : function(object datapoint, object stats) void
+:   A handler function that is executed when the user clicks or touches
+    a datapoint.
+
+</p>
+<p><code>displayanchorlinerule</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function states
+    if a border should be rendered for the axis inside the chart area.
+
+</p>
+<p><code>displayanchorlinetick</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function states
+    if a border should be rendered for the axis inside the axis area.
+
+</p>
+<p><code>displayrules</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the rules for the axis will be rendered below the chart or
+    not. This option controls both the <em>minor</em> and the <em>major</em> rules.
+
+</p>
+<p><code>displayruleminor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the minor rules for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displayrulemajor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the major rules for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displayticklabel</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the tickmark labels for the axis will be rendered below the
+    chart or not. Note that only major tickmarks can have labels.
+
+</p>
+<p><code>displaytickmajor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the major tickmarks for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displaytickmarks</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the tickmarks for the axis will be rendered below the chart
+    or not. This option controls both the <em>minor</em> and the <em>major</em>
+    tickmarks.
+
+</p>
+<p><code>displaytickminor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the minor tickmarks for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>label</code> : object label
+:   Configuration object for text labels.
+
+</p>
+<p><code>labelanchor</code> : string OR function(string type) string
+:   The passed value or the return value of the passed function controls
+    the position of the label in regards of the tickmark origin point.
+    Valid values for this property are: <code>topleft</code>, <code>top</code>, <code>topright</code>,
+    <code>left</code>, <code>center</code>, <code>right</code>, <code>bottomleft</code>, <code>bottom</code>, <code>bottomright</code>,
+    <code>center</code>. By default the anchor will depend on the position of the
+    axis.
+
+</p>
+<p><code>labelangle</code> : float OR function(string type) float
+:   The passed value or the return value of the passed function controls
+    the inclination (angle in degrees) of the labels.
+
+</p>
+<p><code>labelorientation</code> : string OR function(string type) string
+:   The passed value or the return value of the passed function controls
+    the way the label is oriented in relation with its tickmark. The
+    valid values for this option are: <code>orthogonal</code> or <code>aligned</code>.
+
+</p>
+<p><code>lengthtick</code> : float
+:   Length in pixel of the tickmark. Controls both the minor and major
+    tickmarks.
+
+</p>
+<p><code>lengthtickmajor</code> : float
+:   Sets the length in pixel of the major tickmarks.
+
+</p>
+<p><code>lengthtickminor</code> : float
+:   Sets the length in pixel of the minor tickmarks.
+
+</p>
+<p><code>paddingtick</code> : float
+:   Padding distance between the area occupied by the chart and the
+    tickmarks. Controls both the major and minor tickmarks.
+
+</p>
+<p><code>paddingticklabel</code> : float
+:   Padding distance between the area occupied by the chart and the
+    tickmark labels.
+
+</p>
+<p><code>paddingtickmajor</code> : float
+:   Padding distance between the area occupied by the chart and the
+    major tickmarks.
+
+</p>
+<p><code>paddingtickminor</code> : float
+:   Padding distance between the area occupied by the chart and the
+    minor tickmarks.
+
+</p>
+<p><code>height</code> : float
+:   Height of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<p><code>layout</code> : string
+:   This option is automatically set to the most convenient value based
+    on the selected visualization. This field should be set only to
+    assemble unusual and complex visualizations. The accepted values so
+    far are <code>&quot;simple&quot;</code>, <code>&quot;Cartesian&quot;</code> and <code>&quot;x&quot;</code>
+
+</p>
+<p><code>main</code> : string
+:   (experimental) The <code>main</code> field is used to identify in which panel
+    of the selected layout the visualization should be rendered.
+
+</p>
+<p><code>padding</code> : object padding options
+:   The padding object controls how the chart is spaced from its
+    margins.
+
+</p>
+<p><code>titleontop</code> : bool
+:   Set if the title (assuming that one exists) is set on top of the
+    visualization.
+
+</p>
+<p><code>width</code> : float
+:   Width of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<h4>Padding Options</h4>
+<p>If not configured, the values below are automatically set to convey the
+best possible visual without cutting off parts of the axis labels or
+titles. All of these options are measures in pixels (integer values).
+
+</p>
+<p>The available options are: <code>bottom</code>, <code>left</code>, <code>right</code> and <code>top</code>. Segment
+Options ---------------
+
+</p>
+<p>Segment options convey a way to separate several datapoints into
+separated set of values. This comes handy when you want to draw several
+lines from a uniquer data set of datapoints.
+
+</p>
+<p>Both the <code>scale</code> and <code>transform</code> parameters are optionals.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>on</code> : string
+:   Defines the property used to split the datapoints. A new set of
+    datapoints is created for each distinct value for the selected
+    property.
+
+</p>
+<p><code>scale</code> : function(array datapoint) array
+:   The scale function is used to transform each segmented data set of
+    datapoints in a new data set.
+
+</p>
+<p><code>transform</code> : function(array datapoint) array
+:   The transform function works on the data orthogonally.
+
+</p>
+<p><code>values</code>: string array (optional)
+:   Specifies the values for the segmentation. This parameter is
+    optional and if not set, the segment values are derived from the
+    loaded dataset.
+
+</p>
+<h4>Label Options</h4>
+<p>The label options object provides a way to customize the labels and
+texts that appear on your visualizations. They usually take a function
+so that your labels can be customized with their related datapoints.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>title</code> : string OR function(array variables, array datapoint) string
+:   Controls the text to display in the title. The <code>variables</code> array
+    contains objects with a <code>type</code> field that can be used to know the
+    axis that are involved in the visualization. The datapoint array is
+    a collection of data that is the response to a query. Each datapoint
+    has one or more fields describing it. If the parameter is <code>null</code> or
+    returns <code>null</code> the title will not be rendered at all.
+
+</p>
+<p><code>datapoint</code> : function(object datapoint, object stats) string
+:   The label to display on top of each datapoint of the chart. The
+    datapoint is associated to a shape in the visualization and that
+    shape depends on the kind of visualization. For a piechart the
+    datapoint is associated to a slice of the pie, while for a line
+    chart the data point is one point on the line. If the parameter is
+    <code>null</code> or returns <code>null</code> the label will not be rendered at all.
+
+</p>
+<p><code>datapointover</code> : function(object datapoint, object stats) string
+:   The label to display when the user passes his mouse over a datapoint
+    shape (see above) or touches a shape in a touch environment. If the
+    parameter is <code>null</code> or returns <code>null</code> the label will not be rendered
+    at all.
+
+</p>
+<p><code>axis</code> : function(string type) string
+:   The label to apply as a legend for the axis.
+
+</p>
+<p><code>tickmark</code> : function(any value, string type) string
+:   The label to apply to the individual tick-marks of the scales. The
+    <code>value</code> argument is the scaled value for that tick-mark and <code>type</code>
+    is the name of the axis.
+
+</p>
+<p><code>yscaleposition</code> : string
+:   (&quot;alternating&quot;, &quot;left&quot;, &quot;right&quot;)
+
+</p>
+<h3>ReportGrid.streamGraph</h3>
+<p><code>ReportGrid.streamGraph(selector el, parameters object) void</code>
+
+</p>
+<p>A Streamgraph layout emphasizes legibility of individual layers,
+arranging the layers in a distinctively organic form. The scatter graph
+requires two axes, one for the X axis and one for the Y axis.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>effect</code> : string
+:   The effect to apply to each slice in a pie or donut chart.
+    :   -   <code>&quot;noeffect&quot;</code> :
+            :   No effect is applied to the stream bands and they are
+                filled with a solid color.
+
+</p>
+<pre><code>    -   `<span class="string">"gradient"</span>` :
+        :   A simple linear <span class="keyword">and</span> vertical gradient that fills the
+            stream band.
+
+    -   `<span class="string">"gradient:{lightness}"</span>` :
+        :   Same <span class="keyword">as</span> above but with control over the lightness <span class="keyword">or</span>
+            darkness of the stop color in the gradient.
+
+    -   `<span class="string">"gradienth"</span>` :
+        :   The band are filled with a complex horizontal <span class="keyword">and</span> linear
+            gradient that enhance <span class="keyword">or</span> reduce the color based on the
+            values in the graph.
+
+    -   `<span class="string">"gradienth:{lightness}"</span>` :
+        :   Same <span class="keyword">as</span> above but with control over the lightness <span class="keyword">or</span>
+            darkness of the stop color in the gradient.</code></pre>
+<p><code>interpolation</code> : string
+:   Controls how the lines in the stream graph are interpolated, the
+    allowed values are: &quot;basis&quot;, &quot;basisopen&quot;, &quot;basisclosed&quot;, &quot;cardinal&quot;,
+    &quot;cardinalopen&quot;, &quot;cardinalclosed&quot;, &quot;cardinal:{value}&quot;,
+    &quot;cardinalopen:{value}&quot;, &quot;cardinalclosed:{value}&quot;, &quot;monotone&quot;,
+    &quot;stepafter&quot;, &quot;stepbefore&quot;, &quot;linear&quot;.
+
+</p>
+<pre><code>The `{value}` parameter <span class="keyword">for</span> certain interpolation values should be
+replaced with a float value.</code></pre>
+<p><code>segment</code> : object segmentoptions
+:   An object that describes the options for segmenting the data (see
+    below).
+
+</p>
+<p><code>segmenton</code> : string
+:   A shortcut that is equivalent to :
+    <code>{ segment : { on : &quot;propertyname&quot; } }</code>
+
+</p>
+<p><code>click</code> : function(object datapoint, object stats) void
+:   A handler function that is executed when the user clicks or touches
+    a datapoint.
+
+</p>
+<p><code>displayanchorlinerule</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function states
+    if a border should be rendered for the axis inside the chart area.
+
+</p>
+<p><code>displayanchorlinetick</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function states
+    if a border should be rendered for the axis inside the axis area.
+
+</p>
+<p><code>displayrules</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the rules for the axis will be rendered below the chart or
+    not. This option controls both the <em>minor</em> and the <em>major</em> rules.
+
+</p>
+<p><code>displayruleminor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the minor rules for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displayrulemajor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the major rules for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displayticklabel</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the tickmark labels for the axis will be rendered below the
+    chart or not. Note that only major tickmarks can have labels.
+
+</p>
+<p><code>displaytickmajor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the major tickmarks for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>displaytickmarks</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the tickmarks for the axis will be rendered below the chart
+    or not. This option controls both the <em>minor</em> and the <em>major</em>
+    tickmarks.
+
+</p>
+<p><code>displaytickminor</code> : bool OR function(string type ) bool
+:   The passed value or the return value of the passed function controls
+    whether the minor tickmarks for the axis will be rendered below the
+    chart or not.
+
+</p>
+<p><code>label</code> : object label
+:   Configuration object for text labels.
+
+</p>
+<p><code>labelanchor</code> : string OR function(string type) string
+:   The passed value or the return value of the passed function controls
+    the position of the label in regards of the tickmark origin point.
+    Valid values for this property are: <code>topleft</code>, <code>top</code>, <code>topright</code>,
+    <code>left</code>, <code>center</code>, <code>right</code>, <code>bottomleft</code>, <code>bottom</code>, <code>bottomright</code>,
+    <code>center</code>. By default the anchor will depend on the position of the
+    axis.
+
+</p>
+<p><code>labelangle</code> : float OR function(string type) float
+:   The passed value or the return value of the passed function controls
+    the inclination (angle in degrees) of the labels.
+
+</p>
+<p><code>labelorientation</code> : string OR function(string type) string
+:   The passed value or the return value of the passed function controls
+    the way the label is oriented in relation with its tickmark. The
+    valid values for this option are: <code>orthogonal</code> or <code>aligned</code>.
+
+</p>
+<p><code>lengthtick</code> : float
+:   Length in pixel of the tickmark. Controls both the minor and major
+    tickmarks.
+
+</p>
+<p><code>lengthtickmajor</code> : float
+:   Sets the length in pixel of the major tickmarks.
+
+</p>
+<p><code>lengthtickminor</code> : float
+:   Sets the length in pixel of the minor tickmarks.
+
+</p>
+<p><code>paddingtick</code> : float
+:   Padding distance between the area occupied by the chart and the
+    tickmarks. Controls both the major and minor tickmarks.
+
+</p>
+<p><code>paddingticklabel</code> : float
+:   Padding distance between the area occupied by the chart and the
+    tickmark labels.
+
+</p>
+<p><code>paddingtickmajor</code> : float
+:   Padding distance between the area occupied by the chart and the
+    major tickmarks.
+
+</p>
+<p><code>paddingtickminor</code> : float
+:   Padding distance between the area occupied by the chart and the
+    minor tickmarks.
+
+</p>
+<p><code>height</code> : float
+:   Height of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<p><code>layout</code> : string
+:   This option is automatically set to the most convenient value based
+    on the selected visualization. This field should be set only to
+    assemble unusual and complex visualizations. The accepted values so
+    far are <code>&quot;simple&quot;</code>, <code>&quot;Cartesian&quot;</code> and <code>&quot;x&quot;</code>
+
+</p>
+<p><code>main</code> : string
+:   (experimental) The <code>main</code> field is used to identify in which panel
+    of the selected layout the visualization should be rendered.
+
+</p>
+<p><code>padding</code> : object padding options
+:   The padding object controls how the chart is spaced from its
+    margins.
+
+</p>
+<p><code>titleontop</code> : bool
+:   Set if the title (assuming that one exists) is set on top of the
+    visualization.
+
+</p>
+<p><code>width</code> : float
+:   Width of the visualization. If not specified it is assumed from the
+    HTML container.
+
+</p>
+<h4>Padding Options</h4>
+<p>If not configured, the values below are automatically set to convey the
+best possible visual without cutting off parts of the axis labels or
+titles. All of these options are measures in pixels (integer values).
+
+</p>
+<p>The available options are: <code>bottom</code>, <code>left</code>, <code>right</code> and <code>top</code>. Segment
+Options ---------------
+
+</p>
+<p>Segment options convey a way to separate several datapoints into
+separated set of values. This comes handy when you want to draw several
+lines from a uniquer data set of datapoints.
+
+</p>
+<p>Both the <code>scale</code> and <code>transform</code> parameters are optionals.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>on</code> : string
+:   Defines the property used to split the datapoints. A new set of
+    datapoints is created for each distinct value for the selected
+    property.
+
+</p>
+<p><code>scale</code> : function(array datapoint) array
+:   The scale function is used to transform each segmented data set of
+    datapoints in a new data set.
+
+</p>
+<p><code>transform</code> : function(array datapoint) array
+:   The transform function works on the data orthogonally.
+
+</p>
+<p><code>values</code>: string array (optional)
+:   Specifies the values for the segmentation. This parameter is
+    optional and if not set, the segment values are derived from the
+    loaded dataset.
+
+</p>
+<h4>Label Options</h4>
+<p>The label options object provides a way to customize the labels and
+texts that appear on your visualizations. They usually take a function
+so that your labels can be customized with their related datapoints.
+
+</p>
+<p><strong>options:</strong>
+
+</p>
+<p><code>title</code> : string OR function(array variables, array datapoint) string
+:   Controls the text to display in the title. The <code>variables</code> array
+    contains objects with a <code>type</code> field that can be used to know the
+    axis that are involved in the visualization. The datapoint array is
+    a collection of data that is the response to a query. Each datapoint
+    has one or more fields describing it. If the parameter is <code>null</code> or
+    returns <code>null</code> the title will not be rendered at all.
+
+</p>
+<p><code>datapoint</code> : function(object datapoint, object stats) string
+:   The label to display on top of each datapoint of the chart. The
+    datapoint is associated to a shape in the visualization and that
+    shape depends on the kind of visualization. For a piechart the
+    datapoint is associated to a slice of the pie, while for a line
+    chart the data point is one point on the line. If the parameter is
+    <code>null</code> or returns <code>null</code> the label will not be rendered at all.
+
+</p>
+<p><code>datapointover</code> : function(object datapoint, object stats) string
+:   The label to display when the user passes his mouse over a datapoint
+    shape (see above) or touches a shape in a touch environment. If the
+    parameter is <code>null</code> or returns <code>null</code> the label will not be rendered
+    at all.
+
+</p>
+<p><code>axis</code> : function(string type) string
+:   The label to apply as a legend for the axis.
+
+</p>
+<p><code>tickmark</code> : function(any value, string type) string
+:   The label to apply to the individual tick-marks of the scales. The
+    <code>value</code> argument is the scaled value for that tick-mark and <code>type</code>
+    is the name of the axis.
+
+</p>
+<p><code>yscaleposition</code> : string
+:   (&quot;alternating&quot;, &quot;left&quot;, &quot;right&quot;)
+
+</p>
+<h3>ReportGrid.chart</h3>
+<p><code>ReportGrid.chart(selector el, parameters object, string type) void</code>
+
+</p>
+<p>The <code>ReportGrid.chart</code> method is a generic function to build a
+visualization programmatically (passing the type of visualization as the
+third parameter). The <code>type</code> argument can take any of the names of the
+methods described above all lower case.
+
+</p>
+<p>The following two declarations are basically equivalent:
+
+</p>
+<pre><code>ReportGrid.lineChart("#chart", { ...});
+
+ReportGrid.chart("#chart", { ...}, "linechart");</code></pre>
+<h2>Stats</h2>
+<p>Some custom function receive as a parameter a <code>stat</code> object. The stats
+object contains statistic information about a dataset. The stats are
+always relative to a specific axis.
+
+</p>
+<p><code>min</code> :
+:   The smallest value in the data set.
+
+</p>
+<p><code>max</code> :
+:   The biggest value in the data set.
+
+</p>
+<p><code>tot</code> : (only for numeric values)
+:   The numeric total of all the values in the dataset.
+
+</p>
+<p><code>count</code> :
+:   The number of values in the data set.
+
+</p>
+<p><code>values</code> :
+:   The unordered set of distinct values in the dataset.
+
+</p>
+<h2>ReportGrid Utilities</h2>
+<p>The reportgrid-viz.js file adds a lot of fields to the ReportGrid
+object; most of them are related to visualizations but some are generic
+utility functions and variables.
+
+</p>
+<h3>ReportGrid.charts.ready</h3>
+<p><code>ReportGrid.charts.ready(callback function) void</code>
+
+</p>
+<p>The passed callback function is called once when all the visualizations
+on the page are rendered for the first time.
+
+</p>
+<h3>ReportGrid.compare</h3>
+<p><code>ReportGrid.compare(any a, any b) string</code>
+
+</p>
+<p>It takes two argument and returns an integer as the result of their
+comparison.
+
+</p>
+<p>examples:
+
+</p>
+<pre><code>console.log(ReportGrid.compare(<span class="string">"b"</span>, <span class="string">"a"</span>));
+<span class="comment">// outputs: 1</span>
+console.log(ReportGrid.compare(<span class="number">1</span>, <span class="number">2</span>));
+<span class="comment">// outputs: :1</span></code></pre>
+<h3>ReportGrid.date.parse</h3>
+<p><code>ReportGrid.date.parse(string date) Date</code>
+
+</p>
+<p>Returns a date from a string value. The string can contain a ISO format
+date or an expression like &quot;2 days ago&quot;, &quot;today&quot;, &quot;now&quot;, &quot;yesterday&quot; ...
+
+</p>
+<h3>ReportGrid.date.range</h3>
+<p><code>ReportGrid.date.range(date start, date end, string periodicity) array</code>
+
+</p>
+<p>Creates an array of timestamp values for the specified <code>periodicity</code>
+from <code>start</code> to <code>end</code>.
+
+</p>
+<h3>ReportGrid.date.snap</h3>
+<p><code>ReportGrid.date.snap(float timestamp, string periodicity, ?int mode) float</code>
+
+</p>
+<p>For the specified periodicity, it snaps the timestamp to the closest
+value and returns it in timestamp format. The mode parameter states if
+the snap always happen on the value before (mode \&lt; 0), to the value
+after (mode > 0) or to the closest one (mode = 0, default value).
+
+</p>
+<p>example:
+
+</p>
+<pre><code>console.log(ReportGrid.date.snap(<span class="keyword">new</span> Date(<span class="string">"2011:08:01 05:46:00"</span>), <span class="string">"day"</span>))
+<span class="comment">// outputs the timestamp for "2011:08:01 00:00:00"</span></code></pre>
+<h3>ReportGrid.dump</h3>
+<p><code>ReportGrid.dump(any value) string</code>
+
+</p>
+<p>It takes one argument of any type and returns a string out of it. It is
+very convenient to serialize and object in a readable string.
+
+</p>
+<p>examples:
+
+</p>
+<pre><code>console.log(ReportGrid.dump(<span class="number">123456.789</span>));
+<span class="comment">// outputs: "123,456.78"</span>
+console.log(ReportGrid.dump(<span class="keyword">new</span> Date(<span class="string">"2011:09-23"</span>)));
+<span class="comment">// outputs: "Friday, September 23, 2011"</span>
+console.log(ReportGrid.dump({ a : <span class="number">1</span>, b : <span class="string">"c"</span> }));
+<span class="comment">// outputs: "{a:1,b:c}"</span>
+console.log(ReportGrid.dump([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]));
+<span class="comment">// outputs: "1, 2, 3"</span></code></pre>
+<h3>ReportGrid.humanize</h3>
+<p><code>ReportGrid.humanize(any value) string</code>
+
+</p>
+<p>It applies a set of transformation to a string to make it more readable.
+The transformations made are: * splits the text into several words
+according to upper-case letters (e.g. <code>CallMe</code> becomes <code>Call Me</code>). *
+replaces all the underscores in the string with white spaces *
+capitalize each separate word in the text * formats integer and float
+values * formats integer and float values in range like texts (e.g.
+<code>income_1000:10000</code> becomes <code>Income 1.000:10.0000</code>)
+
+</p>
+<h3>ReportGrid.info.charts.version</h3>
+<p><code>ReportGrid.info.charts.version string</code>
+
+</p>
+<p>Contains the version of the reportgrid-charts.js in use.
+
+</p>
+<p>examples:
+
+</p>
+<pre><code>console.log(ReportGrid.info.charts.version);
+<span class="comment">// outputs: "1.0.1.73" &lt;-- this value obviously changes with new releases</span></code></pre>
+<h3>ReportGrid.math.random</h3>
+<p><code>ReportGrid.math.random() float</code>
+
+</p>
+<p>Returns a random float number between 0 and 1. Note that the random
+number generator is actually a <em>pseudo</em> random number generator. That
+means that if the generator is used twice in two different contexts (for
+example reloading the HTML/JS page) it will generate the same sequence
+of numbers.
+
+</p>
+<h3>ReportGrid.symbol</h3>
+<p><code>ReportGrid.symbol(string type, optional int size) string</code>
+
+</p>
+<p>It takes the type of symbol and its size (area in pixel) and returns its
+SVG Path representation. The symbols you can draw are: &quot;triangleDown&quot;,
+&quot;triangleUp&quot;, &quot;square&quot;, &quot;diamond&quot;, &quot;cross&quot;, &quot;circle&quot;, &quot;arrowUp&quot;,
+&quot;arrowDown&quot;, &quot;arrowDownWide&quot;, &quot;arrowRight&quot;, &quot;arrowLeft&quot;, &quot;star&quot;. If size
+is not specified 100 is the default value.
+
+</p>
+<p>example:
+
+</p>
+<pre><code>console.log(ReportGrid.symbol(<span class="string">"star"</span>));
+<span class="comment">// outputs: "M0,-8.97635689348711L2.1184202268629577,-2.917315990383311 ..."</span></code></pre>
+
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="developer-center-tooltips">
+        <div id="path-tt" class="tool-tip">
+          <h4>Path</h4>
+          <p>This is the path to your data. Replace 'path or [path], tic or brackets included with the correct directory location.</p>
+        </div>
+        <div id="root-path-tt" class="tool-tip">
+          <h4>Root Path</h4>
+          <p>This your root path. Replace [root path], brackets included with your root path. Your root path can be found on<a href="../../../account/index.html">your account page</a>.</p>
+        </div>
+        <div id="account-id-tt" class="tool-tip">
+          <h4>Account ID</h4>
+          <p>This is your accountId. Replace 'accountId, tic included with your accountId. Your accountId is the same as your root path and can be found on<a href="../../../account/index.html">your account page</a></p>
+        </div>
+        <div id="grant-id-tt" class="tool-tip">
+          <h4>Grant ID</h4>
+          <p>This is a grantId. Repalce 'grantId, tic included with the appropriate grantId. GrantId's can be generated and accessed using various Security API calls.</p>
+        </div>
+        <div id="api-key-tt" class="tool-tip">
+          <h4>API Key</h4>
+          <p>This is an API Key. Replace 'apiKey or [auth API key], tic or brackets included with the appropriate API Key. You are assigned an initial API Key upon creating your account that is accessible on<a href="../../../account/index.html">your account page</a>. API Keys can also be created using the Security API.</p>
+        </div>
+        <div id="auth-api-key-tt" class="tool-tip">
+          <h4>Auth API Key</h4>
+          <p>This is the authorizing API Key. Most likely it is your initital master Precog API Key. It can be found on<a href="../../../account/index.html">your account page</a>. Replace [auth API Key], brackets included with your Precog API key.</p>
+        </div>
+        <div id="query-tt" class="tool-tip">
+          <h4>Query</h4>
+          <p>This is your custom Quirrel query. See documentation on the quirrel language<a href="http://quirrel-lang.org/">here</a>. Replace [...], brackets included, with a query that has proper syntax.</p>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
+  </body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/devcntr.css">
+    <link rel="icon" type="image/png" href="../../../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CLato:300,400,700,900,300italic,400italic%7CMontserrat:400,700" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/devcntr.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../../for-developers/index.html"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul>
+            <li><a id="login-link" href="../../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../../../blog/index.html">Blog</a></li>
+            <li><a href="http://support.precog.com">Support</a></li>
+            <li><a href="../../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="body">
+      <div id="body-menu">
+        <ul id="fixed-menu">
+          <h1 id="page-title">Dev Center</h1>
+          <li><a href="../../getting-started/overview/index.html">Getting Started</a>
+            <ul class="getting-started">
+              <li><a href="../../getting-started/overview/index.html">Overview</a></li>
+              <li><a href="../../getting-started/faq/index.html">FAQ</a></li>
+              <li><a href="../../getting-started/analytics/index.html">Analytics</a></li>
+            </ul>
+          </li>
+          <li><a href="../../how-tos/index.html">How To Guides</a>
+            <ul class="how-tos">
+              <li><a href="../../how-tos/common-analytics/index.html">Common Analytics</a></li>
+              <li><a href="../../how-tos/embed-reporting/index.html">Embedded Reporting</a></li>
+              <li><a href="../../how-tos/machine-learning/index.html">Machine Learning</a></li>
+              <li><a href="../../how-tos/optimize-performance/index.html">Optimizing Performance</a></li>
+            </ul>
+          </li>
+          <li><a href="../../rest-apis/accounts/index.html">Rest API</a>
+            <ul class="rest-apis">
+              <li><a href="../../rest-apis/accounts/index.html">Accounts</a></li>
+              <li><a href="../../rest-apis/ingest/index.html">Ingest</a></li>
+              <li><a href="../../rest-apis/metadata/index.html">MetaData</a></li>
+              <li><a href="../../rest-apis/analytics/index.html">Analytics</a></li>
+              <li><a href="../../rest-apis/security/index.html">Security</a></li>
+            </ul>
+          </li>
+          <li><a href="../../client-libraries/index.html">Client Libraries</a></li>
+          <li><a href="../../viz-api/index.html">Visualization API</a>
+            <ul class="viz-api">
+              <li><a href="../../viz-api/charts-api/index.html">Charts API</a></li>
+              <li><a href="../../viz-api/transform-api/index.html">Data Transform API</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html">Quirrel</a></li>
+        </ul>
+      </div>
+      <div id="body-content">
+        <h1 class="page-title">Introduction</h1>
+        <div id="dynamic-body-links">
+          <ul id="section-index"></ul>
+        </div>
+        <div id="page-content"><h2>Introduction</h2>
+<p>Quirrel is a simple but powerful query language designed for performing analytics 
+on JSON data. Quirrel is the primary interface to the Precog analytics engine.
+
+</p>
+<p>Quirrel can handle the full range of JSON (actually, a strict 
+superset of JSON), and can perform everything from simple rollups and
+time series queries, to much more advanced statistics and machine learning.
+
+</p>
+<p>In addition, Quirrel gracefully handles heterogeneous data and allows you
+to gradually refine the structure of your data inside a query.
+
+</p>
+<p>This article provides a fast introduction to Quirrel. See the references
+at the end for more information.
+
+</p>
+<h3>Literal Values</h3>
+<p>Quirrel supports all of JSON, so you can create literal JSON values in Quirrel.
+
+</p>
+<p>For example:
+
+</p>
+<pre><code>{"gender": "female", "age": 42, "interests": ["weightlifting", "rowing"]}</code></pre>
+<p>or:
+
+</p>
+<pre><code>[[1, 0, 0], [0, 1, 0], [0, 0, 1]]</code></pre>
+<h3>Expressions</h3>
+<p>You can create numerical and boolean expressions using familiar operators like * (multiplication),
+/ (division), + (addition), ^ (exponentiation), - (subtraction), &amp; (boolean AND), | (boolean OR),
+! (boolean NOT), and many more.
+
+</p>
+<p>For example:
+
+</p>
+<pre><code>2 * 2 ^ 3 + 4 - 3</code></pre>
+<p>or:
+
+</p>
+<pre><code><span class="keyword">true</span> | (!<span class="keyword">false</span> &amp; <span class="keyword">true</span>) &amp; !<span class="keyword">false</span></code></pre>
+<h3>Loading Data</h3>
+<p>Queries need to begin with loading some data. You can use the <em>load()</em> function,
+or the absolute path load operator, represented by two forward slashes (//).
+
+</p>
+<p>For example:
+
+</p>
+<pre><code><span class="comment">//path/to/data</span></code></pre>
+<p>or:
+
+</p>
+<pre><code>load("/path/to/data")</code></pre>
+<h3>Assignment</h3>
+<p>Often times, you will want to store the data inside a variable. To do this, just
+use the assignment operator (<em>:=</em>). Assigning a variable to the data will 
+allow you to more easily reference the data, without having to call one of
+the load commands each time.
+
+</p>
+<p>For example:
+
+</p>
+<pre><code>data := <span class="comment">//path/to/data</span></code></pre>
+<p>If you try to run this query, you&apos;ll get an error, because the query doesn&apos;t return
+anything. It just loads some data and stores it into a variable.
+
+</p>
+<p>If you wanted to retrieve the whole data set, you could run the following query:
+
+</p>
+<pre><code>data := <span class="comment">//path/to/data</span>
+data</code></pre>
+<h3>Object Drilldown</h3>
+<p>One basic operation is the object drilldown operator (<em>.</em>). This lets you
+look at a particular field of a JSON object.
+
+</p>
+<p>For example, the following query extracts out the <em>total</em>&apos;s stored inside
+a bunch of transaction objects:
+
+</p>
+<pre><code>data := <span class="comment">//tutorial/transactions</span>
+data.total    </code></pre>
+<h3>Filtering Data</h3>
+<p>To filter data, use the <em>where</em> operator. This operators lets you filter the 
+values in a set by some boolean (true/false) predicate.
+
+</p>
+<p>For example, the following query looks at <em>total</em>&apos;s where the data source
+is &quot;ad1&quot;:
+
+</p>
+<pre><code>data := <span class="comment">//tutorial/transactions</span>
+data.total where data.source = <span class="string">"ad1"</span></code></pre>
+<h3>Augmentation</h3>
+<p>You can add fields to objects using the <em>with</em> operator.
+
+</p>
+<p>On the left of the <em>with</em> operator is the original data set. On the right is an
+object that defines new fields to include in the merged set.
+
+</p>
+<p>The example below creates an augmented dataset called <em>dataWithHour</em>,
+which contains an <em>hour</em> variable formed using a built-in time function 
+(<em>std::time::hourOfDay</em>). This new variable is then used as a filter in a
+where statement.
+
+</p>
+<pre><code>import std::time::*
+
+data := <span class="comment">//tutorial/transactions</span>
+dataWithHour := data with {hour: hourOfDay(data.timeStamp)}
+dataWithHour.total where dataWithHour.hour &amp;gt; <span class="number">17</span></code></pre>
+<h3>Standard Library</h3>
+<p>There are a bunch of useful functions built into the Quirrel standard library.
+
+</p>
+<p>You can use these functions using the syntax, <em>f(args)</em>, where <em>f</em> is the function
+name, and <em>args</em> are the inputs to the function.
+
+</p>
+<p>For example, if you wanted to average the totals in the <em>//tutorial/transaction</em>:
+
+</p>
+<pre><code>data := <span class="comment">//tutorial/transactions</span>
+mean(data.total)</code></pre>
+<h3>Grouping</h3>
+<p>The <em>solve</em> construct allows you to perform very powerful grouping operations.
+
+</p>
+<p>In the <em>solve</em> construct, Quirrel identifies solutions for a set of variables
+(called <em>tic variables</em>), and evaluates an expression for each solution. The
+results are then merged together in a single set.
+
+</p>
+<p>Take the following example:
+
+</p>
+<pre><code>data := //tutorial/transactions
+solve 'source
+  {source: 'source, averageSales: mean(data.total where data.source = 'source)}</code></pre>
+<p>In this example, Quirrel solves for <em>&apos;source</em>, identifying all solutions. For each <em>&apos;source</em>
+solution, it then evaluates the body of the solve (to yield the mean for the given source), 
+and merges the results together into a single set, which is the output of the query.
+
+</p>
+<h2>Quirrel Standard</h2>
+<ul>
+<li><a href="http://quirrel-lang.org/tutorial.html">Quirrel Tutorial</a></li>
+<li><a href="http://quirrel-lang.org/reference.html">Quirrel Reference</a></li>
+</ul>
+<h2>Learning Quirrel</h2>
+<ul>
+<li><a href="../../how-tos/common-analytics/index.html">How to Perform Common Analytics on Precog</a></li>
+<li><a href="http://www2.precog.com/learn-quirrel-level-1">Quirrel Game</a></li>
+<li><a href="http://www.youtube.com/user/PrecogPlatform">Quirrel Tutorial Videos</a></li>
+<li><a href="irc://irc.freenode.net:6667/quirrel">Quirrel IRC Channel</a></li>
+<li><a href="mailto:support@precog.com">Support Forum</a></li>
+<li><a href="mailto:support@precog.com">support@precog.com</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="developer-center-tooltips">
+        <div id="path-tt" class="tool-tip">
+          <h4>Path</h4>
+          <p>This is the path to your data. Replace 'path or [path], tic or brackets included with the correct directory location.</p>
+        </div>
+        <div id="root-path-tt" class="tool-tip">
+          <h4>Root Path</h4>
+          <p>This your root path. Replace [root path], brackets included with your root path. Your root path can be found on<a href="../../../account/index.html">your account page</a>.</p>
+        </div>
+        <div id="account-id-tt" class="tool-tip">
+          <h4>Account ID</h4>
+          <p>This is your accountId. Replace 'accountId, tic included with your accountId. Your accountId is the same as your root path and can be found on<a href="../../../account/index.html">your account page</a></p>
+        </div>
+        <div id="grant-id-tt" class="tool-tip">
+          <h4>Grant ID</h4>
+          <p>This is a grantId. Repalce 'grantId, tic included with the appropriate grantId. GrantId's can be generated and accessed using various Security API calls.</p>
+        </div>
+        <div id="api-key-tt" class="tool-tip">
+          <h4>API Key</h4>
+          <p>This is an API Key. Replace 'apiKey or [auth API key], tic or brackets included with the appropriate API Key. You are assigned an initial API Key upon creating your account that is accessible on<a href="../../../account/index.html">your account page</a>. API Keys can also be created using the Security API.</p>
+        </div>
+        <div id="auth-api-key-tt" class="tool-tip">
+          <h4>Auth API Key</h4>
+          <p>This is the authorizing API Key. Most likely it is your initital master Precog API Key. It can be found on<a href="../../../account/index.html">your account page</a>. Replace [auth API Key], brackets included with your Precog API key.</p>
+        </div>
+        <div id="query-tt" class="tool-tip">
+          <h4>Query</h4>
+          <p>This is your custom Quirrel query. See documentation on the quirrel language<a href="http://quirrel-lang.org/">here</a>. Replace [...], brackets included, with a query that has proper syntax.</p>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
+  </body>
+</html>

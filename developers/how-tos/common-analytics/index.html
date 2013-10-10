@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/devcntr.css">
+    <link rel="icon" type="image/png" href="../../../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CLato:300,400,700,900,300italic,400italic%7CMontserrat:400,700" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/devcntr.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../../for-developers/index.html"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul>
+            <li><a id="login-link" href="../../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../../../blog/index.html">Blog</a></li>
+            <li><a href="http://support.precog.com">Support</a></li>
+            <li><a href="../../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="body">
+      <div id="body-menu">
+        <ul id="fixed-menu">
+          <h1 id="page-title">Dev Center</h1>
+          <li><a href="../../getting-started/overview/index.html">Getting Started</a>
+            <ul class="getting-started">
+              <li><a href="../../getting-started/overview/index.html">Overview</a></li>
+              <li><a href="../../getting-started/faq/index.html">FAQ</a></li>
+              <li><a href="../../getting-started/analytics/index.html">Analytics</a></li>
+            </ul>
+          </li>
+          <li><a href="../index.html">How To Guides</a>
+            <ul class="how-tos">
+              <li><a href="index.html">Common Analytics</a></li>
+              <li><a href="../embed-reporting/index.html">Embedded Reporting</a></li>
+              <li><a href="../machine-learning/index.html">Machine Learning</a></li>
+              <li><a href="../optimize-performance/index.html">Optimizing Performance</a></li>
+            </ul>
+          </li>
+          <li><a href="../../rest-apis/accounts/index.html">Rest API</a>
+            <ul class="rest-apis">
+              <li><a href="../../rest-apis/accounts/index.html">Accounts</a></li>
+              <li><a href="../../rest-apis/ingest/index.html">Ingest</a></li>
+              <li><a href="../../rest-apis/metadata/index.html">MetaData</a></li>
+              <li><a href="../../rest-apis/analytics/index.html">Analytics</a></li>
+              <li><a href="../../rest-apis/security/index.html">Security</a></li>
+            </ul>
+          </li>
+          <li><a href="../../client-libraries/index.html">Client Libraries</a></li>
+          <li><a href="../../viz-api/index.html">Visualization API</a>
+            <ul class="viz-api">
+              <li><a href="../../viz-api/charts-api/index.html">Charts API</a></li>
+              <li><a href="../../viz-api/transform-api/index.html">Data Transform API</a></li>
+            </ul>
+          </li>
+          <li><a href="../../quirrel/introduction/index.html">Quirrel</a></li>
+        </ul>
+      </div>
+      <div id="body-content">
+        <h1 class="page-title">Common Analytics</h1>
+        <div id="dynamic-body-links">
+          <ul id="section-index"></ul>
+        </div>
+        <div id="page-content"><h2>How to Perform Common Analytics on Precog</h2>
+<h3>Introduction</h3>
+<p>This is a short guide that shows how to perform very common analytics
+using the Quirrel query language.
+
+</p>
+<p>Quirrel is a very powerful language that lets you perform much more advanced
+analytics and statistics than shown in this guide. For more information on how
+to write advanced Quirrel, please see the following resources:
+
+</p>
+<ul>
+<li><a href="http://quirrel-lang.org/tutorial.html">Quirrel Tutorial</a></li>
+<li><a href="http://quirrel-lang.org/reference.html">Quirrel Reference</a></li>
+<li><a href="index.html">How to Perform Common Analytics on Precog</a></li>
+<li><a href="http://www2.precog.com/learn-quirrel-level-1">Quirrel Game</a></li>
+<li><a href="http://www.youtube.com/user/PrecogPlatform">Quirrel Tutorial Videos</a></li>
+<li><a href="irc://irc.freenode.net:6667/quirrel">Quirrel IRC Channel</a></li>
+<li><a href="mailto:support@precog.com">Support Forum</a></li>
+<li><a href="mailto:support@precog.com">support@precog.com</a></li>
+</ul>
+<p>All of these examples have been constructed so you can run them in the demo
+Labcoat environment, which you can access <a href="https://labcoat.precog.com">here</a>.
+
+</p>
+<p>By tweaking the names of the directories and field names, you should be able
+to easily run versions of these queries on your own data, too.
+
+</p>
+<h3>How to compute a count</h3>
+<pre><code>clicks := <span class="comment">//clicks</span>
+count(clicks)</code></pre>
+<h3>How to compute a sum</h3>
+<pre><code>conversions := <span class="comment">//conversions</span>
+
+sum(conversions.product.price)    </code></pre>
+<h3>How to find the minimum, maximum, and average</h3>
+<pre><code>product := (<span class="comment">//conversions).product</span>
+
+  {min:    min(product.price),
+
+  max:     max(product.price),
+
+  average: mean(product.price)}</code></pre>
+<h3>How to discard extreme values (outliers)</h3>
+<pre><code>conversions := <span class="comment">//conversions</span>
+
+average := mean(conversions.product.price)
+
+bound := <span class="number">3</span> * stdDev(conversions.product.price)
+
+conversions where
+
+ (conversions.product.price &amp;gt; (average - bound)) &amp;amp;
+
+ (conversions.product.price &amp;lt; (average + bound))</code></pre>
+<h3>How to filter data</h3>
+<pre><code>conversions := <span class="comment">//conversions</span>
+
+conversions where
+
+ (conversions.product.price &amp;gt; <span class="number">2</span>) &amp;amp;
+
+ (conversions.customer.age &amp;lt; <span class="number">20</span>)</code></pre>
+<h3>How to sort data</h3>
+<pre><code>import std::stats::rankNum
+
+conversions := <span class="comment">//conversions</span>
+
+conversions where
+
+ rankNum(conversions.customer.age) &amp;lt; <span class="number">10</span></code></pre>
+<h3>How to group data</h3>
+<pre><code>conversions := <span class="comment">//conversions</span>
+
+solve <span class="string">'age, '</span>gender
+
+ conversions<span class="string">' := conversions where
+
+   conversions.customer.age = '</span>age &amp;amp;
+
+   conversions.customer.gender = <span class="string">'gender
+
+ {age: '</span>age, gender: <span class="string">'gender, count: count(conversions'</span>)}</code></pre>
+<h3>How to compute a histogram</h3>
+<pre><code>london := //summer_games/london_medals
+
+solve 'age
+
+ london' := london where london.Age = 'age
+
+ {age: 'age, count: count(london')}</code></pre>
+<h3>How to compute a top-10 histogram</h3>
+<pre><code>import std::stats::rank
+
+london := //summer_games/london_medals
+
+histogram := solve 'age
+
+ london' := london where london.Age = 'age
+
+ {age: 'age, count: count(london')}
+
+ranked := histogram with {rank: rank(histogram.count)}
+
+ranked where ranked.rank &amp;lt; 10</code></pre>
+<h3>How to compute a bottom-10 histogram</h3>
+<pre><code>import std::stats::rank
+
+london := //summer_games/london_medals
+
+histogram := solve 'age
+
+ london' := london where london.Age = 'age
+
+ {age: 'age, count: count(london')}
+
+ranked := histogram with {rank: rank(neg histogram.count)}
+
+ranked where ranked.rank &amp;lt; 10</code></pre>
+<h3>How to parse dates and times</h3>
+<pre><code>import std::time::parseDateTime
+
+conversions := <span class="comment">//conversions</span>
+
+parseDateTime(conversions.timeStamp, <span class="string">"yyyy-MM-ddThh:mm:ss.SSS"</span>)</code></pre>
+<h3>How to fuzzily parse dates and times</h3>
+<pre><code>import std::time::parseDateTimeFuzzy
+
+conversions := <span class="comment">//conversions</span>
+
+parseDateTimeFuzzy(conversions.timeStamp)</code></pre>
+<h3>How to compute a day-by-day histogram</h3>
+<pre><code>import std::time::date
+
+conversions := //conversions
+
+solve 'date
+
+ conversions' := conversions where
+
+   date(conversions.timeStamp) = 'date
+
+ {count: count(conversions'), date: 'date}</code></pre>
+<h3>How to compute a day-of-week histogram</h3>
+<pre><code>import std::time::dayOfWeek
+
+conversions := //conversions
+
+solve 'dow
+
+ conversions' := conversions where
+
+   dayOfWeek(conversions.timeStamp) = 'dow
+
+ {count: count(conversions'), dow: 'dow}</code></pre>
+<h3>How to compute an hour-by-hour histogram</h3>
+<pre><code>import std::time::dateHour
+
+conversions := //conversions
+
+solve 'dateHour
+
+ conversions' := conversions where
+
+   dateHour(conversions.timeStamp) = 'dateHour
+
+ {count: count(conversions'), dateHour: 'dateHour}</code></pre>
+<h3>How to compute an hour-of-day histogram</h3>
+<pre><code>import std::time::hourOfDay
+
+conversions := //conversions
+
+solve 'hour
+
+ conversions' := conversions.timeStamp where
+
+   hourOfDay(conversions.timeStamp) = 'hour
+
+ {count: count(conversions'), hour: 'hour}</code></pre>
+<h3>How to join two different data sets</h3>
+<pre><code>billing := <span class="comment">//billing</span>
+
+conversions := <span class="comment">//conversions</span>
+
+billing ~ conversions
+
+{customerId: conversions.customer.ID,
+
+billDate: billing.date} where
+
+ conversions.customer.ID = billing.customer.ID</code></pre>
+<h3>How to perform a time-windowed query</h3>
+<pre><code>import std::time::hourOfDay
+
+transactions := //tutorial/transactions
+
+transactions' := transactions with {hourOfDay: hourOfDay(transactions.timeStamp)}
+
+solve 'hour = transactions'.hourOfDay
+
+ lowerBound := 'hour - 1
+
+ upperBound := 'hour + 1
+
+ window := transactions' where
+
+   transactions'.hourOfDay &amp;gt;= lowerBound &amp;amp;
+
+    transactions'.hourOfDay &amp;lt;= upperBound
+
+ {hour: 'hour, count: count(window)}</code></pre>
+<h3>How to compute a cumulative total over time</h3>
+<pre><code>import std::stats::rank
+
+import std::time::date
+
+transactions := <span class="comment">//tutorial/transactions</span>
+
+transactions<span class="string">' := transactions with
+
+ {order: rank(date(transactions.timeStamp)),
+
+  day: date(transactions.timeStamp)}
+
+solve '</span>day
+
+ daysT := transactions<span class="string">' where transactions'</span>.day = <span class="string">'day
+
+ dayOrder := min(daysT.order)
+
+ {day: '</span>day,
+
+  total: sum(transactions<span class="string">'.price where
+
+               transactions'</span>.order &amp;lt;= dayOrder)}</code></pre>
+<h3>How to find the duration between events</h3>
+<pre><code>import std::stats::denseRank
+
+import std::time::getMillis
+
+conversions := //conversions
+
+solve 'customerId
+
+   conversions' := conversions where
+
+   conversions.customer.ID = 'customerId
+
+ c1 := conversions' with
+
+   {rank: denseRank(conversions.timeStamp),
+
+    millis: getMillis(conversions.timeStamp)}
+
+ c2 := new c1
+
+ solve 'rank
+
+   c1' := c1 where c1.rank = 'rank
+
+   c2' := c2 where c2.rank - 1 = 'rank
+
+   c1' ~ c2'
+
+   {customerId: 'customerId,
+
+    duration: c1'.millis - c2'.millis,
+
+    price: c2'.product.price}</code></pre>
+
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="developer-center-tooltips">
+        <div id="path-tt" class="tool-tip">
+          <h4>Path</h4>
+          <p>This is the path to your data. Replace 'path or [path], tic or brackets included with the correct directory location.</p>
+        </div>
+        <div id="root-path-tt" class="tool-tip">
+          <h4>Root Path</h4>
+          <p>This your root path. Replace [root path], brackets included with your root path. Your root path can be found on<a href="../../../account/index.html">your account page</a>.</p>
+        </div>
+        <div id="account-id-tt" class="tool-tip">
+          <h4>Account ID</h4>
+          <p>This is your accountId. Replace 'accountId, tic included with your accountId. Your accountId is the same as your root path and can be found on<a href="../../../account/index.html">your account page</a></p>
+        </div>
+        <div id="grant-id-tt" class="tool-tip">
+          <h4>Grant ID</h4>
+          <p>This is a grantId. Repalce 'grantId, tic included with the appropriate grantId. GrantId's can be generated and accessed using various Security API calls.</p>
+        </div>
+        <div id="api-key-tt" class="tool-tip">
+          <h4>API Key</h4>
+          <p>This is an API Key. Replace 'apiKey or [auth API key], tic or brackets included with the appropriate API Key. You are assigned an initial API Key upon creating your account that is accessible on<a href="../../../account/index.html">your account page</a>. API Keys can also be created using the Security API.</p>
+        </div>
+        <div id="auth-api-key-tt" class="tool-tip">
+          <h4>Auth API Key</h4>
+          <p>This is the authorizing API Key. Most likely it is your initital master Precog API Key. It can be found on<a href="../../../account/index.html">your account page</a>. Replace [auth API Key], brackets included with your Precog API key.</p>
+        </div>
+        <div id="query-tt" class="tool-tip">
+          <h4>Query</h4>
+          <p>This is your custom Quirrel query. See documentation on the quirrel language<a href="http://quirrel-lang.org/">here</a>. Replace [...], brackets included, with a query that has proper syntax.</p>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
+  </body>
+</html>

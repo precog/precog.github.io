@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/devcntr.css">
+    <link rel="icon" type="image/png" href="../../../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CLato:300,400,700,900,300italic,400italic%7CMontserrat:400,700" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/devcntr.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../../for-developers/index.html"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul>
+            <li><a id="login-link" href="../../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../../../blog/index.html">Blog</a></li>
+            <li><a href="http://support.precog.com">Support</a></li>
+            <li><a href="../../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="body">
+      <div id="body-menu">
+        <ul id="fixed-menu">
+          <h1 id="page-title">Dev Center</h1>
+          <li><a href="../../getting-started/overview/index.html">Getting Started</a>
+            <ul class="getting-started">
+              <li><a href="../../getting-started/overview/index.html">Overview</a></li>
+              <li><a href="../../getting-started/faq/index.html">FAQ</a></li>
+              <li><a href="../../getting-started/analytics/index.html">Analytics</a></li>
+            </ul>
+          </li>
+          <li><a href="../../how-tos/index.html">How To Guides</a>
+            <ul class="how-tos">
+              <li><a href="../../how-tos/common-analytics/index.html">Common Analytics</a></li>
+              <li><a href="../../how-tos/embed-reporting/index.html">Embedded Reporting</a></li>
+              <li><a href="../../how-tos/machine-learning/index.html">Machine Learning</a></li>
+              <li><a href="../../how-tos/optimize-performance/index.html">Optimizing Performance</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html">Rest API</a>
+            <ul class="rest-apis">
+              <li><a href="index.html">Accounts</a></li>
+              <li><a href="../ingest/index.html">Ingest</a></li>
+              <li><a href="../metadata/index.html">MetaData</a></li>
+              <li><a href="../analytics/index.html">Analytics</a></li>
+              <li><a href="../security/index.html">Security</a></li>
+            </ul>
+          </li>
+          <li><a href="../../client-libraries/index.html">Client Libraries</a></li>
+          <li><a href="../../viz-api/index.html">Visualization API</a>
+            <ul class="viz-api">
+              <li><a href="../../viz-api/charts-api/index.html">Charts API</a></li>
+              <li><a href="../../viz-api/transform-api/index.html">Data Transform API</a></li>
+            </ul>
+          </li>
+          <li><a href="../../quirrel/introduction/index.html">Quirrel</a></li>
+        </ul>
+      </div>
+      <div id="body-content">
+        <h1 class="page-title">Accounts</h1>
+        <div id="dynamic-body-links">
+          <ul id="section-index"></ul>
+        </div>
+        <div id="page-content"><h2>Overview</h2>
+<p>The API calls below are given relative to an analytics service. For example, create an account is documented as: POST /accounts/v1/accounts/. The full call will include the analytics service such as <a href="https://beta.precog.com">https://beta.precog.com</a>:
+
+</p>
+<pre><code>POST https:<span class="comment">//beta.precog.com/accounts/v1/accounts/</span></code></pre>
+<p>Tic variables such as <span class="tool-tip-account-id">&apos;accountId</span>, <span class="tool-tip-path">&apos;path</span>, <span class="tool-tip-apikey tool-tip-apikey">&apos;apiKey</span>, and <span class="tool-tip-grant-id">&apos;grantId</span> are used to indicate a place where you should replace the tic variable with the relevant information. For example, to describe account 0001205271:
+
+</p>
+<pre><code>GET /accounts/v1/accounts/&lt;span class="tool-tip-account-id">'accountId&lt;/span>/</code></pre>
+<p>becomes:
+
+</p>
+<pre><code>GET /accounts/v1/accounts/0001205271/</code></pre>
+<h2>Accounts API</h2>
+<p>The accounts API is responsible for account management on the Precog platform. Accounts are identified by an account number, which is tied to a unique email address. Each email address can be associated with only one account.
+
+</p>
+<p>All use of the accounts API must be encrypted using SSL/TLS. All API methods except creating a new account must be authenticated using HTTP basic authentication. Any attempt to use the accounts API without proper encryption and / or authentication will fail with an access denied error.
+
+</p>
+<h3>Create Account</h3>
+<ul>
+<li>JSON</li>
+<li>POST</li>
+<li>POST /accounts/v1/accounts/</li>
+<li>description</li>
+<li>Creates a new account ID, accessible by the specified email address and password, or returns the existing account ID. An email address may be associated with at most one account. This is the only accounts API method that does not require HTTP Basic authentication. Anyone can create an account on the Precog platform, which will be subscribed to the free plan by default and provisioned with a new account root directory (the path to which is the same as the newly created account ID) and API key providing grants to all available permissions for that directory. To retrieve the API key and other information, use the &Ocirc;describe&apos; call described below.</li>
+<li>request body</li>
+<li><pre>{
+&quot;email&quot;: &quot;jdoe@gmail.com&quot;,
+&quot;password&quot;: &quot;someFancyString&quot;
+}</pre></li>
+<li>response body</li>
+<li>Returns the account id of the new (or existing) account. Account IDs are not secure identifiers, and may appear in publicly available URLs and so forth without compromising account security.</li>
+<li><pre>{&quot;accountId&quot;: &quot;2389482834&quot;}</pre>
+
+</li>
+</ul>
+<h3>Describe an Account</h3>
+<ul>
+<li>JSON</li>
+<li>GET</li>
+<li>GET /accounts/v1/accounts/<span class="tool-tip-account-id">&apos;accountId</span></li>
+<li>description</li>
+<li>Retrieves the details about a particular account. This call is the primary mechanism by which you can retrieve your master API key.</li>
+<li>response body</li>
+<li><pre>{
+&quot;accountId&quot;: 9384923423,
+&quot;email&quot;: &quot;jdoe@gmail.com&quot;,
+&quot;accountCreationDate&quot;: &quot;09-21-2001&quot;,
+&quot;apiKey&quot;: &quot;[masterAPIKey]&quot;,
+&quot;rootPath&quot;: &quot;/jdoe/&quot;,
+&quot;plan&quot;: {
+&quot;type&quot;: &quot;developer&quot;,
+}
+}</pre>
+
+</li>
+</ul>
+<h3>Add a Grant to an Account</h3>
+<ul>
+<li>JSON</li>
+<li>POST</li>
+<li>POST /accounts/v1/accounts/<span class="tool-tip-account-id">&apos;accountId</span>/grants/</li>
+<li>description</li>
+<li>Adds a grant to an account&apos;s API key. This method is conceptually equivalent to retrieving the API key of the account, and then using the security API to add the specified grant to the API key. The main difference is that this method does not require the client to know the API key of the account. Therefore, this method represents a secure, anonymous way to add additional grants to a third-party account, without first knowing the API key of that account. This request requires HTTP Basic authentication.</li>
+<li>request body</li>
+<li><pre>{&quot;grantId&quot;: &quot;[Grant Id]&quot;}</pre>
+
+</li>
+</ul>
+<h3>Describe an Account&apos;s Plan</h3>
+<ul>
+<li>JSON</li>
+<li>GET</li>
+<li>GET /accounts/v1/accounts/<span class="tool-tip-account-id">&apos;accountId</span>/plan</li>
+<li>response body</li>
+<li><pre>{&quot;type&quot;: &quot;free&quot;}</pre>
+
+</li>
+</ul>
+<h3>Change an Account&apos;s Plan</h3>
+<ul>
+<li>JSON</li>
+<li>PUT</li>
+<li>PUT /accounts/v1/accounts/<span class="tool-tip-account-id">&apos;accountId</span>/plan</li>
+<li>description</li>
+<li>Changes an account&apos;s plan (only the plan type itself may be changed). Billing for the new plan, if appropriate, will be prorated.</li>
+<li>request body</li>
+<li><pre>{&quot;type&quot;: &quot;bronze&quot;}</pre>
+
+</li>
+</ul>
+<h3>Change an Account&apos;s Password</h3>
+<ul>
+<li>JSON</li>
+<li>PUT</li>
+<li>PUT /accounts/v1/accounts/<span class="tool-tip-account-id">&apos;accountId</span>/password</li>
+<li>description</li>
+<li>Changes your account access password. This call requires HTTP Basic authentication using the current password.</li>
+<li>request body</li>
+<li><pre>{&quot;password&quot;: &quot;myPassword&quot;}</pre>
+
+</li>
+</ul>
+<h3>Delete an Account&apos;s Plan</h3>
+<ul>
+<li>JSON</li>
+<li>DELETE</li>
+<li>DELETE /accounts/v1/accounts/<span class="tool-tip-account-id">&apos;accountId</span>/plan</li>
+<li>description</li>
+<li>Deletes an account&apos;s plan. This is the same as switching a plan to the free plan.</li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="developer-center-tooltips">
+        <div id="path-tt" class="tool-tip">
+          <h4>Path</h4>
+          <p>This is the path to your data. Replace 'path or [path], tic or brackets included with the correct directory location.</p>
+        </div>
+        <div id="root-path-tt" class="tool-tip">
+          <h4>Root Path</h4>
+          <p>This your root path. Replace [root path], brackets included with your root path. Your root path can be found on<a href="../../../account/index.html">your account page</a>.</p>
+        </div>
+        <div id="account-id-tt" class="tool-tip">
+          <h4>Account ID</h4>
+          <p>This is your accountId. Replace 'accountId, tic included with your accountId. Your accountId is the same as your root path and can be found on<a href="../../../account/index.html">your account page</a></p>
+        </div>
+        <div id="grant-id-tt" class="tool-tip">
+          <h4>Grant ID</h4>
+          <p>This is a grantId. Repalce 'grantId, tic included with the appropriate grantId. GrantId's can be generated and accessed using various Security API calls.</p>
+        </div>
+        <div id="api-key-tt" class="tool-tip">
+          <h4>API Key</h4>
+          <p>This is an API Key. Replace 'apiKey or [auth API key], tic or brackets included with the appropriate API Key. You are assigned an initial API Key upon creating your account that is accessible on<a href="../../../account/index.html">your account page</a>. API Keys can also be created using the Security API.</p>
+        </div>
+        <div id="auth-api-key-tt" class="tool-tip">
+          <h4>Auth API Key</h4>
+          <p>This is the authorizing API Key. Most likely it is your initital master Precog API Key. It can be found on<a href="../../../account/index.html">your account page</a>. Replace [auth API Key], brackets included with your Precog API key.</p>
+        </div>
+        <div id="query-tt" class="tool-tip">
+          <h4>Query</h4>
+          <p>This is your custom Quirrel query. See documentation on the quirrel language<a href="http://quirrel-lang.org/">here</a>. Replace [...], brackets included, with a query that has proper syntax.</p>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
+  </body>
+</html>

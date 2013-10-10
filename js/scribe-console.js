@@ -1,0 +1,1 @@
+var ScribeConsoleTracker=function(a){if(!(this instanceof ScribeConsoleTracker)){return new ScribeConsoleTracker(a)}this.config=a};ScribeConsoleTracker.prototype.tracker=function(c){var b=c.path;var a=c.value;if(typeof console!=="undefined"){console.log(b);console.log(a);c.success&&setTimeout(c.success,0)}else{c.failure&&setTimeout(c.failure,0)}};

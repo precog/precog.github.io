@@ -1,0 +1,442 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>precog &mdash; Precog 0.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Precog 0.2.0 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Precog 0.2.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for precog</h1><div class="highlight"><pre>
+<span class="c"># This file is subject to the terms and conditions defined in LICENSE.</span>
+<span class="c"># (c) 2011-2013, ReportGrid Inc. All rights reserved.</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">posixpath</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">httplib</span> <span class="kn">import</span> <span class="n">HTTPSConnection</span><span class="p">,</span> <span class="n">HTTPConnection</span>
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlencode</span><span class="p">,</span> <span class="n">quote_plus</span><span class="p">,</span> <span class="n">pathname2url</span>
+<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">urlsafe_b64encode</span><span class="p">,</span> <span class="n">urlsafe_b64decode</span><span class="p">,</span> <span class="n">standard_b64encode</span>
+
+<span class="n">__app_name__</span>     <span class="o">=</span> <span class="s">&#39;precog&#39;</span>
+<span class="n">__version__</span>      <span class="o">=</span> <span class="s">&#39;0.2.0&#39;</span>
+<span class="n">__author__</span>       <span class="o">=</span> <span class="s">&#39;Erik Osheim&#39;</span>
+<span class="n">__author_email__</span> <span class="o">=</span> <span class="s">&#39;erik@precog.com&#39;</span>
+<span class="n">__description__</span>  <span class="o">=</span> <span class="s">&#39;Python client library for Precog (http://www.precog.com)&#39;</span>
+<span class="n">__url__</span>          <span class="o">=</span> <span class="s">&#39;https://github.com/precog/precog_python_client&#39;</span>
+
+<span class="k">def</span> <span class="nf">ujoin</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">p1</span><span class="p">:</span> <span class="k">return</span> <span class="n">p2</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">p2</span><span class="p">:</span> <span class="k">return</span> <span class="n">p1</span>
+    <span class="n">s1</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">p1</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">p1</span>
+    <span class="n">s2</span> <span class="o">=</span> <span class="n">p2</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">p2</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">p2</span>
+    <span class="k">return</span> <span class="n">s1</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">s2</span>
+
+<span class="k">def</span> <span class="nf">ujoins</span><span class="p">(</span><span class="o">*</span><span class="n">ps</span><span class="p">):</span>
+    <span class="n">pt</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ps</span><span class="p">:</span> <span class="n">pt</span> <span class="o">=</span> <span class="n">ujoin</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pt</span>
+
+<div class="viewcode-block" id="PrecogClientError"><a class="viewcode-back" href="../index.html#precog.PrecogClientError">[docs]</a><span class="k">class</span> <span class="nc">PrecogClientError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Raised on all errors detected or reported by the Precog platform.</span>
+
+<span class="sd">This error usually suggests an error in the user&#39;s code.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</div>
+<div class="viewcode-block" id="PrecogServiceError"><a class="viewcode-back" href="../index.html#precog.PrecogServiceError">[docs]</a><span class="k">class</span> <span class="nc">PrecogServiceError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Raised on HTTP response errors.</span>
+
+<span class="sd">This error may suggest a bug in the client or platform.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</div>
+<div class="viewcode-block" id="Format"><a class="viewcode-back" href="../index.html#precog.Format">[docs]</a><span class="k">class</span> <span class="nc">Format</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Format contains the data formats supported by the Precog client. Methods like</span>
+<span class="sd">``Precog.append`` require a format in order to parse data from a string or file.</span>
+
+<span class="sd"> * json: Data is a single JSON value.</span>
+<span class="sd"> * jsonstream: Data is a stream of JSON values separated by optional whitespace.</span>
+<span class="sd"> * csv: Data is stored as comma-separated values.</span>
+<span class="sd"> * tsv: Data is stored as tab-separated values.</span>
+<span class="sd"> * ssv: Data is stored as semicolon-separated values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">mime</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&#39;mime&#39;</span><span class="p">:</span> <span class="n">mime</span><span class="p">,</span> <span class="s">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}}</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">makecsv</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">delim</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="s">&#39;&quot;&#39;</span><span class="p">,</span> <span class="n">escape</span><span class="o">=</span><span class="s">&#39;&quot;&#39;</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;delim&#39;</span><span class="p">:</span> <span class="n">delim</span><span class="p">,</span> <span class="s">&#39;quote&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="p">,</span> <span class="s">&#39;escape&#39;</span><span class="p">:</span> <span class="n">escape</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&#39;params&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span> <span class="s">&#39;mime&#39;</span><span class="p">:</span> <span class="s">&#39;text/csv&#39;</span><span class="p">}</span>
+</div>
+<span class="n">Format</span><span class="o">.</span><span class="n">json</span>       <span class="o">=</span> <span class="n">Format</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s">&#39;application/json&#39;</span><span class="p">)</span>
+<span class="n">Format</span><span class="o">.</span><span class="n">jsonstream</span> <span class="o">=</span> <span class="n">Format</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s">&#39;application/x-json-stream&#39;</span><span class="p">)</span>
+<span class="n">Format</span><span class="o">.</span><span class="n">csv</span>        <span class="o">=</span> <span class="n">Format</span><span class="o">.</span><span class="n">makecsv</span><span class="p">()</span>
+<span class="n">Format</span><span class="o">.</span><span class="n">tsv</span>        <span class="o">=</span> <span class="n">Format</span><span class="o">.</span><span class="n">makecsv</span><span class="p">(</span><span class="n">delim</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="n">Format</span><span class="o">.</span><span class="n">ssv</span>        <span class="o">=</span> <span class="n">Format</span><span class="o">.</span><span class="n">makecsv</span><span class="p">(</span><span class="n">delim</span><span class="o">=</span><span class="s">&#39;;&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Precog"><a class="viewcode-back" href="../index.html#precog.Precog">[docs]</a><span class="k">class</span> <span class="nc">Precog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Client for the Precog API. This class contains all the functionality provided</span>
+<span class="sd">by this module.</span>
+
+<span class="sd">Arguments:</span>
+<span class="sd"> * apikey (str): String containing the Precog API key</span>
+<span class="sd">   (e.g. &quot;6789ABCD-EF12-3456-68AC-123456789ABC&quot;).</span>
+<span class="sd"> * accountid (str): String containing the Precog Account ID</span>
+<span class="sd">   (e.g. &quot;00000011345&quot;).</span>
+
+<span class="sd">Keyword Arguments:</span>
+<span class="sd"> * basepath (str): Base path to use (defaults to accountid).</span>
+<span class="sd"> * host (str): Host name to connect to.</span>
+<span class="sd"> * port (int): Port to connect to.</span>
+<span class="sd"> * https (bool): Whether to connect to host using HTTPS.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apikey</span><span class="p">,</span> <span class="n">accountid</span><span class="p">,</span> <span class="n">basepath</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&#39;beta.precog.com&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">443</span><span class="p">,</span> <span class="n">https</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">basepath</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="n">basepath</span> <span class="o">=</span> <span class="n">accountid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apikey</span>    <span class="o">=</span> <span class="n">apikey</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accountid</span> <span class="o">=</span> <span class="n">accountid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basepath</span>  <span class="o">=</span> <span class="n">basepath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host</span>      <span class="o">=</span> <span class="n">host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span>      <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">https</span>     <span class="o">=</span> <span class="n">https</span>
+
+    <span class="k">def</span> <span class="nf">_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">https</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">HTTPSConnection</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">HTTPConnection</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">headers</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_doit</span><span class="p">(</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connect</span><span class="p">(),</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">headers</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_doit</span><span class="p">(</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connect</span><span class="p">(),</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">headers</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_doit</span><span class="p">(</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connect</span><span class="p">(),</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">void</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_doit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">void</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">?</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pathname2url</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">urlencode</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+
+        <span class="c"># Send request and get response</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="n">debugurl</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">:</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+        <span class="c"># Check HTTP status code</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">202</span><span class="p">]:</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> body=</span><span class="si">%r</span><span class="s"> params=</span><span class="si">%r</span><span class="s"> headers=</span><span class="si">%r</span><span class="s"> returned non-200 status (</span><span class="si">%d</span><span class="s">): </span><span class="si">%s</span><span class="s"> [</span><span class="si">%s</span><span class="s">]&quot;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">debugurl</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">PrecogServiceError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">void</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+        <span class="c"># Try parsing JSON response</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PrecogServiceError</span><span class="p">(</span><span class="s">&#39;invalid json response </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">standard_b64encode</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s">&quot;Basic </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">s</span><span class="p">}</span>
+
+<div class="viewcode-block" id="Precog.create_account"><a class="viewcode-back" href="../index.html#precog.Precog.create_account">[docs]</a>    <span class="k">def</span> <span class="nf">create_account</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Create a new account.</span>
+
+<span class="sd">Given an email address and password, this method will create a</span>
+<span class="sd">new account, and return the account ID.</span>
+
+<span class="sd">Arguments:</span>
+<span class="sd"> * email (str): The email address for the new account.</span>
+<span class="sd"> * password (str): The password for the new account.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&quot;email&quot;</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="n">password</span><span class="p">})</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="n">Format</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s">&quot;mime&quot;</span><span class="p">]</span> <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_post</span><span class="p">(</span><span class="s">&#39;/accounts/v1/accounts/&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Precog.search_account"><a class="viewcode-back" href="../index.html#precog.Precog.search_account">[docs]</a>    <span class="k">def</span> <span class="nf">search_account</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Search for an existing account.</span>
+
+<span class="sd">Given an email address and password, this method will search</span>
+<span class="sd">for an existing account, and return the account ID if found, or</span>
+<span class="sd">None if the account is not found.</span>
+
+<span class="sd">Arguments:</span>
+<span class="sd"> * email (str): The email address for this account.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="s">&#39;/accounts/v1/accounts/search&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;email&quot;</span><span class="p">:</span> <span class="n">email</span><span class="p">})</span>
+</div>
+<div class="viewcode-block" id="Precog.account_details"><a class="viewcode-back" href="../index.html#precog.Precog.account_details">[docs]</a>    <span class="k">def</span> <span class="nf">account_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">accountId</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Return details about an account.</span>
+
+<span class="sd">The resulting dictionary will contain information about the</span>
+<span class="sd">account, including the master API key.</span>
+
+<span class="sd">Arguments:</span>
+<span class="sd"> * email (str): The email address for this account.</span>
+<span class="sd"> * password (str): The password for this account.</span>
+<span class="sd"> * accountid (str): The ID for this account.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="s">&#39;/accounts/v1/accounts/</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">accountId</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Precog.append"><a class="viewcode-back" href="../index.html#precog.Precog.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Append a single JSON object to the destination path. The object must be a</span>
+<span class="sd">Python object representing a single JSON value: a dictionary, list, number,</span>
+<span class="sd">string, boolean, or None.</span>
+
+<span class="sd">Arguments:</span>
+<span class="sd"> * dest (str): Precog path to append the object to.</span>
+<span class="sd"> * obj (json): The Python object to be appended.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ingest</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">json</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">([</span><span class="n">obj</span><span class="p">]),</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;batch&#39;</span><span class="p">,</span> <span class="n">receipt</span><span class="o">=</span><span class="s">&#39;true&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Precog.append_all"><a class="viewcode-back" href="../index.html#precog.Precog.append_all">[docs]</a>    <span class="k">def</span> <span class="nf">append_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">objs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Appends an list of JSON object to the destination path. Each object must be a</span>
+<span class="sd">Python object representing a single JSON value: a dictionary, list, number,</span>
+<span class="sd">string, boolean, or None. The objects should be provided in a list.</span>
+
+<span class="sd">Arguments:</span>
+<span class="sd"> * dest (str): Precog path to append the object to.</span>
+<span class="sd"> * objs (list): The list of Python objects to be appended.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ingest</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">Format</span><span class="o">.</span><span class="n">json</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">objs</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;batch&#39;</span><span class="p">,</span> <span class="n">receipt</span><span class="o">=</span><span class="s">&#39;true&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Precog.append_all_from_file"><a class="viewcode-back" href="../index.html#precog.Precog.append_all_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">append_all_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Given a file and a format, append all the data from the file to the destination</span>
+<span class="sd">path. The ``format`` should be one of those provided by the ``precog.Format``</span>
+<span class="sd">class (e.g. ``Format.json``).</span>
+
+<span class="sd">Arguments:</span>
+<span class="sd"> * dest (str): Precog path to append the object to.</span>
+<span class="sd"> * format (dict): A dictionary defining the format to be used. See</span>
+<span class="sd">   ``precog.Format`` for the supported formats.</span>
+<span class="sd"> * src (str or file): Either a path (as a string) or a file object read from.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="o">==</span> <span class="nb">unicode</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">append_all_from_string</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Precog.append_all_from_string"><a class="viewcode-back" href="../index.html#precog.Precog.append_all_from_string">[docs]</a>    <span class="k">def</span> <span class="nf">append_all_from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Given a string of data and a format, append all the data to the destination</span>
+<span class="sd">path. The ``format`` should be one of those provided by the ``precog.Format``</span>
+<span class="sd">class (e.g. ``Format.json``).</span>
+
+<span class="sd">Arguments:</span>
+<span class="sd"> * dest (str): Precog path to append the object to.</span>
+<span class="sd"> * format (dict): A dictionary defining the format to be used. See</span>
+<span class="sd">   ``precog.Format`` for the supported formats.</span>
+<span class="sd"> * src (str): The data to be read.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ingest</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;batch&#39;</span><span class="p">,</span> <span class="n">receipt</span><span class="o">=</span><span class="s">&#39;true&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Precog.upload_file"><a class="viewcode-back" href="../index.html#precog.Precog.upload_file">[docs]</a>    <span class="k">def</span> <span class="nf">upload_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Given a file and a format, append all the data from the file to the destination</span>
+<span class="sd">path. This will replace any data that previously existed.The ``format`` should</span>
+<span class="sd">be one of those provided by the ``precog.Format`` class (e.g. ``Format.json``).</span>
+
+<span class="sd">Arguments:</span>
+<span class="sd"> * dest (str): Precog path to append the object to.</span>
+<span class="sd"> * format (dict): A dictionary defining the format to be used. See</span>
+<span class="sd">   ``precog.Format`` for the supported formats.</span>
+<span class="sd"> * src (str or file): Either a path (as a string) or a file object read from.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="o">==</span> <span class="nb">unicode</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ingest</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;batch&#39;</span><span class="p">,</span> <span class="n">receipt</span><span class="o">=</span><span class="s">&#39;true&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Precog.upload_string"><a class="viewcode-back" href="../index.html#precog.Precog.upload_string">[docs]</a>    <span class="k">def</span> <span class="nf">upload_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Given a string of data and a format, append all the data to the destination</span>
+<span class="sd">path. This will replace any data that previously existed.The ``format`` should</span>
+<span class="sd">be one of those provided by the ``precog.Format`` class (e.g. ``Format.json``).</span>
+
+<span class="sd">Arguments:</span>
+<span class="sd"> * dest (str): Precog path to append the object to.</span>
+<span class="sd"> * format (dict): A dictionary defining the format to be used. See</span>
+<span class="sd">   ``precog.Format`` for the supported formats.</span>
+<span class="sd"> * src (str): The data to be read.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ingest</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;batch&#39;</span><span class="p">,</span> <span class="n">receipt</span><span class="o">=</span><span class="s">&#39;true&#39;</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_ingest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">format</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">receipt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ingests csv or json data at the specified path&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">bytes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PrecogClientError</span><span class="p">(</span><span class="s">&quot;no bytes to ingest&quot;</span><span class="p">)</span>
+
+        <span class="n">fullpath</span> <span class="o">=</span> <span class="n">ujoins</span><span class="p">(</span><span class="s">&#39;/ingest/v1/fs&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basepath</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;apiKey&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">apikey</span><span class="p">,</span> <span class="s">&#39;mode&#39;</span><span class="p">:</span> <span class="n">mode</span><span class="p">,</span> <span class="s">&#39;receipt&#39;</span><span class="p">:</span> <span class="n">receipt</span><span class="p">}</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">format</span><span class="p">[</span><span class="s">&#39;params&#39;</span><span class="p">])</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="n">format</span><span class="p">[</span><span class="s">&#39;mime&#39;</span><span class="p">]}</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_post</span><span class="p">(</span><span class="n">fullpath</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;apiKey&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">apikey</span><span class="p">}</span>
+        <span class="n">fullpath</span> <span class="o">=</span> <span class="n">ujoins</span><span class="p">(</span><span class="s">&#39;/ingest/v1/fs&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basepath</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span><span class="p">(</span><span class="n">fullpath</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Precog.query"><a class="viewcode-back" href="../index.html#precog.Precog.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">detailed</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Evaluate a query.</span>
+
+<span class="sd">Run a Quirrel query against specified base path, and return the resulting set.</span>
+
+<span class="sd">Arguments:</span>
+<span class="sd"> * query (str): The Quirrel query to perform.</span>
+
+<span class="sd">Keyword Arguments:</span>
+<span class="sd"> * path (str): Optional base path to add for this query.</span>
+<span class="sd"> * detailed (bool): If true, result will be a dictionary containing more</span>
+<span class="sd">   information about how the query was performed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fullpath</span> <span class="o">=</span> <span class="n">ujoins</span><span class="p">(</span><span class="s">&#39;/analytics/v1/fs&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basepath</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;q&quot;</span><span class="p">:</span> <span class="n">query</span><span class="p">,</span> <span class="s">&#39;apiKey&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">apikey</span><span class="p">,</span> <span class="s">&#39;format&#39;</span><span class="p">:</span> <span class="s">&#39;detailed&#39;</span><span class="p">}</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">fullpath</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">detailed</span><span class="p">:</span> <span class="k">return</span> <span class="n">d</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;errors&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PrecogClientError</span><span class="p">(</span><span class="s">&quot;query had errors: </span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">errors</span><span class="p">)</span>
+        <span class="n">servererrors</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;serverErrors&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">if</span> <span class="n">servererrors</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PrecogClientError</span><span class="p">(</span><span class="s">&quot;server had errors: </span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">errors</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;warnings&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;warning: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">w</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+    <span class="c">#def async_query(self, path, query):</span>
+    <span class="c">#    basepath = ujoin(self.basepath, path)</span>
+    <span class="c">#    params = {&quot;q&quot;: query, &#39;apiKey&#39;: self.apikey, &#39;basePath&#39;: basepath}</span>
+    <span class="c">#    return self.get(&#39;/analytics/v1/queries&#39;, params=params)</span>
+
+    <span class="c">#def async_status(self, queryid):</span>
+    <span class="c">#    fullpath = ujoins(&#39;/analytics/v1/queries/%d/status&#39; % queryid)</span>
+    <span class="c">#    return self.get(fullpath, params={&#39;apiKey&#39;: self.apikey})</span>
+
+    <span class="c">#def async_results(self, queryid):</span>
+    <span class="c">#    fullpath = &#39;/analytics/v1/queries/%d&#39; % queryid</span>
+    <span class="c">#    return self.get(fullpath, params={&#39;apiKey&#39;: self.apikey})</span>
+
+
+<span class="c">#def to_token(user, pwd, host, accountid, apikey, root_path):</span>
+<span class="c">#    s = &quot;%s:%s:%s:%s:%s:%s&quot; % (user, pwd, host, accountid, apikey, root_path)</span>
+<span class="c">#    return urlsafe_b64encode(s)</span>
+<span class="c">#</span>
+<span class="c">#fields = [&#39;user&#39;, &#39;pwd&#39;, &#39;host&#39;, &#39;accountid&#39;, &#39;apikey&#39;, &#39;root_path&#39;]</span>
+<span class="c">#def from_token(token):</span>
+<span class="c">#    s = urlsafe_b64decode(token)</span>
+<span class="c">#    toks = s.split(&quot;:&quot;)</span>
+<span class="c">#    if len(toks) != len(fields):</span>
+<span class="c">#        raise PrecogClientError(&quot;invalid token: %r (%r)&quot; % (s, token))</span>
+<span class="c">#    return dict(zip(fields, toks))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Precog 0.2.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Erik Osheim.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

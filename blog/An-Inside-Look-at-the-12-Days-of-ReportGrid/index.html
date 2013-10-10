@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>An Inside Look at the 12 Days of ReportGrid - Precog
+    </title>
+    <link rel="stylesheet" href="../../css/default.css">
+    <link rel="stylesheet" href="../../css/unique.css">
+    <link rel="stylesheet" href="../../css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CAbel%7CMontserrat:400,700%7CCinzel:400,700,900" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="../../images/favicon.png">
+    <link rel="alternate" href="../../feed.xml.rss" type="application/rss+xml" title="Precog Big Data Analytics">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../js/default.js"></script>
+    <script type="text/javascript" src="../../js/unique.js"></script>
+    <script type="text/javascript" src="../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../index.html"><img src="../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul class="menu">
+            <li><a id="login-link" href="../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../index.html">Blog</a></li>
+            <li><a href="mailto:support@precog.com">Support</a></li>
+            <li><a href="../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="section-body">
+      <div class="holder">
+        <div class="two-columns">
+          <h1 class="page-title">An Inside Look at the 12 Days of ReportGrid</h1>
+          <page class="post"></page>
+          <section class="content"><p>We recently launched <a href="http://www2.precog.com/12daysofreportgrid">The 12 Days of ReportGrid</a> to provide a fun overview of a sampling of embedded reporting options. In this post, we&apos;ll dig deeper into the technical details behind these beautiful, customizable visualizations. Here&apos;s the Sankey we&apos;ll be reproducing in a few short steps below:</p>
+<p><strong>Data First</strong></p>
+<p>Without data, there is nothing to visualize, so lets start at the source. For the Sankey visualization, we are looking at the flow of clicks to conversions broken apart by gender. You can run this query in the <a href="https://labcoat.precog.com/?q=clicks+:=+//clicks+%0Aconversions+:=+//conversions+%0A%0A%7Bhead:+%22male+clicks%22,+actions:+count(clicks.timeStamp+where+clicks.customer.gender+=+%22male%22),+tail:+%22total+clicks%22%7D+union+%0A%7Bhead:+%22female+clicks%22,+actions:+count(clicks.timeStamp+where+clicks.customer.gender+=+%22female%22),+tail:+%22total+clicks%22%7D+union+%0A%7Bhead:+%22male+conversions%22,+actions:+count(conversions.timeStamp+where+conversions.customer.gender+=+%22male%22),+tail:+%22male+clicks%22%7D+union+%0A%7Bhead:+%22female+conversions%22,+actions:+count(conversions.timeStamp+where+conversions.customer.gender+=+%22female%22),+tail:%22female+clicks%22%7D">demo version of Labcoat</a>. The basic idea is to begin by loading some clicks and conversions data. Then we union together the four objects we need for the visualization. Each object needs a label for the head and the tail so that the Sankey can determine how the data is related. The &quot;head&quot; is the where the data is going and the &quot;tail&quot; is where the data came from. So for example, in the first object, the &quot;total clicks&quot; is the tail that breaks into the smaller head of &quot;male clicks&quot;. The size of each node comes from the max of the sum of every tail and the sum of every head, but this default can be overridden to provide flexibility for situations in which you want to set the size of a node to an exact measurement. Note that the second object has the same tail and a different head. In addition to these structural labels, each object also contains an appropriate count.</p>
+<pre>clicks := //clicks
+conversions := //conversions
+
+{head: &quot;male clicks&quot;, actions: count(clicks.timeStamp where 
+clicks.customer.gender = &quot;male&quot;), tail: &quot;total clicks&quot;} union
+{head: &quot;female clicks&quot;, actions: count(clicks.timeStamp where 
+clicks.customer.gender = &quot;female&quot;), tail: &quot;total clicks&quot;} union
+{head: &quot;male conversions&quot;, actions: count(conversions.timeStamp where 
+conversions.customer.gender = &quot;male&quot;), tail: &quot;male clicks&quot;} union
+{head: &quot;female conversions&quot;, actions: count(conversions.timeStamp where 
+conversions.customer.gender = &quot;female&quot;),  tail:&quot;female clicks&quot;}</pre>
+<p><strong>Easy Integration</strong></p>
+<p>Once we have a query that returns results we are interested in displaying, we can export the code and integrate it into HTML The download code option in labcoat (the downward pointing arrow in the query editor) provides numerous options for downloading queries (including an HTML template if desired). Note that the javascript option will automatically insert escape characters as needed. For example,</p>
+<pre>head: &quot;male clicks&quot;</pre>
+<p>becomes transformed into:</p>
+<pre>head: \&quot;male clicks\&quot;</pre>
+<p>This query can then be assigned into a variable and used in a query to power a ReportGrid visualization. Check out this gist to see the code. Lines 5-7 load the ReportGrid visualization library, along with its default styling options and the Precog JavaScript client library with a read-only API key. Lines 11 to 26 call the ReportGrid.sankey() function, with straightforward parameters.</p>
+<p>That&apos;s all you need to have an informative and insightful visualization embedded in your application. At a glance you can tell that male customers click at a significantly higher rate, but the conversion rates are quite similar.</p>
+<p>Check out the other visualizations used in the <a href="http://www2.precog.com/12daysofreportgrid">12 days of ReportGrid</a> or see examples of the entire <a href="http://www.precog.com/products/reportgrid">ReportGrid Visualization library!</a> For a more complete explanation of how to use Precog and ReportGrid to create embedded reporting, check out this <a href="../../developers/how-tos/embed-reporting/index.html">How To guide</a>.</p></section>
+        </div>
+        <div class="two-columns-end">
+          <div id="disqus_thread">
+            <script type="text/javascript">
+              /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+              var disqus_shortname = 'precog'; // required: replace example with your forum shortname
+              /* * * DON'T EDIT BELOW THIS LINE * * */
+              (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+              })();
+            </script>
+            <noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript><a href="http://disqus.com" class="dsq-brlink">comments powered by<span class="logo-disqus">Disqus</span></a>
+          </div>
+        </div>
+        <div class="clear-left"></div>
+      </div>
+    </div>
+    <footer>
+      <div class="holder">
+        <div id="footer-menu">
+          <ul class="menu">
+            <li><a href="../../about/contact-us/index.html">About</a>
+              <ul>
+                <li><a href="../../about/contact-us/index.html">Overview</a></li>
+                <li><a href="../../about/contact-us/index.html">Contact</a></li>
+                <li><a href="../index.html">Blog</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="menu">
+            <li><a href="../../for-developers/index.html">For Developers</a>
+              <ul>
+                <li><a href="../../for-developers/index.html">Overview</a></li>
+                <li><a href="../../developers/getting-started/overview/index.html" target="_blank">Dev Center</a></li>
+                <li><a href="http://support.precog.com">Support</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="menu">
+            <li><a href="../../for-businesses/index.html">For Businesses</a>
+              <ul>
+                <li><a href="../../for-businesses/index.html">Overview</a></li>
+                <li><a href="../../solutions/white-label-reporting/index.html">White Label Reporting</a></li>
+                <li><a href="../../solutions/social-media-analytics/index.html">Social Media Analytics</a></li>
+                <li><a href="../../solutions/web-analytics/index.html">Web Analytics</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div id="footer-content">
+          <div id="copyrights"><a href="../../legal/index.html">privacy and terms of use</a>
+            <p>Copyright @ 2012-2013 ReportGrid, Inc. All Rights Reserved</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

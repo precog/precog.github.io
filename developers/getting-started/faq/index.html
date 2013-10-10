@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../css/devcntr.css">
+    <link rel="icon" type="image/png" href="../../../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Questrial%7CLato:300,400,700,900,300italic,400italic%7CMontserrat:400,700" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/devcntr.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-console.js"></script>
+    <script type="text/javascript" src="../../../js/scribe-analytics.js"></script>
+    <script type="text/javascript">new Scribe(new ScribeConsoleTracker());</script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33659709-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="holder">
+        <div id="header-logo"><a href="../../../for-developers/index.html"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-mini-menu">
+          <ul>
+            <li><a id="login-link" href="../../../about/contact-us/index.html">Login</a></li>
+            <li><a href="../../../blog/index.html">Blog</a></li>
+            <li><a href="http://support.precog.com">Support</a></li>
+            <li><a href="../../../about/contact-us/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div id="body">
+      <div id="body-menu">
+        <ul id="fixed-menu">
+          <h1 id="page-title">Dev Center</h1>
+          <li><a href="../overview/index.html">Getting Started</a>
+            <ul class="getting-started">
+              <li><a href="../overview/index.html">Overview</a></li>
+              <li><a href="index.html">FAQ</a></li>
+              <li><a href="../analytics/index.html">Analytics</a></li>
+            </ul>
+          </li>
+          <li><a href="../../how-tos/index.html">How To Guides</a>
+            <ul class="how-tos">
+              <li><a href="../../how-tos/common-analytics/index.html">Common Analytics</a></li>
+              <li><a href="../../how-tos/embed-reporting/index.html">Embedded Reporting</a></li>
+              <li><a href="../../how-tos/machine-learning/index.html">Machine Learning</a></li>
+              <li><a href="../../how-tos/optimize-performance/index.html">Optimizing Performance</a></li>
+            </ul>
+          </li>
+          <li><a href="../../rest-apis/accounts/index.html">Rest API</a>
+            <ul class="rest-apis">
+              <li><a href="../../rest-apis/accounts/index.html">Accounts</a></li>
+              <li><a href="../../rest-apis/ingest/index.html">Ingest</a></li>
+              <li><a href="../../rest-apis/metadata/index.html">MetaData</a></li>
+              <li><a href="../../rest-apis/analytics/index.html">Analytics</a></li>
+              <li><a href="../../rest-apis/security/index.html">Security</a></li>
+            </ul>
+          </li>
+          <li><a href="../../client-libraries/index.html">Client Libraries</a></li>
+          <li><a href="../../viz-api/index.html">Visualization API</a>
+            <ul class="viz-api">
+              <li><a href="../../viz-api/charts-api/index.html">Charts API</a></li>
+              <li><a href="../../viz-api/transform-api/index.html">Data Transform API</a></li>
+            </ul>
+          </li>
+          <li><a href="../../quirrel/introduction/index.html">Quirrel</a></li>
+        </ul>
+      </div>
+      <div id="body-content">
+        <h1 class="page-title">FAQ</h1>
+        <div id="dynamic-body-links">
+          <ul id="section-index"></ul>
+        </div>
+        <div id="page-content"><h2>FAQ</h2>
+<h3>What is Precog</h3>
+<p>Precog is a schemaless, columnar database designed for storing and analyzing multi-structured data like JSON.
+
+</p>
+<ul>
+<li><strong>Schemaless.</strong> Precog does not require that users create schemas. Precog identifies data that has identical schema and only stores that schema once, to maximize performance.</li>
+<li><strong>Columnar.</strong> Precog stores data in a column-major format that ensures all data from the same column is stored together. For typical analytical queries that only involve one or a few columns, this results in a dramatic reduction in IO, which improves performance.</li>
+<li><strong>Storing.</strong> Precog can import data from other sources, but it is designed to work as the primary authority for analytical JSON data. Your existing database will continue to store entity-oriented data, such as people, places, and things.</li>
+<li><strong>Analyzing.</strong> Precog supports the analytical query language called Quirrel, which provides a simple way to perform advanced analytics on JSON data.</li>
+<li><strong>Multi-structured.</strong> Precog can store any kind of multi-structured data, ranging from lines in a log file, to heavily nested data structures containing objects, arrays, and primitives.</li>
+</ul>
+<p>When for our cloud or appliance offerings, all of Precog&apos;s functionality is 
+exposed by REST APIs, which are documented in the Developer Center. Client 
+libraries are available in JavaScript, Python, PHP, Ruby, Java, C#, and other common
+programming languages.
+
+</p>
+<h3>Does Precog have tables</h3>
+<p>Tables help developers organize data that has similar schema (collections
+serve a similar purpose in many NoSQL databases). Precog does not support
+tables, but supports a more flexible organizational mechanism modeled after
+file systems.
+
+</p>
+<p>When you store data in Precog, you need to choose a location in the file
+system to store the data. If you choose a location that does not exist yet, it
+will be created automatically.
+
+</p>
+<p>The file system supports any number of levels, so you can organize your data
+in ways that are far more flexible and fine-grained than traditional organization 
+through databases and tables.
+
+</p>
+<p>Unlike tables in RDBMS technology, the data you store in Precog does not
+have to possess uniform structure or schema. You can perform analysis
+of data with mixed structure and schema.
+
+</p>
+<h3>Does Precog support security</h3>
+<p>Most databases have no meaningful security model. Precog, because it&apos;s
+designed to be used directly by web, mobile, and server applications, has a 
+very robust security model built-in.
+
+</p>
+<p>The security model revolves around the file system, and lets you give very
+fine-grained permissions to different API keys. Precog uses the same security
+model to provision customer accounts, and you can use the security model to
+provision your own customers or users.
+
+</p>
+<h3>What kind of data does Precog support</h3>
+<p>The Precog data model is a strict superset of the JSON data model. Any valid
+JSON can be stored unmodified in Precog.
+
+</p>
+<p>JSON can be nested to any depth. For example, instead of having table
+containing customers and a table containing addresses, you can store all a
+customer&apos;s addresses inside a single object:
+
+</p>
+<pre><code>{
+  "customerId": "12312321",
+  "addresses": [{"address": "221 B Baker Street"}, {"P Sherman 42, Wallaby Way"}]
+}</code></pre>
+<p>Because Precog lets you store and analyze multi-structured data natively,
+you can eliminate all the time you would ordinarily spend creating data models,
+forcing your data into tabular form, and maintaining schema homogeneity over time.
+
+</p>
+<h3>Does Precog support schemas</h3>
+<p>Precog doesn&apos;t require you to specify schemas upfront. However, Precog will
+detect duplicated schemas and only store the schema once, to increase runtime
+performance.
+
+</p>
+<p>Unlike relational databases with strict schemas and strong normalization
+requirements, Precog makes it easy to store denormalized data or dirty data,
+and refine the structure and content of your data as necessary.
+
+</p>
+<h3>What language is Precog written in</h3>
+<p>Precog is implemented in Scala. Scala is a high-performance, functional /
+object-oriented hybrid language that runs on the Java Virtual Machine. Scala
+is used to create high-performing, distributed software by Twitter,
+FourSquare, LinkedIn, and many other companies.
+
+</p>
+<h3>What languages can I use to work with Precog</h3>
+<p>Precog supports a growing collection of client libraries. If you use a
+language that doesn&apos;t have a client library, just let us know and we&apos;ll add it
+for you!
+
+</p>
+<h3>Does Precog support SQL</h3>
+<p>No. SQL is an excellent language for storing, retrieving, and aggregating
+highly structured, tabular data. However, SQL does not support heterogeneous 
+JSON data, and can only do simple analytics.
+
+</p>
+<p>Precog supports Quirrel, a simple, but highly expressive query language 
+that makes it easy to simple or advanced analytics on JSON data.
+
+</p>
+<h3>Does Precog replace my existing database</h3>
+<p>No. Precog works alongside your existing operational database to store all
+the analytical data generated from your application. Analytical data includes
+event-oriented data (like clicks, transactions, and other user actions), as
+well as sensor data, activity stream data, and anything you would otherwise
+store in a relational fact table.
+
+</p>
+<p>Analytical data is immutable. Therefore, Precog doesn&apos;t have the ability to
+efficiently update or delete single records. If you need the ability to mutably 
+update and delete individual records, you are probably storing entities (person,
+places, or things) and would be better served by an operational database.
+
+</p>
+<p>Although you can store analytical data in your existing operational database, 
+you won&apos;t be able to perform deep analysis and you will eventually 
+encounter performance problems as your data grows. Precog is built to store 
+never-ending streams of analytical data, and can perform in-database analytics, 
+statistics and machine learning.
+
+</p>
+<h3>What are typical uses for Precog</h3>
+<p>Precog is a flexible analytics platform that provides a rapid way to solve many 
+complex analytical problems. In general, if you want to store and perform 
+analytics on multi-structured data like JSON, then Precog is a good fit and
+will outperform other technologies in this role.
+
+</p>
+<h3>Does Precog support transactions</h3>
+<p>Since Precog is designed to support immutable analytical data, it does not
+support transactions in the classic relational sense. However, Precog does
+support the reliable storage (with acknowledgement) of analytical data.
+
+</p>
+<h3>Are writes written to disk immediately, or lazily</h3>
+<p>Precog immediately writes data to a transaction log, which is used to build
+out the main data structures that Precog uses to store data. If data is sent
+to Precog with acknowledgement turned on, then the request will not return
+until after the data has been committed to the transaction log, at which point
+the data can be considered secure and will eventually be available for
+querying.
+
+</p>
+<p>Precog is an eventually consistent data store, so that writes may not
+immediately be reflected in reads (although in practice, the delay is usually
+quite small).
+
+</p>
+<h3>Where is Precog&apos;s managed cloud hosted</h3>
+<p>Precog&apos;s cloud offering is hosted in a variety of data centers to maximize
+availability and performance.
+
+</p>
+<h3>Is Precog built on Hadoop, Cassandra or something else</h3>
+<p>Precog is original technology highly-optimized for storing and analyzing
+multi-structured data. It is not built on any other database technology.
+
+</p>
+<h3>How does Precog differ from NoSQL databases</h3>
+<p>All current NoSQL databases are operational databases, designed to store entities, 
+such as people, places, and things. Precog is designed to store analytical data, 
+like events that describe what users are doing, events that describe what a system 
+is doing, or the results of a survey or poll.
+
+</p>
+<p>NoSQL databases make it easy to store and retrieve entity-oriented data.
+Precog makes it easy to store, retrieve, and deeply analyze analytical data.
+Many use cases that are hard or impossible with NoSQL databases are very
+straightforward using Precog.
+
+</p>
+<h3>Does Precog support other databases</h3>
+<p>Yes. Precog is designed to work well with your existing entity-oriented
+database. Precog can import data from NoSQL databases and relational
+databases.
+
+</p>
+<h3>Does Precog provide an on-premises solution</h3>
+<p>Yes, Precog is available in a managed cloud offering, a hardware appliance, 
+and a virtual appliance.
+</p>
+
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div id="developer-center-tooltips">
+        <div id="path-tt" class="tool-tip">
+          <h4>Path</h4>
+          <p>This is the path to your data. Replace 'path or [path], tic or brackets included with the correct directory location.</p>
+        </div>
+        <div id="root-path-tt" class="tool-tip">
+          <h4>Root Path</h4>
+          <p>This your root path. Replace [root path], brackets included with your root path. Your root path can be found on<a href="../../../account/index.html">your account page</a>.</p>
+        </div>
+        <div id="account-id-tt" class="tool-tip">
+          <h4>Account ID</h4>
+          <p>This is your accountId. Replace 'accountId, tic included with your accountId. Your accountId is the same as your root path and can be found on<a href="../../../account/index.html">your account page</a></p>
+        </div>
+        <div id="grant-id-tt" class="tool-tip">
+          <h4>Grant ID</h4>
+          <p>This is a grantId. Repalce 'grantId, tic included with the appropriate grantId. GrantId's can be generated and accessed using various Security API calls.</p>
+        </div>
+        <div id="api-key-tt" class="tool-tip">
+          <h4>API Key</h4>
+          <p>This is an API Key. Replace 'apiKey or [auth API key], tic or brackets included with the appropriate API Key. You are assigned an initial API Key upon creating your account that is accessible on<a href="../../../account/index.html">your account page</a>. API Keys can also be created using the Security API.</p>
+        </div>
+        <div id="auth-api-key-tt" class="tool-tip">
+          <h4>Auth API Key</h4>
+          <p>This is the authorizing API Key. Most likely it is your initital master Precog API Key. It can be found on<a href="../../../account/index.html">your account page</a>. Replace [auth API Key], brackets included with your Precog API key.</p>
+        </div>
+        <div id="query-tt" class="tool-tip">
+          <h4>Query</h4>
+          <p>This is your custom Quirrel query. See documentation on the quirrel language<a href="http://quirrel-lang.org/">here</a>. Replace [...], brackets included, with a query that has proper syntax.</p>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
+  </body>
+</html>

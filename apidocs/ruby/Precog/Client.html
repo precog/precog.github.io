@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>Class: Precog::Client</title>
+
+  <link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="../lib/precog_rb-TB_iframe=true&height=550&width=785.html"
+              class="thickbox" title="lib/precog.rb">lib/precog.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link">Object</p>
+        
+      </div>
+      
+
+      
+
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="Client.html#method-c-account_details">::account_details</a></li>
+          
+          <li><a href="Client.html#method-c-create_account">::create_account</a></li>
+          
+          <li><a href="Client.html#method-c-new">::new</a></li>
+          
+          <li><a href="Client.html#method-i-append">#append</a></li>
+          
+          <li><a href="Client.html#method-i-append_all">#append_all</a></li>
+          
+          <li><a href="Client.html#method-i-append_from_file">#append_from_file</a></li>
+          
+          <li><a href="Client.html#method-i-append_raw">#append_raw</a></li>
+          
+          <li><a href="Client.html#method-i-delete">#delete</a></li>
+          
+          <li><a href="Client.html#method-i-query">#query</a></li>
+          
+          <li><a href="Client.html#method-i-query_async">#query_async</a></li>
+          
+          <li><a href="Client.html#method-i-secure-3F">#secure?</a></li>
+          
+          <li><a href="Client.html#method-i-upload_file">#upload_file</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="../Precog.html">Precog</a></li>
+        
+          <li><a href="Client.html">Precog::Client</a></li>
+        
+          <li><a href="Query.html">Precog::Query</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">Precog::Client</h1>
+
+    <div id="description" class="description">
+      
+<p>A simple REST client for storing data in <a
+href="../Precog.html">Precog</a> and querying it with Quirrel.</p>
+
+<p>This provides methods to upload files to your virtual file system (in <a
+href="../Precog.html">Precog</a>), append records/events to the VFS, delete
+data, and run Quirrel queries on your data. Additionally, you can also
+create new accounts and get the account details for existing accounts.</p>
+
+<p>All methods are blocking, which means that the method returns when the
+server has replied with the answer.</p>
+
+    </div><!-- description -->
+
+    
+    
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+
+      
+      <!-- Attributes -->
+      <div id="attribute-method-details" class="method-section section">
+        <h3 class="section-header">Attributes</h3>
+
+        
+        <div id="account_id-attribute-method" class="method-detail">
+          <a name="account_id"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">account_id</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="api_key-attribute-method" class="method-detail">
+          <a name="api_key"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">api_key</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="base_path-attribute-method" class="method-detail">
+          <a name="base_path"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">base_path</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="host-attribute-method" class="method-detail">
+          <a name="host"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">host</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="port-attribute-method" class="method-detail">
+          <a name="port"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">port</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+      </div><!-- attribute-method-details -->
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="account_details-method" class="method-detail ">
+          <a name="method-c-account_details"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">account_details</span><span
+              class="method-args">(email, password, account_id, options = {})</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Retrieves the details about a particular account. This call is the primary
+mechanism by which you can retrieve your master API key. You <b>must</b>
+provide a service that uses HTTPS to use this service, otherwise an
+exception will be thrown.  Returns an instance of AccountInfo.</p>
+
+<p>Accepts the same options as new.</p>
+
+<p>Arguments:</p>
+
+<pre>email: (String)
+password: (String)
+account_id: (String)
+options: (Hash)</pre>
+            
+
+            
+            <div class="method-source-code" id="account_details-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">account_details</span>(<span class="ruby-identifier">email</span>, <span class="ruby-identifier">password</span>, <span class="ruby-identifier">account_id</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">stub_client</span> = <span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">account_id</span>, <span class="ruby-identifier">options</span>)   <span class="ruby-comment"># invalid stub client not meant to escape</span>
+
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">'account_details requires https'</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">stub_client</span>.<span class="ruby-identifier">secure?</span>
+
+  <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Precog</span>.<span class="ruby-identifier">get_auth</span>(<span class="ruby-identifier">stub_client</span>, <span class="ruby-node">&quot;/accounts/v#{VERSION}/accounts/#{account_id}&quot;</span>, { <span class="ruby-string">'Content-Type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'application/json'</span> }, <span class="ruby-identifier">email</span>, <span class="ruby-identifier">password</span>)
+  <span class="ruby-identifier">results</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span> <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>
+  <span class="ruby-constant">AccountInfo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">results</span>[<span class="ruby-string">&quot;apiKey&quot;</span>], <span class="ruby-identifier">account_id</span>, <span class="ruby-identifier">email</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- account_details-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- account_details-method -->
+
+      
+        <div id="create_account-method" class="method-detail ">
+          <a name="method-c-create_account"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">create_account</span><span
+              class="method-args">(email, password, profile, options = {})</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Creates a new account ID, accessible by the specified email address and
+password, or returns the existing account ID. You <em>must</em> provide a
+service that uses HTTPS to use this service, otherwise an exception will be
+thrown.  Returns an instance of AccountInfo.</p>
+
+<p>Accepts the same options as new.</p>
+
+<p>Arguments:</p>
+
+<pre>email: (String)
+password: (String)
+profile: (Object)
+options: (Hash)</pre>
+            
+
+            
+            <div class="method-source-code" id="create_account-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create_account</span>(<span class="ruby-identifier">email</span>, <span class="ruby-identifier">password</span>, <span class="ruby-identifier">profile</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">stub_client</span> = <span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">options</span>)   <span class="ruby-comment"># invalid stub client not meant to escape</span>
+
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">'create_account requires https'</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">stub_client</span>.<span class="ruby-identifier">secure?</span>
+
+  <span class="ruby-identifier">body</span> = {
+    <span class="ruby-value">:email</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">email</span>,
+    <span class="ruby-value">:password</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">password</span>,
+    <span class="ruby-value">:profile</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">profile</span>
+  }
+
+  <span class="ruby-identifier">results</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span> <span class="ruby-constant">Precog</span>.<span class="ruby-identifier">post</span>(<span class="ruby-identifier">stub_client</span>, <span class="ruby-node">&quot;/accounts/v#{VERSION}/accounts/&quot;</span>, <span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_json</span>, { <span class="ruby-string">'Content-Type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'application/json'</span> }, {}).<span class="ruby-identifier">body</span>
+  <span class="ruby-identifier">account_id</span> = <span class="ruby-identifier">results</span>[<span class="ruby-string">&quot;accountId&quot;</span>]
+  <span class="ruby-identifier">account_details</span>(<span class="ruby-identifier">email</span>, <span class="ruby-identifier">password</span>, <span class="ruby-identifier">account_id</span>, <span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- create_account-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- create_account-method -->
+
+      
+        <div id="new-method" class="method-detail ">
+          <a name="method-c-new"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">new</span><span
+              class="method-args">(api_key, account_id, options = {})</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Builds a new client to connect to precog services.  Accepts an optional
+<tt>Hash</tt> of options of the following type:</p>
+<ul><li>
+<p>:host (String)  The <a href="../Precog.html">Precog</a> service endpoint
+(default: <tt>'beta.precog.com'</tt>)</p>
+</li><li>
+<p>:<a href="Client.html#attribute-i-base_path">base_path</a> (String) The
+default root for all actions (default: <tt>&quot;#{account_id}/&quot;</tt>)</p>
+</li><li>
+<p>:secure (Boolean) Flag indicating whether or not to use HTTPS (default:
+<tt>true</tt>)</p>
+</li><li>
+<p>:port (Fixnum) Service endpoint port to use (default: <tt>443</tt>)</p>
+</li></ul>
+
+<p>Arguments:</p>
+
+<pre>api_key: (String)
+account_id: (String)
+options: (Hash)</pre>
+            
+
+            
+            <div class="method-source-code" id="new-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">api_key</span>, <span class="ruby-identifier">account_id</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:host</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">DEFAULT_HOST</span>
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:base_path</span>] <span class="ruby-operator">||=</span> <span class="ruby-node">&quot;#{account_id}/&quot;</span>
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:secure</span>] = <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:secure</span>].<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:port</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:secure</span>] <span class="ruby-operator">?</span> <span class="ruby-value">443</span> <span class="ruby-operator">:</span> <span class="ruby-value">80</span>
+
+  <span class="ruby-ivar">@api_key</span> = <span class="ruby-identifier">api_key</span>
+  <span class="ruby-ivar">@account_id</span> = <span class="ruby-identifier">account_id</span>
+  <span class="ruby-ivar">@host</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:host</span>]
+  <span class="ruby-ivar">@base_path</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:base_path</span>]
+  <span class="ruby-ivar">@secure</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:secure</span>]
+  <span class="ruby-ivar">@port</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:port</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- new-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- new-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="append-method" class="method-detail ">
+          <a name="method-i-append"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">append</span><span
+              class="method-args">(path, data)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Store the object data as a record in <a href="../Precog.html">Precog</a>.
+It is serialized by the <tt>to_json</tt> function.  Returns a pair,
+<tt>[ingested, errors]</tt>, consisting of a <tt>Fixnum</tt> and an
+<tt>Array</tt> of errors.</p>
+
+<p>Note: Calling this method guarantees the object is stored in the <a
+href="../Precog.html">Precog</a> transaction log.</p>
+
+<p>Arguments:</p>
+
+<pre>path: (String)
+data: (Object)</pre>
+            
+
+            
+            <div class="method-source-code" id="append-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 142</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">append</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">append_all</span>(<span class="ruby-identifier">path</span>, [<span class="ruby-identifier">data</span>])
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- append-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- append-method -->
+
+      
+        <div id="append_all-method" class="method-detail ">
+          <a name="method-i-append_all"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">append_all</span><span
+              class="method-args">(path, collection)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Append a collection of records in <a href="../Precog.html">Precog</a>.</p>
+
+<p>Arguments:</p>
+
+<pre>path: (String)
+collection: (Array)</pre>
+            
+
+            
+            <div class="method-source-code" id="append_all-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 151</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">append_all</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">collection</span>)
+  <span class="ruby-identifier">append_raw</span>(<span class="ruby-identifier">path</span>, <span class="ruby-value">:json</span>, <span class="ruby-identifier">collection</span>.<span class="ruby-identifier">to_json</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- append_all-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- append_all-method -->
+
+      
+        <div id="append_from_file-method" class="method-detail ">
+          <a name="method-i-append_from_file"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">append_from_file</span><span
+              class="method-args">(path, format, file)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Appends all the events in <tt>file</tt>, a file whose format is described
+by <tt>format</tt> (see <a
+href="Client.html#method-i-append_raw">append_raw</a>), to <tt>path</tt> in
+the virtual file-system.</p>
+
+<p>For instance, to ingest a CSV file, you could do something like:</p>
+
+<pre>client = Precog.new(api_key, account_id)
+csv_file = '/path/to/my.csv'
+client.append_from_file('my.csv', :csv, csv_file)</pre>
+            
+
+            
+            <div class="method-source-code" id="append_from_file-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 201</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">append_from_file</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">format</span>, <span class="ruby-identifier">file</span>)
+  <span class="ruby-identifier">path</span> = <span class="ruby-identifier">relativize_path</span> <span class="ruby-identifier">path</span>
+
+  <span class="ruby-identifier">content_type</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">format</span> <span class="ruby-operator">==</span> <span class="ruby-value">:json</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-string">'application/json'</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">format</span> <span class="ruby-operator">==</span> <span class="ruby-value">:json_stream</span>
+    <span class="ruby-string">'application/x-json-stream'</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-constant">CSV</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">format</span>
+    <span class="ruby-string">'text/csv'</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">format</span> <span class="ruby-operator">==</span> <span class="ruby-value">:csv</span>
+    <span class="ruby-identifier">format</span> = <span class="ruby-constant">DEFAULT_CSV</span>
+    <span class="ruby-string">'text/csv'</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;invalid format: #{format}&quot;</span>   <span class="ruby-comment"># todo</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">csv_params</span> = <span class="ruby-keyword">if</span> <span class="ruby-constant">CSV</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">format</span> <span class="ruby-keyword">then</span>
+    { <span class="ruby-value">:escape</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">escape</span>, <span class="ruby-value">:delimiter</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">delimiter</span>, <span class="ruby-value">:quote</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">quote</span> }
+  <span class="ruby-keyword">else</span>
+    {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">header</span> = { <span class="ruby-string">'Content-Type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">content_type</span> }
+  <span class="ruby-identifier">params</span> = { <span class="ruby-value">:apiKey</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">api_key</span>, <span class="ruby-value">:receipt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-value">:mode</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'batch'</span> }.<span class="ruby-identifier">merge</span> <span class="ruby-identifier">csv_params</span>
+
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-string">'r'</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">stream</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">back</span> = []
+    <span class="ruby-identifier">stream</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">chunk</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Precog</span>.<span class="ruby-identifier">post</span>(<span class="ruby-keyword">self</span>, <span class="ruby-node">&quot;/ingest/v#{VERSION}/fs/#{path}&quot;</span>, <span class="ruby-identifier">chunk</span>, <span class="ruby-identifier">header</span>, <span class="ruby-identifier">params</span>)
+
+      <span class="ruby-identifier">results</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span> <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>
+      <span class="ruby-identifier">back</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">results</span>[<span class="ruby-string">&quot;ingested&quot;</span>], <span class="ruby-identifier">results</span>[<span class="ruby-string">&quot;errors&quot;</span>]]
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">back</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- append_from_file-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- append_from_file-method -->
+
+      
+        <div id="append_raw-method" class="method-detail ">
+          <a name="method-i-append_raw"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">append_raw</span><span
+              class="method-args">(path, format, data)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Appends all the events in <tt>data</tt>, a string whose format is described
+by the <tt>format</tt> argument, to path in the virtual file-system.  The
+<tt>format</tt> must be in the following set:</p>
+<ul><li>
+<p>:json (raw, well-formed JSON)</p>
+</li><li>
+<p>:json_stream (well-formed JSON values separated by newlines)</p>
+</li><li>
+<p>:csv (comma-separated values, delimited by newlines using the “ character
+for quoting)</p>
+</li><li>
+<p><tt>CSV.new(...)</tt> (an instance of the CSV struct)</p>
+</li></ul>
+            
+
+            
+            <div class="method-source-code" id="append_raw-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">append_raw</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">format</span>, <span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">path</span> = <span class="ruby-identifier">relativize_path</span> <span class="ruby-identifier">path</span>
+
+  <span class="ruby-identifier">content_type</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">format</span> <span class="ruby-operator">==</span> <span class="ruby-value">:json</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-string">'application/json'</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">format</span> <span class="ruby-operator">==</span> <span class="ruby-value">:json_stream</span>
+    <span class="ruby-string">'application/x-json-stream'</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-constant">CSV</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">format</span>
+    <span class="ruby-string">'text/csv'</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">format</span> <span class="ruby-operator">==</span> <span class="ruby-value">:csv</span>
+    <span class="ruby-identifier">format</span> = <span class="ruby-constant">DEFAULT_CSV</span>
+    <span class="ruby-string">'text/csv'</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;invalid format: #{format}&quot;</span>   <span class="ruby-comment"># todo</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">csv_params</span> = <span class="ruby-keyword">if</span> <span class="ruby-constant">CSV</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">format</span> <span class="ruby-keyword">then</span>
+    { <span class="ruby-value">:escape</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">escape</span>, <span class="ruby-value">:delimiter</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">delimiter</span>, <span class="ruby-value">:quote</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">quote</span> }
+  <span class="ruby-keyword">else</span>
+    {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">header</span> = { <span class="ruby-string">'Content-Type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">content_type</span> }
+  <span class="ruby-identifier">params</span> = { <span class="ruby-value">:apiKey</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">api_key</span>, <span class="ruby-value">:receipt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-value">:mode</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'batch'</span> }.<span class="ruby-identifier">merge</span> <span class="ruby-identifier">csv_params</span>
+  <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Precog</span>.<span class="ruby-identifier">post</span>(<span class="ruby-keyword">self</span>, <span class="ruby-node">&quot;/ingest/v#{VERSION}/fs/#{path}&quot;</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">header</span>, <span class="ruby-identifier">params</span>)
+
+  <span class="ruby-identifier">results</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span> <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>
+  [<span class="ruby-identifier">results</span>[<span class="ruby-string">&quot;ingested&quot;</span>], <span class="ruby-identifier">results</span>[<span class="ruby-string">&quot;errors&quot;</span>]]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- append_raw-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- append_raw-method -->
+
+      
+        <div id="delete-method" class="method-detail ">
+          <a name="method-i-delete"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">delete</span><span
+              class="method-args">(path)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Deletes the data stored at the specified path. This does NOT do a recursive
+delete. It’ll only delete the data the path specified, all other data in
+sub-paths of <tt>path</tt> will remain intact.</p>
+            
+
+            
+            <div class="method-source-code" id="delete-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 249</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">path</span> = <span class="ruby-identifier">relativize_path</span> <span class="ruby-identifier">path</span>
+
+  <span class="ruby-constant">Precog</span>.<span class="ruby-identifier">connect</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">http</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">uri</span> = <span class="ruby-constant">Addressable</span><span class="ruby-operator">::</span><span class="ruby-constant">URI</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">query_values</span> = { <span class="ruby-value">:apiKey</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">api_key</span> }
+
+    <span class="ruby-identifier">http</span>.<span class="ruby-identifier">delete</span> <span class="ruby-node">&quot;/ingest/v#{VERSION}/fs/#{path}?#{uri.query}&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- delete-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- delete-method -->
+
+      
+        <div id="query-method" class="method-detail ">
+          <a name="method-i-query"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">query</span><span
+              class="method-args">(path, query)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Executes a synchronous query relative to the specified base path. The HTTP
+connection will remain open for as long as the query is evaluating
+(potentially minutes).</p>
+
+<p>Not recommended for long-running queries, because if the connection is
+interrupted, there will be no way to retrieve the results of the query.</p>
+
+<p>Returns a triple of errors, warnings and an <tt>Array</tt> of data
+representing the query results.  The errors and warnings are represented as
+<tt>Array</tt>(s) of <tt>Info</tt> objects.</p>
+            
+
+            
+            <div class="method-source-code" id="query-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 270</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">query</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">query</span>)
+  <span class="ruby-identifier">path</span> = <span class="ruby-identifier">relativize_path</span> <span class="ruby-identifier">path</span>
+  <span class="ruby-identifier">params</span> = { <span class="ruby-value">:apiKey</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">api_key</span>, <span class="ruby-value">:q</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>, <span class="ruby-value">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'detailed'</span> }
+  <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Precog</span>.<span class="ruby-identifier">get</span>(<span class="ruby-keyword">self</span>, <span class="ruby-node">&quot;/analytics/v#{VERSION}/fs/#{path}&quot;</span>, { <span class="ruby-string">'Content-Type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'application/json'</span> }, <span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">output</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span> <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>
+
+  [
+    <span class="ruby-identifier">output</span>[<span class="ruby-string">&quot;errors&quot;</span>].<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">i</span>.<span class="ruby-identifier">nil?</span> }.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-constant">Precog</span>.<span class="ruby-identifier">parse_info</span> <span class="ruby-identifier">i</span> },
+    <span class="ruby-identifier">output</span>[<span class="ruby-string">&quot;warnings&quot;</span>].<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">i</span>.<span class="ruby-identifier">nil?</span> }.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-constant">Precog</span>.<span class="ruby-identifier">parse_info</span> <span class="ruby-identifier">i</span> },
+    <span class="ruby-identifier">output</span>[<span class="ruby-string">&quot;data&quot;</span>]
+  ]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- query-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- query-method -->
+
+      
+        <div id="query_async-method" class="method-detail ">
+          <a name="method-i-query_async"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">query_async</span><span
+              class="method-args">(path, query)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Runs an asynchronous query against <a href="../Precog.html">Precog</a>. An
+async query is a query that simply returns a Job ID, rather than the query
+results. You can then periodically poll for the results of the job/query.</p>
+
+<p>This does <em>NOT</em> run the query in a new thread. It will still block
+the current thread until the server responds.</p>
+
+<p>An example of using <a
+href="Client.html#method-i-query_async">query_async</a> to poll for results
+could look like:</p>
+
+<pre>client = ...
+query = client.query_async(&quot;foo/&quot;, &quot;min(//bar)&quot;)
+
+result = nil
+result = query.parsed until result
+errors, warnings, data = result
+min = data.first
+puts &quot;Minimum is: #{min}&quot;</pre>
+
+<p>This is ideal for long running queries.</p>
+
+<p>Returns a <a href="Query.html">Query</a> object.</p>
+            
+
+            
+            <div class="method-source-code" id="query_async-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 305</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">query_async</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">query</span>)
+  <span class="ruby-identifier">path</span> = <span class="ruby-identifier">relativize_path</span> <span class="ruby-identifier">path</span>
+  <span class="ruby-identifier">params</span> = { <span class="ruby-value">:apiKey</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">api_key</span>, <span class="ruby-value">:q</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">query</span>, <span class="ruby-value">:prefixPath</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">path</span> }
+  <span class="ruby-identifier">resp</span> = <span class="ruby-constant">Precog</span>.<span class="ruby-identifier">post</span>(<span class="ruby-keyword">self</span>, <span class="ruby-node">&quot;/analytics/v#{VERSION}/queries&quot;</span>, <span class="ruby-string">''</span>, { <span class="ruby-string">'Content-Type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'application/json'</span> }, <span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">output</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span> <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">body</span>
+  <span class="ruby-constant">Query</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">output</span>[<span class="ruby-string">'jobId'</span>])
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- query_async-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- query_async-method -->
+
+      
+        <div id="secure-3F-method" class="method-detail ">
+          <a name="method-i-secure-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">secure?</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="secure-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">secure?</span>
+  <span class="ruby-ivar">@secure</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- secure-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- secure-3F-method -->
+
+      
+        <div id="upload_file-method" class="method-detail ">
+          <a name="method-i-upload_file"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">upload_file</span><span
+              class="method-args">(path, format, file)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Uploads the records in <tt>file</tt> to <tt>path</tt>. This is equivalent
+to first _deleting the data_ at the VFS path (using delete), then calling
+append_from_file.</p>
+            
+
+            
+            <div class="method-source-code" id="upload_file-source">
+<pre>
+<span class="ruby-comment"># File lib/precog.rb, line 241</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">upload_file</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">format</span>, <span class="ruby-identifier">file</span>)
+  <span class="ruby-identifier">delete</span> <span class="ruby-identifier">path</span>
+  <span class="ruby-identifier">append_from_file</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">format</span>, <span class="ruby-identifier">file</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- upload_file-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- upload_file-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+
