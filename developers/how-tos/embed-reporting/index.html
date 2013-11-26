@@ -25,7 +25,7 @@
   <body>
     <header>
       <div class="holder">
-        <div id="header-logo"><a href="../../../for-developers/index.html"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-logo"><a href="http://www.precog.com"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
       </div>
     </header>
     <div id="body">
@@ -73,7 +73,6 @@
         </div>
         <div id="page-content"><div>
 <h2>How to Embed Reporting in Your App</h2>
-<p>Check out a demo dashboard <a href="http://www2.precog.com/socialsaucedashboard">here</a>.</p>
 <h3>Overview</h3>
 <p>If you&apos;re building a business application, then your customers probably want self-service reporting. Most business applications, from marketing tools to advertising platforms, have full-featured reporting built into them. Precog makes it easy to build this kind of functionality directly into your application, without spending a lot of time or money.</p>
 <p>This document provides a step-by-step guide to embed analytics and charts into an online dashboard. Code is provided every step of the way. So, if you follow along, at the end of the tutorial you&apos;ll have a fully-functioning reporting dashboard that you can embed in your application, for your customers. You can also see what the <a href="../../../external/Tutorials/apocalypsetutorial/ApocalypseProductsDashboard.htm">final result</a> looks like.</p>
@@ -90,14 +89,7 @@
 <p>For the remainder of the tutorial, let&apos;s imagine that you&apos;re NimbleSell and that you&apos;re looking to provide all of the above features to your customers (the merchants who use your platform).</p>
 <p>To go from nothing to offering self-service reporting for your customers, you need to create a Precog account (to get an API key). You can use your master API key to create customized keys for every customer (including Apocalypse Products). You can then instrument your platform so data starts flowing to Precog, as well as back import historical data. After these steps have been completed, all that remains is to create insightful queries and pipe those queries into a reporting dashboard embedded in the NimbleSell platform.</p>
 <p>These steps will be covered in depth in the sections that follow.</p>
-<h3>Step 1: Create a Precog Account</h3>
-<p>Sign up for a <a href="../../../about/contact-us/index.html">Precog account</a>. After you sign up, you&apos;ll be given an API key and an account Id number that serves as your root path. These provide you access to the Precog REST API.</p>
-<p>An API key is essentially a secure combination of username and password, which gives you some permissions to use the API in various ways. For more information, visit the <a href="../../getting-started/overview/index.html">developer center</a>.</p>
-<p>A root path is the main directory where your Precog data is located. The root path is how you tell the Precog API where to look for your data. Your root path is your account Id number.</p>
-<p>NimbleSell&apos;s root path might be:</p>
-<p>/0000110734/</p>
-<p>You can access your account information at the <a href="../../../account/index.html">account page</a>. In addition to your API key and root path there is a link to your personalized version of Precog&apos;s interactive analysis tool: Labcoat. You can also check out a <a href="https://labcoat.precog.com/">preview version of Labcoat</a> loaded with sample data, including the data used in this tutorial.</p>
-<h3>Step 2: Organize Your Data</h3>
+<h3>Step 1: Organize Your Data</h3>
 <p>Before you start loading and analyzing data with Precog, it&apos;s best to figure out how to organize that data. This organizational structure can be as flexible as your company needs.</p>
 <p>One common pattern, which would work well for NimbleSell, is to organize each of your customer&apos;s data into a separate directory. For example:</p>
 <pre>
@@ -107,7 +99,7 @@
 <p>This way of organizing the data makes it easy for you to give each customer permissions to see their own data, but not to see data from any other customer.</p>
 <p>For example, the custom API key that you provide to Apocalypse Products allows Apocalypse Products to load data from /0000110734/<em>apocalypseproducts</em> but not from /0000110734/<em>someothercustomer</em>.</p>
 <p><em>If a user has appropriate access, queries can analyze data across many folders, so creating an organizational division does not necessarily create data silos. For example, you have access to &quot;/0000110734/&quot;, so you can run queries across all of the subdirectories of &quot;/0000110734/&quot; without restriction.</em></p>
-<h3>Step 3: Create New API Keys for Your Customers</h3>
+<h3>Step 2: Create New API Keys for Your Customers</h3>
 <p>The master API key you get when you sign up for an account will have many grants. It will be able to read and write data into any child path or your root path. Since you do not want to give Apocalypse Products access to your internal data or the data of your other customers, you need to create a new API key for them.</p>
 <p>You can create new API keys using the <a href="http://www.precog.com/api-security">security API</a> directly or you can use a <a href="https://github.com/reportgrid/client-libraries/tree/master/precog">client library</a>. For example, you want to create an API key for Apocalypse Products that gives them read and write access to the path /0000110734/apocalypseproducts/. You need to use the API key you were assigned upon creating your Precog account as the authorizing API key.</p>
 <p>All API calls require an analytics service endpoint. The current default is: <a href="https://beta.precog.com/">https://beta.precog.com/</a>. For reference, this endpoint is listed as the analytics service on your <a href="../../../account/index.html">account page</a>.</p>
@@ -144,7 +136,7 @@ POST <a href="https://beta.precog.com/security/v1/apikeys/?apiKey=%5Bauth">https
 <p>You would then store this API key in whatever database you use to keep track of your customers. For example, if you have a customers table that you use to keep track of all of your customers, then you could add a precogApiKey column to this table, which would let you store a custom API key for each of your customers (this is a Precog-recommended Best Practice).</p>
 <p>You will later use this customer-specific API key to deploy a secure reporting dashboard for each of your customers (including Apocalypse Products). You could also give these API keys directly to your customers if you wanted to allow them to explore their data directly (through Labcoat or ReportGrid).</p>
 <p>For more information on the Accounts API and Client Libraries see the <a href="../../getting-started/overview/index.html">developer center</a>.</p>
-<h3>Step 4: Instrumenting Your Application</h3>
+<h3>Step 3: Instrumenting Your Application</h3>
 <p>Adding self-service reporting to your platform requires piping all the data flowing through your platform into Precog, where it can be analyzed and displayed in charts. This step is called instrumentation, and it&apos;s one of the most important steps to integrating Precog.</p>
 <p>In addition to organizing data using the file system, it&apos;s important to figure out what data to store and how it should be represented. Usually, this data will be event-oriented in nature, capturing what users are doing. In your case, it will include information on what products customers are searching for, looking at, and buying, and where customers are coming from.</p>
 <p>This section will include a brief overview of the Precog REST API and an explanation of how to hook your current data stream into Precog API. You can find a brief screencast tutorial about instrumenting your application <a href="http://www.youtube.com/watch?v=rXSrl0ozSH8">here on YouTube</a>. Importing historical data that you may already be storing in a different data system will be covered in Step 5.</p>
@@ -176,7 +168,7 @@ Precog.store(&quot;/path/to/store/data&quot;, dataToBeStored);<br></pre>
 </script>
 <p>The first line loads the PHP client library. Lines 3-5 creates a new variable called <strong>$api</strong> that is an instance of the PrecogAPI. The arguments passed to the constructor are your API key and the Precog service URL. Lines 7-9 create an ISO8601 formatted timestamp. Lines 11-16 stores the event data in a variable, and the line 18 sends that data to Precog to be stored at the specified path.</p>
 <p>After this code is integrated into your platform, all future order confirmation events will be stored in Precog, and available for detailed analysis and reporting.</p>
-<h3>Step 5: Back Import Historical Data</h3>
+<h3>Step 4: Back Import Historical Data</h3>
 <p>You probably have some historical data that needs to be imported into Precog.</p>
 <p><a href="http://labcoat.precog.com">Labcoat</a> has an easy drag and drop interface for loading files in JSON, CSV, and zipped versions of those formats (Precog will be supporting more languages and formats in the future).</p>
 <p>However, you can also import your data programmatically using Precog API. You can use the REST API directly, or use one of the client libraries, such as PHP or JavaScript.</p>
@@ -201,7 +193,7 @@ Precog.store(&quot;/path/to/store/data&quot;, dataToBeStored);<br></pre>
 <p>The script below proceeds by loading the Precog PHP client library, creating an instance of the Precog API, and using that instance to store data. The SQL portion of the script opens a connection to the database, and uses the query function to extract the contents of the table. Notice the second, optional argument of the query function: <strong>PDO::FETCH_ASSOC</strong>. Without this argument, the query will return both the field name and the column number for each value. Including this option will return rows as an object with only the field names, making it easier to store the data in Precog.</p>
 <p>Assuming that you have a SQL database (or any PDO supported database) called <em>nimbleData.db</em>, and a table called Users, the following PHP script will import the data into Precog:</p><script src="https://gist.github.com/4196098.js" type="text/javascript">
 </script>
-<h3>Step 6: Use Labcoat to Analyze Data</h3>
+<h3>Step 5: Use Labcoat to Analyze Data</h3>
 <p>You have now back imported historical data and instrumented your application so that all current data is flowing into Precog. Now you need to analyze the data in order to turn this raw data into actionable insights for your customers.</p>
 <p>Precog comes with industry-leading support for Quirrel, a simple, yet powerful language for analyzing data. You will do all data analysis using Quirrel.</p>
 <p>The easiest way to develop Quirrel is to use <a href="http://labcoat.precog.com/">Labcoat</a>, which is a powerful browser-based tool for developing and deploying Quirrel scripts. You can embed any queries you develop in Labcoat into your application and run them on-demand using the Precog API.</p>
@@ -227,7 +219,7 @@ Precog.store(&quot;/path/to/store/data&quot;, dataToBeStored);<br></pre>
 <h4>Query 3: Proportion of Sales Generated by Source at 1 o&apos;clock</h4>
 <p>The last query we&apos;ll examine in this tutorial will return the total sales from each source during a specific hour of the day.</p><script src="https://gist.github.com/4196110.js" type="text/javascript">
 </script>
-<h3>Step 7: Create and Embed a Reporting Dashboard</h3>
+<h3>Step 6: Create and Embed a Reporting Dashboard</h3>
 <p>Queries generate useful information, but sometimes raw numbers aren&apos;t the best way to convey this information. Apocalypse Products does not want to sift through a bunch of spreadsheets to know if they are meeting sales goals. They want you to provide them with a real-time dashboard that conveys this information at a glance. Access to snazzy e-commerce analytics and reporting is part of why Apocalypse Products chose to use your platform to sell goods.</p>
 <p>In just a few minutes, you can take the Quirrel code you developed in Labcoat, combine it with ReportGrid, and deploy a beautiful, self-service reporting dashboard for Apocalypse Products.</p>
 <h4>Integrate Javascript Client Library and ReportGrid Visualization Library</h4>

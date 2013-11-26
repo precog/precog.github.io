@@ -25,7 +25,7 @@
   <body>
     <header>
       <div class="holder">
-        <div id="header-logo"><a href="../../../for-developers/index.html"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
+        <div id="header-logo"><a href="http://www.precog.com"><img src="../../../images/logo-precog.png" alt="Precog"></a></div>
       </div>
     </header>
     <div id="body">
@@ -91,7 +91,7 @@ conversions := <span class="comment">//conversions</span>
 input := { age : conversions.customer.age }
 model := kMedians( input, <span class="number">7</span> )
 model</code></pre>
-<p><a href="https://labcoat.precog.com/?q=import+std::stats::*%0Aconversions+:=+//conversions%0A%09%0Ainput+:=+%7B+age+:+conversions.customer.age+%7D%0Amodel+:=+kMedians(+input,+7+)%0Amodel&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/" title="Run in Labcoat">Run in Labcoat</a>
+<p><a href="https://labcoat.precog.com/?q=import+std::stats::*%0Aconversions+:=+//conversions%0A%09%0Ainput+:=+%7B+age+:+conversions.customer.age+%7D%0Amodel+:=+kMedians(+input,+7+)%0Amodel&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/" title="Run in Labcoat"></a>
 
 </p>
 <p>For exploratory purposes, knowing these cluster centers might useful. We might be artificially trying to think about age demographics in convenient segments such as 21-25 or 30-39, but a natural segmentation from clustering might reveal that it makes more sense to consider 19-27 on cohort but provide finer grained distinctions of 31-33, 34-35 and 36-39.  But even more useful than simply knowing these centroids is to apply the model to existing data and do analytics on this augmented data.  In the example below, we are examining how much money is spent by customers in these various age clusters on average. This is done by using the base of the query above (which could be saved as its own cached query for convenient re-use) and augmenting the conversions dataset with a new cluster field.  We then do a solve statement where the implicit constraint comes from the where clause and allows the tic variable to take values from conversions&apos;.cluster.model1.clusterId.  Since determined the number of clusters, we know then, that the body of the solve will be computed 7 times, one for each value of clusterId. 
@@ -111,7 +111,7 @@ solve '</span>cluster
   mean : mean(conversions'</span>.product.price where 
            conversions<span class="string">'.cluster.model1.clusterId = '</span>cluster)
   }  </code></pre>
-<p><a href="https://labcoat.precog.com/?q=import+std::stats::*%0Aconversions+:=+//conversions%0A%0Ainput+:=+%7B+age+:+conversions.customer.age+%7D%0Amodel+:=+kMedians(+input,+7+)%0A%0Aconversions'+:=+conversions+with+%7Bcluster+:+assignClusters(input,+model)+%7D%0A%0Asolve+'cluster%0A++%7B%0A++cluster:+'cluster,%0A++mean+:+mean(conversions'.product.price+where+conversions'.cluster.model1.clusterId+=+'cluster)%0A++%7D&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/" title="Check out this query in Labcoat.">[Run in Labcoat</a>
+<p><a href="https://labcoat.precog.com/?q=import+std::stats::*%0Aconversions+:=+//conversions%0A%0Ainput+:=+%7B+age+:+conversions.customer.age+%7D%0Amodel+:=+kMedians(+input,+7+)%0A%0Aconversions'+:=+conversions+with+%7Bcluster+:+assignClusters(input,+model)+%7D%0A%0Asolve+'cluster%0A++%7B%0A++cluster:+'cluster,%0A++mean+:+mean(conversions'.product.price+where+conversions'.cluster.model1.clusterId+=+'cluster)%0A++%7D&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/" title="Check out this query in Labcoat."></a>
 
 </p>
 <p>While many of the clusters have similar mean sales in this example there is still a significant discrepancy between the cluster with the highest mean sales being over 22% higher than the cluster with the lowest mean sales. Depending upon the demographics and cost of acquiring customers in the various clusters, this could be a meaningful insight that boosts average sales and revenue. 
@@ -169,7 +169,7 @@ Total : medals.Total
 }
 
 std::stats::linearRegression(medals.Weight, indVars)</code></pre>
-<p><a href="https://labcoat.precog.com/?q=medals+:=+//summer_games/london_medals%0A%0AindVars+:=%0A%7B%0AHeightIncm+:+medals.HeightIncm,%0AAge+:+medals.Age,%0ATotal+:+medals.Total%0A%7D%0A%0Astd::stats::linearRegression(medals.Weight,+indVars)&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/" title="Run this query in Labcoat.">Run in Labcoat</a>
+<p><a href="https://labcoat.precog.com/?q=medals+:=+//summer_games/london_medals%0A%0AindVars+:=%0A%7B%0AHeightIncm+:+medals.HeightIncm,%0AAge+:+medals.Age,%0ATotal+:+medals.Total%0A%7D%0A%0Astd::stats::linearRegression(medals.Weight,+indVars)&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/" title="Run this query in Labcoat."></a>
 
 </p>
 <p>And a look at a subset of the output:
@@ -228,7 +228,7 @@ indVars :=
  }
 
 logisticRegression( conversions'</span>.female, indVars)</code></pre>
-<p><a href="https://labcoat.precog.com/?q=import+std::stats::*%0Aconversions+:=+//conversions%0Aconversions'+:=+conversions+with+%7Bfemale+:+if+conversions.customer.gender+=+%22female%22+then+1+else+0+%7D%0A%0AindVars+:=%0A+%7B%0A+price+:+conversions'.product.price,%0A+age+:+conversions'.customer.age%0A+%7D%0A%0AlogisticRegression(+conversions'.female,+indVars)&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/" title="View in Labcoat.">Run in Labcoat</a>
+<p><a href="https://labcoat.precog.com/?q=import+std::stats::*%0Aconversions+:=+//conversions%0Aconversions'+:=+conversions+with+%7Bfemale+:+if+conversions.customer.gender+=+%22female%22+then+1+else+0+%7D%0A%0AindVars+:=%0A+%7B%0A+price+:+conversions'.product.price,%0A+age+:+conversions'.customer.age%0A+%7D%0A%0AlogisticRegression(+conversions'.female,+indVars)&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/" title="View in Labcoat."></a>
 
 </p>
 <p>The resulting model will give us a probability estimate based on the price of the product being considered and the age of the customer that the customer is female. This can then be used to impute missing values in historical data or as a real-time prediction to generate dynamic content in an application.  
@@ -291,7 +291,7 @@ rmse(predicted, observed) :=
 model1rmse : rmse(results.prediction.model1.fit, results.Weight),
 model2rmse : rmse(results.prediction.model2.fit, results.Weight)
 }</code></pre>
-<p><a href="https://labcoat.precog.com/?q=medals+:=+//summer_games/london_medals%0A%0Afilter+:=+observe(medals,+std::random::uniform(38))%0Atrain+:=+medals+where+filter+%3C=+0.8%0Atest+:=+medals+where+filter+%3E+0.8%0A%0AindVars+:=%0A%7B%0AHeightIncm+:+train.HeightIncm,%0AAge+:+train.Age,%0ATotal+:+train.Total%0A%7D%0A%0Amodel+:=+std::stats::linearRegression(train.Weight,+indVars)%0Aprediction+:=+std::stats::predictLinear(test,+model)%0Aresults+:=+test+with+%7Bprediction+:+prediction%7D%0A%0Armse(predicted,+observed)+:=%0A+diff+:=+observed+-+predicted%0A+std::math::sqrt((mean(diff%5E2)))%0A%0A%7B%0Amodel1rmse+:+rmse(results.prediction.model1.fit,+results.Weight),%0Amodel2rmse+:+rmse(results.prediction.model2.fit,+results.Weight)%0A%7D&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/" title="See the results in Labcoat">Run in Labcoat</a>
+<p><a href="https://labcoat.precog.com/?q=medals+:=+//summer_games/london_medals%0A%0Afilter+:=+observe(medals,+std::random::uniform(38))%0Atrain+:=+medals+where+filter+%3C=+0.8%0Atest+:=+medals+where+filter+%3E+0.8%0A%0AindVars+:=%0A%7B%0AHeightIncm+:+train.HeightIncm,%0AAge+:+train.Age,%0ATotal+:+train.Total%0A%7D%0A%0Amodel+:=+std::stats::linearRegression(train.Weight,+indVars)%0Aprediction+:=+std::stats::predictLinear(test,+model)%0Aresults+:=+test+with+%7Bprediction+:+prediction%7D%0A%0Armse(predicted,+observed)+:=%0A+diff+:=+observed+-+predicted%0A+std::math::sqrt((mean(diff%5E2)))%0A%0A%7B%0Amodel1rmse+:+rmse(results.prediction.model1.fit,+results.Weight),%0Amodel2rmse+:+rmse(results.prediction.model2.fit,+results.Weight)%0A%7D&apiKey=5CDA81E8-9817-438A-A340-F34E578E86F8&analyticsService=https://labcoat.precog.com/" title="See the results in Labcoat"></a>
 
 </p>
 <p>Note that the results include rmse for two different models.  This is because Precog supports heterogeneous data.  So linear regression will create a model for each schema in the data.  Some observations are missing data for height, which dramatically reduces the quality of the prediction.  Notice that the RMSE for the model with height is almost twice as good as the model without.  This can help you understand your data better and the value that each component provides.
